@@ -12,6 +12,8 @@ class World:
 			star = Star(self.star_names.pop())
 			self.stars.append(star)
 
-			nb_planets = random.randrange(config.min_planets_per_star, config.max_planets_per_star+1)
+			nb_planets = random.randrange(
+				config.min_planets_per_star,
+				config.max_planets_per_star + 1)
 			for n in range(0, nb_planets):
-				star.addPlanet()
+				star.add_planet()

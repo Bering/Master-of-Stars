@@ -6,6 +6,6 @@ class Star:
 		self.name = name
 		self.planets = []
 
-	def addPlanet(self):
+	def add_planet(self):
 		p = Planet(self)
 		self.planets.append(p)
