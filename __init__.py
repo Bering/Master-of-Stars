@@ -26,14 +26,10 @@ class Application:
 
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
-		for player in self.players:
-			print("- " + player.name)
-			for planet in player.planets:
-				print("  o " + planet.name)
+		for p in self.players:
+			print("- " + p.name + " (" + p.planets[0].name + ")")
 		for ai in self.ais:
-			print("- " + ai.name)
-			for planet in ai.planets:
-				print("  o " + planet.name)
+			print("- " + ai.name + " (" + ai.planets[0].name + ")")
 
 	def print_world(self):
 		print("\nCreated world with " + str(len(self.world.stars)) + " stars:")
