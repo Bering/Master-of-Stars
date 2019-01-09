@@ -6,4 +6,5 @@ class Player:
 
 	def colonize_planet(self, planet):
 		self.planets.append(planet)
+		planet.colonize(self)
 	

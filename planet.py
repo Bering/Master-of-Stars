@@ -11,3 +11,7 @@ class Planet:
 		self.size = sizes[random.randrange(0,len(sizes))]
 		self.type = types[random.randrange(0,len(types))]
 		self.name = star.name + " " + suffixes[len(star.planets)]
+		self.player = None
+
+	def colonize(self, player):
+		self.player = player

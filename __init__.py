@@ -23,7 +23,7 @@ class Application:
 			self.ais.append(AI("AI " + str(n+1)))
 		
 		self.world = World(config, self.players, self.ais)
-
+	
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
 		for p in self.players:
