@@ -14,8 +14,6 @@ from ai import AI
 class Application:
 
 	def __init__(self):
-		self.world = World(config)
-		
 		self.players = []
 		for n in range(0, config.nb_players):
 			self.players.append(Player("Player " + str(n+1)))
@@ -23,6 +21,19 @@ class Application:
 		self.ais = []
 		for n in range(0, config.nb_ais):
 			self.ais.append(AI("AI " + str(n+1)))
+		
+		self.world = World(config, self.players, self.ais)
+
+	def print_players(self):
+		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
+		for player in self.players:
+			print("- " + player.name)
+			for planet in player.planets:
+				print("  o " + planet.name)
+		for ai in self.ais:
+			print("- " + ai.name)
+			for planet in ai.planets:
+				print("  o " + planet.name)
 
 	def print_world(self):
 		print("\nCreated world with " + str(len(self.world.stars)) + " stars:")
@@ -31,13 +42,6 @@ class Application:
 			for p in s.planets:
 				print("  o " + p.name + " (" + p.size + " " + p.type + ")")
 	
-	def print_players(self):
-		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
-		for p in self.players:
-			print("- " + p.name)
-		for ai in self.ais:
-			print("- " + ai.name)
-
 print("Stars v.alpha0")
 app = Application()
 app.print_world()

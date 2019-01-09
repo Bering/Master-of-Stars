@@ -4,7 +4,7 @@ from star_names_stack import StarNamesStack
 
 class World:
 
-	def __init__(self, config):
+	def __init__(self, config, players, ais):
 		self._star_names = StarNamesStack()
 		self.stars = []
 		for n in range(0, config.nb_stars):
@@ -16,3 +16,14 @@ class World:
 				config.max_planets_per_star + 1)
 			for n in range(0, nb_planets):
 				star.add_planet()
+
+		for p in players:
+			self._colonize_random_planet(p)
+
+		for ai in ais:
+			self._colonize_random_planet(ai)
+
+	def _colonize_random_planet(self, player):
+		star = self.stars[random.randrange(0, len(self.stars))]
+		planet = star.planets[random.randrange(0, len(star.planets))]
+		player.colonize_planet(planet)
