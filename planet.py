@@ -1,20 +1,38 @@
 import random
 
-sizes = ["Tiny", "Small", "Medium", "Large", "Huge"]
-types = ["Baren", "Arid", "Terran", "Rich", "Gaïa"]
-suffixes = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"]
+_sizes = ["Tiny", "Small", "Medium", "Large", "Huge"]
+_types = ["Baren", "Arid", "Terran", "Rich", "Gaia"]
+_suffixes = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"]
+_population_limits = {
+	"Tiny" : 10,
+	"Small" : 100,
+	"Medium" : 1000,
+	"Large" : 10000,
+	"Huge" : 100000
+}
+_base_production = {
+	"Baren" : { "pop": 0, "ind": 0, "sci": 0 },
+	"Arid" : { "pop": 0, "ind": 0, "sci": 0 },
+	"Terran" : { "pop": 1, "ind": 0, "sci": 0 },
+	"Rich" : { "pop": 0, "ind": 1, "sci": 0 },
+	"Gaia" : { "pop": 2, "ind": 2, "sci": 1 }
+}
 
 class Planet:
 
 	def __init__(self, star):
 		self.star = star
-		self.size = sizes[random.randrange(0,len(sizes))]
-		self.type = types[random.randrange(0,len(types))]
-		self.name = star.name + " " + suffixes[len(star.planets)]
+		self.name = star.name + " " + _suffixes[len(star.planets)]
 		self.player = None
+
+		self.size = _sizes[random.randrange(0,len(_sizes))]
+		self.type = _types[random.randrange(0,len(_types))]
 
 	def colonize(self, player):
 		if (self.player): return False
 
 		self.player = player
+		self.population = _base_production[self.type]["pop"]
+		self.industry = _base_production[self.type]["ind"]
+		self.science = _base_production[self.type]["sci"]
 		return True
