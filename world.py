@@ -24,6 +24,11 @@ class World:
 			self._colonize_random_planet(ai)
 
 	def _colonize_random_planet(self, player):
-		star = self.stars[random.randrange(0, len(self.stars))]
-		planet = star.planets[random.randrange(0, len(star.planets))]
+		
+		owner = player
+		while(owner is not None):
+			star = self.stars[random.randrange(0, len(self.stars))]
+			planet = star.planets[random.randrange(0, len(star.planets))]
+			owner = planet.player
+
 		player.colonize_planet(planet)
