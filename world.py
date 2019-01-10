@@ -30,5 +30,6 @@ class World:
 			star = self.stars[random.randrange(0, len(self.stars))]
 			planet = star.planets[random.randrange(0, len(star.planets))]
 			owner = planet.player
-
+		
 		player.colonize_planet(planet)
+		planet.defense = 5

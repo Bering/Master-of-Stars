@@ -24,9 +24,13 @@ class Planet:
 		self.star = star
 		self.name = star.name + " " + _suffixes[len(star.planets)]
 		self.player = None
-
 		self.size = _sizes[random.randrange(0,len(_sizes))]
 		self.type = _types[random.randrange(0,len(_types))]
+		self.population = 0
+		self.industry = 0
+		self.science = 0
+		self.defense = 0
+		self.shipyard_level = 0
 
 	def colonize(self, player):
 		if (self.player): return False
@@ -36,3 +40,6 @@ class Planet:
 		self.industry = _base_production[self.type]["ind"]
 		self.science = _base_production[self.type]["sci"]
 		return True
+	
+	def set_production(self, production):
+		self.production = production
