@@ -14,4 +14,7 @@ class Planet:
 		self.player = None
 
 	def colonize(self, player):
+		if (self.player) return false
+
 		self.player = player
+		return true
