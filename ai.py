@@ -1,9 +1,6 @@
-class AI:
+from player_base import PlayerBase
+
+class AI(PlayerBase):
 
 	def __init__(self, name):
-		self.name = name
-		self.planets = []
-
-	def colonize_planet(self, planet):
-		self.planets.append(planet)
-		planet.colonize(self)
+		super().__init__(name)
