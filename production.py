@@ -14,9 +14,9 @@ class ProductionBase:
 			self.progress -= self.cost
 			item_count ++
 
-		self.produce(planet, item_count)
+		self.effect(planet, item_count)
 
-	def produce(self, planet, item_count):
+	def effect(self, planet, item_count):
 		pass
 
 class ProdPop(ProductionBase):
@@ -24,45 +24,38 @@ class ProdPop(ProductionBase):
 	def __init__(self):
 		super().__init__("Population", 5)
 
-	def produce(self, planet, item_count):
-		planet.population ++
+	def effect(self, planet, item_count):
+		planet.population += item_count
 
 class ProdInd(ProductionBase):
 
 	def __init__(self):
 		super().__init__("Industry", 5)
 
-	def produce(self, planet, item_count):
-		planet.industry ++
+	def effect(self, planet, item_count):
+		planet.industry += item_count
 
 class ProdSci(ProductionBase):
 
 	def __init__(self):
 		super().__init__("Science", 5)
 
-	def produce(self, planet, item_count):
-		planet.science ++
+	def effect(self, planet, item_count):
+		planet.science += item_count
 
 class ProdDef(ProductionBase):
 
 	def __init__(self):
 		super().__init__("Defense", 10)
 
-	def produce(self, planet, item_count):
-		planet.defense ++
+	def effect(self, planet, item_count):
+		planet.defense += item_count
 
-class ProdShipyard(ProductionBase):
+class ProdFrigate(ProductionBase):
 
 	def __init__(self):
-		super().__init__("Shipyard", 50)
+		super().__init__("Frigate", 10)
 
-	def produce(self, planet, item_count):
-		planet.shipyard_level ++
-
-#class ProdFrigate(ProductionBase):
-
-#	def __init__(self):
-#		super().__init__("Frigate", 10)
-
-#	def produce(self, planet, item_count):
-#		planet.build_ship("Frigate")
+	def effect(self, planet, item_count):
+		for n in range(0, item_count):
+			planet.build_ship("Frigate")
