@@ -10,7 +10,7 @@ _population_limits = {
 	"Large" : 10000,
 	"Huge" : 100000
 }
-_base_production = {
+_production_bonuses = {
 	"Baren" : { "pop": 0, "ind": 0, "sci": 0 },
 	"Arid" : { "pop": 0, "ind": 0, "sci": 0 },
 	"Terran" : { "pop": 1, "ind": 0, "sci": 0 },
@@ -36,9 +36,10 @@ class Planet:
 		if (self.player): return False
 
 		self.player = player
-		self.population = _base_production[self.type]["pop"]
-		self.industry = _base_production[self.type]["ind"]
-		self.science = _base_production[self.type]["sci"]
+		self.population = 1
+		self.population += _production_bonuses[self.type]["pop"]
+		self.industry += _production_bonuses[self.type]["ind"]
+		self.science += _production_bonuses[self.type]["sci"]
 		return True
 	
 	def set_production(self, production):
