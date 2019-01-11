@@ -60,5 +60,10 @@ class Planet:
 	def next_turn(self):
 		self.population += _production_bonuses[self.type]["pop"]
 		self.industry += _production_bonuses[self.type]["ind"]
+		self.science += _production_bonuses[self.type]["sci"]
+
 		if (self.population > _population_limits[self.size]):
 			self.population = _population_limits[self.size]
+
+		if (self.production): self.production.next_turn(self)
+		if (self.research): self.research.next_turn(self)
