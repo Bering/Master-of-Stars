@@ -21,8 +21,8 @@ class ResearchShipyard(ResearchBase):
 		super().__init__("Upgrade Shipyard", 50 * planet.shipyard_level)
 
 	def effect(self, planet):
-		planet.shipyard_level ++
-
+		planet.tech_levels["Shipyard"] ++
+		
 #class ResearchFrigate(ResearchBase):
 
 #	def __init__(self, planet):
