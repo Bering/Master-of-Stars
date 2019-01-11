@@ -44,3 +44,7 @@ class Planet:
 	
 	def set_production(self, production):
 		self.production = production
+
+	def set_research(self, research):
+		self.research = research
+	
