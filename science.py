@@ -18,15 +18,39 @@ class ResearchBase:
 class ResearchShipyard(ResearchBase):
 
 	def __init__(self, planet):
-		super().__init__("Upgrade Shipyard", 50 * planet.shipyard_level)
+		super().__init__("Upgrade Shipyard", 50 * planet.tech_levels["Shipyard"])
 
 	def effect(self, planet):
 		planet.tech_levels["Shipyard"] ++
-		
-#class ResearchFrigate(ResearchBase):
 
-#	def __init__(self, planet):
-#		super().__init__("Upgrade Fighters", 50 * planet.fighters_level)
+class ResearchScout(ResearchBase):
 
-#	def effect(self, planet):
-#		planet.fighters_level ++
+	def __init__(self, planet):
+		super().__init__("Upgrade Scouts", 50 * planet.tech_levels["Scout"])
+
+	def effect(self, planet):
+		planet.tech_levels["Scout"] ++
+
+class ResearchFrigate(ResearchBase):
+
+	def __init__(self, planet):
+		super().__init__("Upgrade Fighters", 50 * planet.tech_levels["Fighter"])
+
+	def effect(self, planet):
+		planet.tech_levels["Fighter"] ++
+
+class ResearchDestroyer(ResearchBase):
+
+	def __init__(self, planet):
+		super().__init__("Upgrade Destroyers", 50 * planet.tech_levels["Destroyer"])
+
+	def effect(self, planet):
+		planet.tech_levels["Destroyer"] ++
+
+class ResearchColony(ResearchBase):
+
+	def __init__(self, planet):
+		super().__init__("Upgrade Colony Ships", 50 * planet.tech_levels["Colony"])
+
+	def effect(self, planet):
+		planet.tech_levels["Colony"] ++

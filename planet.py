@@ -36,7 +36,7 @@ class Planet:
 		self.tech_levels = {
 			"Shipyard" : 1,
 			"Scout" : 1,
-			"Fighters" : 0,
+			"Fighter" : 0,
 			"Destroyer" : 0,
 			"Colony" : 0
 		}
@@ -52,9 +52,11 @@ class Planet:
 		return True
 	
 	def set_production(self, production):
+		"""Set the planet's production (ProductionBase object)"""
 		self.production = production
 
 	def set_research(self, research):
+		"""Set the planet's research project (ResearchBase object)"""
 		self.research = research
 
 	def next_turn(self):
