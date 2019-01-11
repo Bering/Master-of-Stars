@@ -33,3 +33,9 @@ class World:
 		
 		player.colonize_planet(planet)
 		planet.defense = 5
+
+	def next_turn(self):
+		for s in self.stars:
+			for p in s.planets:
+				p.next_turn()
+	

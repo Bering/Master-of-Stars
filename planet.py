@@ -31,6 +31,15 @@ class Planet:
 		self.science = 0
 		self.defense = 0
 		self.shipyard_level = 0
+		self.production = None
+		self.research = None
+		self.tech_levels = {
+			"Shipyard" : 1,
+			"Scout" : 1,
+			"Fighters" : 0,
+			"Destroyer" : 0,
+			"Colony" : 0
+		}
 
 	def colonize(self, player):
 		if (self.player): return False
@@ -47,4 +56,9 @@ class Planet:
 
 	def set_research(self, research):
 		self.research = research
-	
+
+	def next_turn(self):
+		self.population += _production_bonuses[self.type]["pop"]
+		self.industry += _production_bonuses[self.type]["ind"]
+		if (self.population > _population_limits[self.size]):
+			self.population = _population_limits[self.size]
