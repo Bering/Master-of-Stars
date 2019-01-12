@@ -87,9 +87,12 @@ class Application:
 				self._surface.blit(s.surface, (s.x, s.y))
 			# TODO: draw the selection marker around the selected star
 		elif (self._screen == SCREEN_PLANETS):
-			# TODO: draw the star in the middle
-			for p in self._local_player.selected_star.planets:
-				self._surface.blit(p.surface, p.position)
+			s = self._local_player.selected_star
+			rect = s.surface.get_rect()
+			rect.center = self._surface.get_rect().center
+			self._surface.blit(s.surface, rect)
+			for p in s.planets:
+				self._surface.blit(p.surface, (p.x, p.y))
 
 		pygame.display.flip()
 
