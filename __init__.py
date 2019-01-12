@@ -25,12 +25,14 @@ class Application:
 		self.players = []
 		for n in range(config.nb_players):
 			self.players.append(Player("Player " + str(n+1)))
+		self._local_player = self.players[0]
 		
 		self.ais = []
 		for n in range(config.nb_ais):
 			self.ais.append(AI("AI " + str(n+1)))
 		
 		self.world = World(config, self.players, self.ais)
+
 
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
@@ -56,7 +58,23 @@ class Application:
 	def _events(self):
 		for event in pygame.event.get():
 			if (event.type == pygame.QUIT):
-				self._quit = True
+				self._on_quit()
+			elif (event.type == pygame.KEYUP):
+				if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
+					self._on_quit()
+				elif (event.key == pygame.K_s):
+					self._screen = SCREEN_STARS
+				elif (event.key == pygame.K_PERIOD):
+					self._on_next_planet()
+				elif (event.key == pygame.K_p):
+					if (pygame.key.get_mods() & pygame.KMOD_LSHIFT):
+						self._on_prev_planet()
+					elif (pygame.key.get_mods() & pygame.KMOD_RSHIFT):
+						self._on_prev_planet()
+					else:
+						self._on_next_planet()
+				elif (event.key == pygame.K_COMMA):
+					self._on_prev_planet()
 
 	def _update(self):
 		pass
@@ -67,12 +85,25 @@ class Application:
 		if (self._screen == SCREEN_STARS):
 			for s in self.world.stars:
 				self._surface.blit(s.surface, s.position)
+			# TODO: draw the selection marker around the selected star
 		elif (self._screen == SCREEN_PLANETS):
-			for p in s.planets:
+			# TODO: draw the star in the middle
+			for p in self._local_player.selected_star.planets:
 				self._surface.blit(p.surface, p.position)
 
 		pygame.display.flip()
 
+	def _on_quit(self):
+		# TODO: Are you sure?
+		self._quit = True
+
+	def _on_next_planet(self):
+		self._screen = SCREEN_PLANETS
+		self._local_player.next_planet()
+
+	def _on_prev_planet(self):
+		self._screen = SCREEN_PLANETS
+		self._local_player.prev_planet()
 
 print("Stars v.alpha0")
 app = Application()

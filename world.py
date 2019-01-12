@@ -18,13 +18,16 @@ class World:
 				star.add_planet()
 
 		for p in players:
-			self._colonize_random_planet(p)
+			colony = self._colonize_random_planet(p)
+			p.select_star(colony.star)
+			p.select_planet(colony)
 
 		for ai in ais:
-			self._colonize_random_planet(ai)
+			colony = self._colonize_random_planet(ai)
+			p.select_star(colony.star)
+			p.select_planet(colony)
 
 	def _colonize_random_planet(self, player):
-		
 		owner = player
 		while(owner is not None):
 			star = self.stars[random.randrange(len(self.stars))]
@@ -33,6 +36,7 @@ class World:
 		
 		player.colonize_planet(planet)
 		planet.defense = 5
+		return planet
 
 	def next_turn(self):
 		for s in self.stars:
