@@ -14,12 +14,14 @@ import pygame
 
 SCREEN_STARS = 1
 SCREEN_PLANETS = 2
+SCREEN_QUIT = 99
 
 class Application:
 
 	def __init__(self):
 		pygame.init()
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
+		self._previous_screen = SCREEN_STARS
 		self._screen = SCREEN_STARS
 
 		self.players = []
@@ -58,23 +60,29 @@ class Application:
 	def _events(self):
 		for event in pygame.event.get():
 			if (event.type == pygame.QUIT):
-				self._on_quit()
+				self._on_close()
 			elif (event.type == pygame.KEYUP):
-				if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
-					self._on_quit()
-				elif (event.key == pygame.K_s):
-					self._screen = SCREEN_STARS
-				elif (event.key == pygame.K_PERIOD):
-					self._on_next_planet()
-				elif (event.key == pygame.K_p):
-					if (pygame.key.get_mods() & pygame.KMOD_LSHIFT):
-						self._on_prev_planet()
-					elif (pygame.key.get_mods() & pygame.KMOD_RSHIFT):
-						self._on_prev_planet()
-					else:
+				if (self._screen == SCREEN_STARS) or (self._screen == SCREEN_PLANETS):
+					if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
+						self._on_close()
+					elif (event.key == pygame.K_s):
+						self._screen = SCREEN_STARS
+					elif (event.key == pygame.K_PERIOD):
 						self._on_next_planet()
-				elif (event.key == pygame.K_COMMA):
-					self._on_prev_planet()
+					elif (event.key == pygame.K_p):
+						if (pygame.key.get_mods() & pygame.KMOD_LSHIFT):
+							self._on_prev_planet()
+						elif (pygame.key.get_mods() & pygame.KMOD_RSHIFT):
+							self._on_prev_planet()
+						else:
+							self._on_next_planet()
+					elif (event.key == pygame.K_COMMA):
+						self._on_prev_planet()
+				else:
+					if (event.key == pygame.K_y):
+						self._on_quit()
+					elif (event.key == pygame.K_n):
+						self._screen = self._previous_screen
 
 	def _update(self):
 		pass
@@ -93,11 +101,26 @@ class Application:
 			self._surface.blit(s.surface, rect)
 			for p in s.planets:
 				self._surface.blit(p.surface, (p.x, p.y))
+		elif (self._screen == SCREEN_QUIT):
+			font = pygame.font.Font(None, 24)
+			text_surf = font.render("Are you sure?", True, (255,255,255))
+			rect = text_surf.get_rect()
+			rect.center = self._surface.get_rect().center
+			self._surface.blit(text_surf, rect)
+
+			rect.x -= 15
+			rect.y -= 15
+			rect.width += 30
+			rect.height += 30
+			pygame.draw.rect(self._surface, (255,255,255), rect, 2)
 
 		pygame.display.flip()
 
+	def _on_close(self):
+		self._previous_screen = self._screen
+		self._screen = SCREEN_QUIT
+
 	def _on_quit(self):
-		# TODO: Are you sure?
 		self._quit = True
 
 	def _on_next_planet(self):
