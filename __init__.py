@@ -15,11 +15,11 @@ class Application:
 
 	def __init__(self):
 		self.players = []
-		for n in range(0, config.nb_players):
+		for n in range(config.nb_players):
 			self.players.append(Player("Player " + str(n+1)))
 		
 		self.ais = []
-		for n in range(0, config.nb_ais):
+		for n in range(config.nb_ais):
 			self.ais.append(AI("AI " + str(n+1)))
 		
 		self.world = World(config, self.players, self.ais)

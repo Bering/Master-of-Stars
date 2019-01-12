@@ -57,5 +57,5 @@ class ProdFrigate(ProductionBase):
 		super().__init__("Frigate", 10)
 
 	def effect(self, planet, item_count):
-		for n in range(0, item_count):
+		for n in range(item_count):
 			planet.build_ship("Frigate")

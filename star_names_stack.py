@@ -15,7 +15,7 @@ class StarNamesStack:
 	def pop(self):
 		if (not self.names): raise IndexError("Out of star names!")
 
-		index = random.randrange(0, len(self.names))
+		index = random.randrange(len(self.names))
 		name = self.names[index]
 		self.names.remove(name)
 		return name

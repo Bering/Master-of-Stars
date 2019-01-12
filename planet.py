@@ -23,8 +23,8 @@ class Planet:
 	def __init__(self, star):
 		self.star = star
 		self.name = star.name + " " + _suffixes[len(star.planets)]
-		self.size = _sizes[random.randrange(0,len(_sizes))]
-		self.type = _types[random.randrange(0,len(_types))]
+		self.size = _sizes[random.randrange(len(_sizes))]
+		self.type = _types[random.randrange(len(_types))]
 		self.player = None
 		self.population = 0
 		self.industry = 0
