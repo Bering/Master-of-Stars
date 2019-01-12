@@ -84,7 +84,7 @@ class Application:
 		
 		if (self._screen == SCREEN_STARS):
 			for s in self.world.stars:
-				self._surface.blit(s.surface, s.position)
+				self._surface.blit(s.surface, (s.x, s.y))
 			# TODO: draw the selection marker around the selected star
 		elif (self._screen == SCREEN_PLANETS):
 			# TODO: draw the star in the middle

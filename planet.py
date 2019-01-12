@@ -21,7 +21,7 @@ _production_bonuses = {
 
 class Planet:
 
-	def __init__(self, star):
+	def __init__(self, star, x, y):
 		self.star = star
 		self.name = star.name + " " + _suffixes[len(star.planets)]
 		self.size = _sizes[random.randrange(len(_sizes))]
@@ -42,7 +42,8 @@ class Planet:
 			"Colony" : 0
 		}
 		self.surface = pygame.image.load("images/planet.png").convert()
-		self.position = (0, 0)
+		self.x = x
+		self.y = y
 
 	def colonize(self, player):
 		if (self.player): return False
