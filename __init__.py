@@ -12,9 +12,16 @@ from player import Player
 from ai import AI
 import pygame
 
+SCREEN_STARS = 1
+SCREEN_PLANETS = 2
+
 class Application:
 
 	def __init__(self):
+		pygame.init()
+		self._surface = pygame.display.set_mode((640, 480))
+		self._screen = SCREEN_STARS
+
 		self.players = []
 		for n in range(config.nb_players):
 			self.players.append(Player("Player " + str(n+1)))
@@ -24,9 +31,6 @@ class Application:
 			self.ais.append(AI("AI " + str(n+1)))
 		
 		self.world = World(config, self.players, self.ais)
-
-		pygame.init()
-		self.screen = pygame.display.set_mode((640, 480))
 
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
@@ -42,14 +46,36 @@ class Application:
 			for p in s.planets:
 				print("  o " + p.name + " (" + p.size + " " + p.type + ")")
 
-	def loop(self):
-		while(1):
-			for event in pygame.event.get():
-				if (event.type == pygame.QUIT):
-					return
+	def run(self):
+		self._quit = False
+		while(not self._quit):
+			self._events()
+			self._update()
+			self._render()
+
+	def _events(self):
+		for event in pygame.event.get():
+			if (event.type == pygame.QUIT):
+				self._quit = True
+
+	def _update(self):
+		pass
+
+	def _render(self):
+		self._surface.fill((0, 0, 0))
+		
+		if (self._screen == SCREEN_STARS):
+			for s in self.world.stars:
+				self._surface.blit(s.surface, s.position)
+		elif (self._screen == SCREEN_PLANETS):
+			for p in s.planets:
+				self._surface.blit(p.surface, p.position)
+
+		pygame.display.flip()
+
 
 print("Stars v.alpha0")
 app = Application()
 app.print_world()
 app.print_players()	
-app.loop()
+app.run()

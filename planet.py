@@ -1,4 +1,5 @@
 import random
+import pygame
 
 _sizes = ["Tiny", "Small", "Medium", "Large", "Huge"]
 _types = ["Baren", "Arid", "Terran", "Rich", "Gaia"]
@@ -40,6 +41,8 @@ class Planet:
 			"Destroyer" : 0,
 			"Colony" : 0
 		}
+		self.surface = pygame.image.load("images/planet.png").convert()
+		self.position = (0, 0)
 
 	def colonize(self, player):
 		if (self.player): return False
