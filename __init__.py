@@ -19,7 +19,7 @@ class Application:
 
 	def __init__(self):
 		pygame.init()
-		self._surface = pygame.display.set_mode((640, 480))
+		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
 		self._screen = SCREEN_STARS
 
 		self.players = []
