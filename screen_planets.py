@@ -24,6 +24,9 @@ class PlanetsScreen(ScreenBase):
 			elif (event.key == pygame.K_COMMA):
 				self._app.on_prev_planet()
 
+	def update(self, world):
+		pass
+
 	def render(self, world, surface):
 		s = self._app.local_player.selected_star
 		rect = s.surface.get_rect()

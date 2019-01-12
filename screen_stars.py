@@ -22,6 +22,9 @@ class StarsScreen(ScreenBase):
 				else:
 					self._app.on_next_planet()
 
+	def update(self, world):
+		pass
+
 	def render(self, world, surface):
 		for s in self._app._world.stars:
 			surface.blit(s.surface, (s.x, s.y))

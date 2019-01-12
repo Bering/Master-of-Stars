@@ -13,6 +13,9 @@ class QuitScreen(ScreenBase):
 			elif (event.key == pygame.K_n):
 				self._app.change_screen_back()
 
+	def update(self, world):
+		pass
+		
 	def render(self, world, surface):
 		font = pygame.font.Font(None, 24)
 		text_surf = font.render("Are you sure?", True, (255,255,255))
