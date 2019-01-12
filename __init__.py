@@ -10,6 +10,7 @@ import config
 from world import World
 from player import Player
 from ai import AI
+import pygame
 
 class Application:
 
@@ -23,7 +24,10 @@ class Application:
 			self.ais.append(AI("AI " + str(n+1)))
 		
 		self.world = World(config, self.players, self.ais)
-	
+
+		pygame.init()
+		self.screen = pygame.display.set_mode((640, 480))
+
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
 		for p in self.players:
@@ -37,9 +41,15 @@ class Application:
 			print("* " + s.name)
 			for p in s.planets:
 				print("  o " + p.name + " (" + p.size + " " + p.type + ")")
-	
+
+	def loop(self):
+		while(1):
+			for event in pygame.event.get():
+				if (event.type == pygame.QUIT):
+					return
+
 print("Stars v.alpha0")
 app = Application()
 app.print_world()
 app.print_players()	
-app.world.next_turn()
+app.loop()
