@@ -46,9 +46,6 @@ class Planet:
 		image_file = os.path.join("images", "planet.png")
 		self.surface = pygame.image.load(image_file).convert_alpha()
 		self.rect = self.surface.get_rect().move(x, y)
-		self.x = x
-		self.y = y
-		# TODO get rid of x,y as they are only used in ScatterPlanet()
 
 		font = pygame.font.Font(None, 18)
 		render_name = self.name.replace(self.star.name + " ", "")

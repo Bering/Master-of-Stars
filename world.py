@@ -25,7 +25,9 @@ class World:
 				)
 
 			self._scatter_planets(config, star)
+			self._scatter_planets(config, star)
 
+		self._scatter_stars(config)
 		self._scatter_stars(config)
 
 		for p in players:
@@ -43,36 +45,44 @@ class World:
 			for o in star.planets:
 				if (o == p): continue
 
-				if (abs(p.x - o.x) + abs(p.y - o.y) < 32):
+				if (abs(p.rect.x - o.rect.x) + abs(p.rect.y - o.rect.y) < 32):
 
-					if (p.x < o.x):
-						if (p.x > 32):
-							p.x -= 32
+					if (p.rect.x < o.rect.x):
+						if (p.rect.x > 32):
+							p.rect.move_ip(-32, 0)
+							p.name_rect.move_ip(-32, 0)
 						else:
-							p.x += 64
+							p.rect.move_ip(64, 0)
+							p.name_rect.move_ip(64, 0)
 					else:
-						if (p.x < config.window_width - 16):
-							p.x += 32
+						if (p.rect.x < config.window_width - 16):
+							p.rect.move_ip(32, 0)
+							p.name_rect.move_ip(32, 0)
 						else:
-							p.x -= 64
+							p.rect.move_ip(-64, 0)
+							p.name_rect.move_ip(-64, 0)
 
 	def _scatter_stars(self, config):
 		for s in self.stars:
 			for o in self.stars:
 				if (o == s): continue
 
-				if (abs(s.x - o.x) + abs(s.y - o.y) < 32):
+				if (abs(s.rect.x - o.rect.x) + abs(s.rect.y - o.rect.y) < 32):
 
-					if (s.x < o.x):
-						if (s.x > 32):
-							s.x -= 32
+					if (s.rect.x < o.rect.x):
+						if (s.rect.x > 32):
+							s.rect.move_ip(-32, 0)
+							s.name_rect.move_ip(-32, 0)
 						else:
-							s.x += 64
+							s.rect.move_ip(64, 0)
+							s.name_rect.move_ip(64, 0)
 					else:
-						if (s.x < config.window_width - 16):
-							s.x += 32
+						if (s.rect.x < config.window_width - 16):
+							s.rect.move_ip(32, 0)
+							s.name_rect.move_ip(32, 0)
 						else:
-							s.x -= 64
+							s.rect.move_ip(-64, 0)
+							s.name_rect.move_ip(-64, 0)
 
 	def _colonize_random_planet(self, player):
 		owner = player
