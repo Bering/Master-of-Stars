@@ -23,8 +23,5 @@ class QuitScreen(ScreenBase):
 		rect.center = surface.get_rect().center
 		surface.blit(text_surf, rect)
 
-		rect.x -= 15
-		rect.y -= 15
-		rect.width += 30
-		rect.height += 30
+		rect.inflate_ip(30, 30)
 		pygame.draw.rect(surface, (255,255,255), rect, 2)
