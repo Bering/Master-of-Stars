@@ -42,7 +42,7 @@ class Planet:
 			"Destroyer" : 0,
 			"Colony" : 0
 		}
-		self.surface = pygame.image.load(os.path.join("images", "planet.png")).convert()
+		self.surface = pygame.image.load(os.path.join("images", "planet.png")).convert_alpha()
 		self.x = x
 		self.y = y
 

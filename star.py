@@ -7,7 +7,7 @@ class Star:
 	def __init__(self, name, x, y):
 		self.name = name
 		self.planets = []
-		self.surface = pygame.image.load(os.path.join("images", "star.png")).convert()
+		self.surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 		self.x = x
 		self.y = y
 
