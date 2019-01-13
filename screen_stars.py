@@ -33,5 +33,6 @@ class StarsScreen(ScreenBase):
 
 	def render(self, world, surface):
 		for s in self._app._world.stars:
-			surface.blit(s.surface, (s.x, s.y))
+			surface.blit(s.surface, s.rect)
+			surface.blit(s.name_surf, s.name_rect)
 		# TODO: draw the selection marker around the selected star

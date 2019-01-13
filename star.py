@@ -10,8 +10,15 @@ class Star:
 
 		image_file = os.path.join("images", "star.png")
 		self.surface = pygame.image.load(image_file).convert_alpha()
+		self.rect = self.surface.get_rect().move(x, y)
 		self.x = x
 		self.y = y
+		# TODO: get rid of x, y as they are only used in ScatterStars()
+
+		font = pygame.font.Font(None, 18)
+		self.name_surf = font.render(self.name, True, (255,255,255))
+		self.name_rect = self.name_surf.get_rect()
+		self.name_rect.midtop = self.rect.midbottom
 
 	def add_planet(self, x, y):
 		p = Planet(self, x, y)

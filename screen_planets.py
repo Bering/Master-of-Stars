@@ -32,5 +32,8 @@ class PlanetsScreen(ScreenBase):
 		rect = s.surface.get_rect()
 		rect.center = surface.get_rect().center
 		surface.blit(s.surface, rect)
+		rect.midtop = rect.midbottom
+		surface.blit(s.name_surf, rect)
 		for p in s.planets:
-			surface.blit(p.surface, (p.x, p.y))
+			surface.blit(p.surface, p.rect)
+			surface.blit(p.name_surf, p.name_rect)
