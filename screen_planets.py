@@ -38,7 +38,7 @@ class PlanetsScreen(ScreenBase):
 		rect.center = surface.get_rect().center
 		surface.blit(star.surface, rect)
 		
-		name_rect = star.name_rect
+		name_rect = star.name_surf.get_rect()
 		name_rect.midtop = rect.midbottom
 		surface.blit(star.name_surf, name_rect)
 
