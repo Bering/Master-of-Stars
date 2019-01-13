@@ -82,6 +82,10 @@ class Application:
 	def on_quit(self):
 		self.quit = True
 
+	def on_select_star(self, star):
+		self.change_screen(self.screens["Stars"])
+		self.local_player.select_star(star)
+
 	def on_next_planet(self):
 		self.change_screen(self.screens["Planets"])
 		self.local_player.next_planet()

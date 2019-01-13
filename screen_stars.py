@@ -21,6 +21,12 @@ class StarsScreen(ScreenBase):
 					self._app.on_prev_planet()
 				else:
 					self._app.on_next_planet()
+		
+		elif (event.type == pygame.MOUSEBUTTONUP):
+			for s in self._app._world.stars:
+				rect = s.rect.move(s.x, s.y)
+				if rect.collidepoint(event.pos):
+					self._app.on_select_star(s)
 
 	def update(self, world):
 		pass
