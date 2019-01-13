@@ -24,8 +24,7 @@ class StarsScreen(ScreenBase):
 		
 		elif (event.type == pygame.MOUSEBUTTONUP):
 			for s in self._app.world.stars:
-				rect = s.rect.move(s.x, s.y)
-				if rect.collidepoint(event.pos):
+				if s.rect.collidepoint(event.pos):
 					self._app.on_select_star(s)
 
 	def update(self):
