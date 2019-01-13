@@ -28,12 +28,15 @@ class PlanetsScreen(ScreenBase):
 		pass
 
 	def render(self, world, surface):
-		s = self._app.local_player.selected_star
-		rect = s.surface.get_rect()
+		star = self._app.local_player.selected_star
+		rect = star.surface.get_rect()
 		rect.center = surface.get_rect().center
-		surface.blit(s.surface, rect)
-		rect.midtop = rect.midbottom
-		surface.blit(s.name_surf, rect)
-		for p in s.planets:
+		surface.blit(star.surface, rect)
+		
+		name_rect = star.name_rect
+		name_rect.midtop = rect.midbottom
+		surface.blit(star.name_surf, name_rect)
+		
+		for p in star.planets:
 			surface.blit(p.surface, p.rect)
 			surface.blit(p.name_surf, p.name_rect)
