@@ -16,10 +16,10 @@ class QuitScreen(ScreenBase):
 			elif (event.key == pygame.K_n):
 				self._app.change_screen_back()
 
-	def update(self, world):
+	def update(self):
 		pass
 		
-	def render(self, world, surface):
+	def render(self, surface):
 		self.text_rect.center = surface.get_rect().center
 		surface.blit(self.text_surf, self.text_rect)
 		rect = self.text_rect.inflate(30, 30)

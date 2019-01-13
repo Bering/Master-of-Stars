@@ -6,8 +6,8 @@ class ScreenBase:
 	def on_event(self, event):
 		pass
 
-	def update(self, world):
+	def update(self):
 		pass
 
-	def render(self, world, surface):
+	def render(self, surface):
 		pass

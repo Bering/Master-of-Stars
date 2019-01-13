@@ -39,7 +39,7 @@ class Application:
 		for n in range(config.nb_ais):
 			self.ais.append(AI("AI " + str(n+1)))
 		
-		self._world = World(config, self.players, self.ais)
+		self.world = World(config, self.players, self.ais)
 
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
@@ -49,8 +49,8 @@ class Application:
 			print("- " + ai.name + " (" + ai.planets[0].name + ")")
 
 	def print_world(self):
-		print("\nCreated world with " + str(len(self._world.stars)) + " stars:")
-		for s in self._world.stars:
+		print("\nCreated world with " + str(len(self.world.stars)) + " stars:")
+		for s in self.world.stars:
 			print("* " + s.name)
 			for p in s.planets:
 				print("  o " + p.name + " (" + p.size + " " + p.type + ")")
@@ -64,10 +64,10 @@ class Application:
 				else:
 					self._current_screen.on_event(event)
 
-			self._current_screen.update(self._world)
+			self._current_screen.update()
 
 			self._surface.fill((0, 0, 0))
-			self._current_screen.render(self._world, self._surface)
+			self._current_screen.render(self._surface)
 			pygame.display.flip()
 
 	def change_screen(self, screen):

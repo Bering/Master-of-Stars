@@ -24,10 +24,16 @@ class PlanetsScreen(ScreenBase):
 			elif (event.key == pygame.K_COMMA):
 				self._app.on_prev_planet()
 
-	def update(self, world):
+		elif (event.type == pygame.MOUSEBUTTONUP):
+			for s in self._app.world.stars:
+				rect = s.rect.move(s.x, s.y)
+				if rect.collidepoint(event.pos):
+					self._app.on_select_star(s)
+
+	def update(self):
 		pass
 
-	def render(self, world, surface):
+	def render(self, surface):
 		star = self._app.local_player.selected_star
 		rect = star.surface.get_rect()
 		rect.center = surface.get_rect().center
@@ -36,7 +42,7 @@ class PlanetsScreen(ScreenBase):
 		name_rect = star.name_rect
 		name_rect.midtop = rect.midbottom
 		surface.blit(star.name_surf, name_rect)
-		
+
 		for p in star.planets:
 			surface.blit(p.surface, p.rect)
 			surface.blit(p.name_surf, p.name_rect)
