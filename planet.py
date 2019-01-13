@@ -1,5 +1,6 @@
 import random
 import pygame
+import os
 
 _sizes = ["Tiny", "Small", "Medium", "Large", "Huge"]
 _types = ["Baren", "Arid", "Terran", "Rich", "Gaia"]
@@ -41,7 +42,7 @@ class Planet:
 			"Destroyer" : 0,
 			"Colony" : 0
 		}
-		self.surface = pygame.image.load("images/planet.png").convert()
+		self.surface = pygame.image.load(os.path.join("images", "planet.png")).convert()
 		self.x = x
 		self.y = y
 

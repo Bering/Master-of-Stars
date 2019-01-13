@@ -1,12 +1,13 @@
 from planet import Planet
 import pygame
+import os
 
 class Star:
 
 	def __init__(self, name, x, y):
 		self.name = name
 		self.planets = []
-		self.surface = pygame.image.load("images/star.png").convert()
+		self.surface = pygame.image.load(os.path.join("images", "star.png")).convert()
 		self.x = x
 		self.y = y
 
