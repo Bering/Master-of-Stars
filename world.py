@@ -32,13 +32,9 @@ class World:
 
 		for p in players:
 			colony = self._colonize_random_planet(p)
-			p.select_star(colony.star)
-			p.select_planet(colony)
 
 		for ai in ais:
 			colony = self._colonize_random_planet(ai)
-			p.select_star(colony.star)
-			p.select_planet(colony)
 
 	def _scatter_planets(self, config, star):
 		for p in star.planets:

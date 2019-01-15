@@ -5,6 +5,8 @@ class PlanetsScreen(ScreenBase):
 
 	def __init__(self, app):
 		super().__init__(app)
+		self.star = None
+		self.selected_planet = None
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -13,35 +15,45 @@ class PlanetsScreen(ScreenBase):
 			elif (event.key == pygame.K_s):
 				self._app.change_screen(self._app.screens["Stars"])
 			elif (event.key == pygame.K_PERIOD):
-				self._app.on_next_planet()
+				self.on_next_planet()
 			elif (event.key == pygame.K_p):
 				if (pygame.key.get_mods() & pygame.KMOD_LSHIFT):
-					self._app.on_prev_planet()
+					self.on_prev_planet()
 				elif (pygame.key.get_mods() & pygame.KMOD_RSHIFT):
-					self._app.on_prev_planet()
+					self.on_prev_planet()
 				else:
-					self._app.on_next_planet()
+					self.on_next_planet()
 			elif (event.key == pygame.K_COMMA):
-				self._app.on_prev_planet()
+				self.on_prev_planet()
 
 		elif (event.type == pygame.MOUSEBUTTONUP):
-			for s in self._app.world.stars:
-				if s.rect.collidepoint(event.pos):
-					self._app.on_select_star(s)
+			if self.star and self.centered_rect.collidepoint(event.pos):
+				self.on_star_clicked()
 
 	def update(self):
 		pass
 
 	def render(self, surface):
-		star = self._app.local_player.selected_star
-		rect = star.surface.get_rect()
-		rect.center = surface.get_rect().center
-		surface.blit(star.surface, rect)
+		self.centered_rect.center = surface.get_rect().center
+		surface.blit(self.star.surface, self.centered_rect)
 		
-		name_rect = star.name_surf.get_rect()
-		name_rect.midtop = rect.midbottom
-		surface.blit(star.name_surf, name_rect)
+		name_rect = self.star.name_surf.get_rect()
+		name_rect.midtop = self.centered_rect.midbottom
+		surface.blit(self.star.name_surf, name_rect)
 
-		for p in star.planets:
+		for p in self.star.planets:
 			surface.blit(p.surface, p.rect)
 			surface.blit(p.name_surf, p.name_rect)
+
+	def select_star(self, star):
+		self.star = star
+		self.centered_rect = star.rect.copy()
+
+	def on_star_clicked(self):
+		self._app.change_screen(self._app.screens["Stars"])
+
+	def on_next_planet(self):
+		self.star = self._app.local_player.next_planet(self.selected_planet).star
+
+	def on_prev_planet(self):
+		self.star = self._app.local_player.prev_planet(self.selected_planet).star
