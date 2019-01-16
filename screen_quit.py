@@ -16,7 +16,7 @@ class QuitScreen(ScreenBase):
 			elif (event.key == pygame.K_n):
 				self._app.change_screen_back()
 
-	def update(self):
+	def update(self, delta_time):
 		pass
 		
 	def render(self, surface):

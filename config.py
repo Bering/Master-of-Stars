@@ -1,5 +1,6 @@
 window_width = 640
 window_height = 480
+max_fps = 30
 nb_players = 1
 nb_ais = 7
 nb_stars = 4

@@ -28,7 +28,7 @@ class StarsScreen(ScreenBase):
 				if s.rect.collidepoint(event.pos):
 					self.on_select_star(s)
 
-	def update(self):
+	def update(self, delta_time):
 		pass
 
 	def render(self, surface):

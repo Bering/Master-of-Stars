@@ -57,6 +57,8 @@ class Application:
 
 	def run(self):
 		self.quit = False
+		self.clock = pygame.time.Clock()
+
 		while(not self.quit):
 			for event in pygame.event.get():
 				if (event.type == pygame.QUIT):
@@ -64,7 +66,8 @@ class Application:
 				else:
 					self._current_screen.on_event(event)
 
-			self._current_screen.update()
+			self.clock.tick(config.max_fps)
+			self._current_screen.update(self.clock.get_time())
 
 			self._surface.fill((0, 0, 0))
 			self._current_screen.render(self._surface)

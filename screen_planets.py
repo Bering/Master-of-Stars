@@ -30,7 +30,7 @@ class PlanetsScreen(ScreenBase):
 			if self.star and self.centered_rect.collidepoint(event.pos):
 				self.on_star_clicked()
 
-	def update(self):
+	def update(self, delta_time):
 		pass
 
 	def render(self, surface):
