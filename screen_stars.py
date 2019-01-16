@@ -1,3 +1,4 @@
+import os
 import pygame
 from screen_base import ScreenBase
 
@@ -6,6 +7,14 @@ class StarsScreen(ScreenBase):
 	def __init__(self, app):
 		super().__init__(app)
 		self.selected_star = None
+		
+		filename = os.path.join("images", "selection.png")
+		self.selected_star_surface = pygame.image.load(filename)
+		self.selected_star_rect = self.selected_star_surface.get_rect()
+
+		filename = os.path.join("images", "ownermarker.png")
+		self.owned_star_surface = pygame.image.load(filename)
+		self.owned_star_rect = self.owned_star_surface.get_rect()
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -35,7 +44,9 @@ class StarsScreen(ScreenBase):
 		for s in self._app.world.stars:
 			surface.blit(s.surface, s.rect)
 			surface.blit(s.name_surf, s.name_rect)
-		# TODO: draw the selection marker around the selected star
+		
+		if self.selected_star:
+			surface.blit(self.selected_star_surface, self.selected_star_rect)
 
 	def on_select_star(self, star):
 		if self.selected_star == star:
@@ -43,6 +54,7 @@ class StarsScreen(ScreenBase):
 			self._app.screens["Planets"].select_star(star)
 		else:
 			self.selected_star = star
+			self.selected_star_rect.center = star.rect.center
 
 	def on_next_planet(self):
 		self._app.change_screen(self._app.screens["Planets"])
