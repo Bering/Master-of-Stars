@@ -1,3 +1,4 @@
+import os
 import pygame
 from screen_base import ScreenBase
 
@@ -7,6 +8,14 @@ class PlanetsScreen(ScreenBase):
 		super().__init__(app)
 		self.star = None
 		self.selected_planet = None
+
+		filename = os.path.join("images", "selection.png")
+		self.selected_planet_surface = pygame.image.load(filename)
+		self.selected_planet_rect = self.selected_planet_surface.get_rect()
+
+		filename = os.path.join("images", "ownermarker.png")
+		self.owned_planet_surface = pygame.image.load(filename)
+		self.owned_planet_rect = self.owned_planet_surface.get_rect()
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -29,6 +38,10 @@ class PlanetsScreen(ScreenBase):
 		elif (event.type == pygame.MOUSEBUTTONUP):
 			if self.star and self.centered_rect.collidepoint(event.pos):
 				self.on_star_clicked()
+			else:
+				for p in self.star.planets:
+					if p.rect.collidepoint(event.pos):
+						self.on_planet_clicked(p)
 
 	def update(self, delta_time):
 		pass
@@ -45,12 +58,20 @@ class PlanetsScreen(ScreenBase):
 			surface.blit(p.surface, p.rect)
 			surface.blit(p.name_surf, p.name_rect)
 
+			if self.selected_planet:
+				surface.blit(self.selected_planet_surface, self.selected_planet_rect)
+
 	def select_star(self, star):
 		self.star = star
 		self.centered_rect = star.rect.copy()
+		self.selected_planet = None
 
 	def on_star_clicked(self):
 		self._app.change_screen(self._app.screens["Stars"])
+
+	def on_planet_clicked(self, planet):
+		self.selected_planet = planet
+		self.selected_planet_rect.center = planet.rect.center
 
 	def on_next_planet(self):
 		self.star = self._app.local_player.next_planet(self.selected_planet).star
