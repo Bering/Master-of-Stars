@@ -11,11 +11,9 @@ class PlanetsScreen(ScreenBase):
 
 		filename = os.path.join("images", "selection.png")
 		self.selected_planet_surface = pygame.image.load(filename)
-		self.selected_planet_rect = self.selected_planet_surface.get_rect()
 
 		filename = os.path.join("images", "ownermarker.png")
 		self.owned_planet_surface = pygame.image.load(filename)
-		self.owned_planet_rect = self.owned_planet_surface.get_rect()
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -59,7 +57,10 @@ class PlanetsScreen(ScreenBase):
 			surface.blit(p.name_surf, p.name_rect)
 
 			if self.selected_planet:
-				surface.blit(self.selected_planet_surface, self.selected_planet_rect)
+				surface.blit(self.selected_planet_surface, self.selected_planet.rect)
+
+			if p.player:
+				surface.blit(self.owned_planet_surface, p.rect)
 
 	def select_star(self, star):
 		self.star = star
@@ -71,7 +72,6 @@ class PlanetsScreen(ScreenBase):
 
 	def on_planet_clicked(self, planet):
 		self.selected_planet = planet
-		self.selected_planet_rect.center = planet.rect.center
 
 	def on_next_planet(self):
 		self.star = self._app.local_player.next_planet(self.selected_planet).star
