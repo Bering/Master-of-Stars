@@ -16,6 +16,9 @@ class GalaxyScreen(ScreenBase):
 		self.owned_star_surface = pygame.image.load(filename)
 		self.owned_star_rect = self.owned_star_surface.get_rect()
 
+		filename = os.path.join("images", "fleet.png")
+		self.fleet_surface = pygame.image.load(filename)
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -49,8 +52,12 @@ class GalaxyScreen(ScreenBase):
 				if p.player:
 					self.owned_star_rect.center = s.rect.center
 					surface.blit(self.owned_star_surface, self.owned_star_rect)
-					break; # as soon as one planet is owned we can stop looking
-		
+
+				if p.fleets:
+					rect = s.rect.copy()
+					rect.midleft = s.rect.topright
+					surface.blit(self.fleet_surface, rect)
+						
 		if self.selected_star:
 			surface.blit(self.selected_star_surface, self.selected_star_rect)
 

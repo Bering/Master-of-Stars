@@ -9,11 +9,18 @@ class PlanetScreen(ScreenBase):
 		self.planet = None
 
 		filename = os.path.join("images", "ownermarker.png")
-		ownermarker = pygame.image.load(filename)
-		self.ownermarker_rect = ownermarker.get_rect()
+		surface = pygame.image.load(filename)
+		self.ownermarker_rect = surface.get_rect()
 		self.ownermarker_rect.width *= 3
 		self.ownermarker_rect.height *= 3
-		self.ownermarker = pygame.transform.smoothscale(ownermarker, self.ownermarker_rect.size)
+		self.ownermarker = pygame.transform.smoothscale(surface, self.ownermarker_rect.size)
+
+		filename = os.path.join("images", "fleet.png")
+		surface = pygame.image.load(filename)
+		self.fleet_rect = surface.get_rect()
+		self.fleet_rect.width *= 3
+		self.fleet_rect.height *= 3
+		self.fleet_surface = pygame.transform.smoothscale(surface, self.fleet_rect.size)
 
 		self._font = pygame.font.Font(None, 18)
 
@@ -23,6 +30,8 @@ class PlanetScreen(ScreenBase):
 				self._app.change_screen("Quit")
 			elif (event.key == pygame.K_g):
 				self._app.change_screen("Galaxy")
+			elif (event.key == pygame.K_s):
+				self._app.change_screen("Star")
 			elif (event.key == pygame.K_PERIOD):
 				self.on_next_planet()
 			elif (event.key == pygame.K_p):
@@ -52,6 +61,10 @@ class PlanetScreen(ScreenBase):
 		if self.planet.player:
 			self.ownermarker_rect.center = surface.get_rect().center
 			surface.blit(self.ownermarker, self.ownermarker_rect)
+
+		if self.planet.fleets:
+			self.fleet_rect.midleft = self.centered_rect.topright
+			surface.blit(self.fleet_surface, self.fleet_rect)
 
 	def select_planet(self, planet):
 		self.planet = planet

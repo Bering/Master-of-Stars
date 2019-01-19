@@ -15,6 +15,9 @@ class StarScreen(ScreenBase):
 		filename = os.path.join("images", "ownermarker.png")
 		self.owned_planet_surface = pygame.image.load(filename)
 
+		filename = os.path.join("images", "fleet.png")
+		self.fleet_surface = pygame.image.load(filename)
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -61,6 +64,11 @@ class StarScreen(ScreenBase):
 			if p.player:
 				surface.blit(self.owned_planet_surface, p.rect)
 
+			if p.fleets:
+				rect = p.rect.copy()
+				rect.midleft = p.rect.topright
+				surface.blit(self.fleet_surface, rect)
+				
 	def select_star(self, star):
 		self.star = star
 		self.selected_planet = None
