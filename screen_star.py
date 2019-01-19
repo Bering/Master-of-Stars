@@ -2,7 +2,7 @@ import os
 import pygame
 from screen_base import ScreenBase
 
-class PlanetsScreen(ScreenBase):
+class StarScreen(ScreenBase):
 
 	def __init__(self, app):
 		super().__init__(app)
@@ -19,8 +19,8 @@ class PlanetsScreen(ScreenBase):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
 				self._app.change_screen(self._app.screens["Quit"])
-			elif (event.key == pygame.K_s):
-				self._app.change_screen(self._app.screens["Stars"])
+			elif (event.key == pygame.K_g):
+				self._app.change_screen(self._app.screens["Galaxy"])
 			elif (event.key == pygame.K_PERIOD):
 				self.on_next_planet()
 			elif (event.key == pygame.K_p):
@@ -65,16 +65,20 @@ class PlanetsScreen(ScreenBase):
 	def select_star(self, star):
 		self.star = star
 		self.centered_rect = star.rect.copy()
-		self.centered_rect.width = star.rect.width * 3
-		self.centered_rect.height = star.rect.height * 3
+		self.centered_rect.width *= 3
+		self.centered_rect.height *= 3
 		self.centered_surface = pygame.transform.scale(star.surface, self.centered_rect.size)
 		self.selected_planet = None
 
 	def on_star_clicked(self):
-		self._app.change_screen(self._app.screens["Stars"])
+		self._app.change_screen(self._app.screens["Galaxy"])
 
 	def on_planet_clicked(self, planet):
-		self.selected_planet = planet
+		if self.selected_planet == planet:
+			self._app.change_screen(self._app.screens["Planet"])
+			self._app.screens["Planet"].select_planet(planet)
+		else:
+			self.selected_planet = planet
 
 	def on_next_planet(self):
 		self.star = self._app.local_player.next_planet(self.selected_planet).star

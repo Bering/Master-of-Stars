@@ -2,7 +2,7 @@ import os
 import pygame
 from screen_base import ScreenBase
 
-class StarsScreen(ScreenBase):
+class GalaxyScreen(ScreenBase):
 
 	def __init__(self, app):
 		super().__init__(app)
@@ -50,20 +50,20 @@ class StarsScreen(ScreenBase):
 
 	def on_select_star(self, star):
 		if self.selected_star == star:
-			self._app.change_screen(self._app.screens["Planets"])
-			self._app.screens["Planets"].select_star(star)
+			self._app.change_screen(self._app.screens["Star"])
+			self._app.screens["Star"].select_star(star)
 		else:
 			self.selected_star = star
 			self.selected_star_rect.center = star.rect.center
 
 	def on_next_planet(self):
-		self._app.change_screen(self._app.screens["Planets"])
+		self._app.change_screen(self._app.screens["Star"])
 		planet = self._app.local_player.next_planet()
-		self._app.screens["Planets"].select_star(star)
-		self._app.screens["Planets"].selected_planet = planet
+		self._app.screens["Star"].select_star(star)
+		self._app.screens["Star"].selected_planet = planet
 
 	def on_prev_planet(self):
-		self._app.change_screen(self._app.screens["Planets"])
+		self._app.change_screen(self._app.screens["Star"])
 		planet = self._app.local_player.prev_planet()
-		self._app.screens["Planets"].select_star(star)
-		self._app.screens["Planets"].selected_planet = planet
+		self._app.screens["Star"].select_star(star)
+		self._app.screens["Star"].selected_planet = planet

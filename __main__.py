@@ -10,8 +10,9 @@ import config
 from world import World
 from player import Player
 from ai import AI
-from screen_stars import StarsScreen
-from screen_planets import PlanetsScreen
+from screen_galaxy import GalaxyScreen
+from screen_star import StarScreen
+from screen_planet import PlanetScreen
 from screen_quit import QuitScreen
 import pygame
 
@@ -22,13 +23,14 @@ class Application:
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
 
 		self.screens = {
-			"Stars" : StarsScreen(self),
-			"Planets" : PlanetsScreen(self),
+			"Galaxy" : GalaxyScreen(self),
+			"Star" : StarScreen(self),
+			"Planet" : PlanetScreen(self),
 			"Quit" : QuitScreen(self)
 		}
 		self._previous_screen = None
 		self._current_screen = self.screens["Quit"]
-		self.change_screen(self.screens["Stars"])
+		self.change_screen(self.screens["Galaxy"])
 
 		self.players = []
 		for n in range(config.nb_players):
