@@ -51,11 +51,11 @@ class ProdDef(ProductionBase):
 	def effect(self, planet, item_count):
 		planet.defense += item_count
 
-class ProdFrigate(ProductionBase):
+class ProdScout(ProductionBase):
 
 	def __init__(self):
-		super().__init__("Frigate", 10)
+		super().__init__("Ship: Scout", 10)
 
 	def effect(self, planet, item_count):
 		for n in range(item_count):
-			planet.build_ship("Frigate")
+			planet.build_ship("Scout")

@@ -1,3 +1,4 @@
+from ship import Ship
 import os
 import pygame
 
@@ -31,3 +32,7 @@ class Fleet:
 		if last_char == "2": return name + "nd"
 		if last_char == "3": return name + "rd"
 		return name + "th"
+
+	def create_ship(self, ship_type, tech_level):
+		ship = Ship(ship_type, tech_level)
+		self.ships.append(ship)

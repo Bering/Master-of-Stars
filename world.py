@@ -34,15 +34,11 @@ class World:
 
 		for p in players:
 			colony = self._colonize_random_planet(p)
-			fleet = p.create_fleet(colony)
-			# TODO: fleet.add_ship("Scout")
-			colony.fleets.append(fleet)
+			colony.build_ship("Scout")
 
 		for ai in ais:
 			colony = self._colonize_random_planet(ai)
-			fleet = ai.create_fleet(colony)
-			# TODO: fleet.add_ship("Scout")
-			colony.fleets.append(fleet)
+			colony.build_ship("Scout")
 
 	def _scatter_planets(self, config, star):
 		screen_center_x = config.window_width / 2

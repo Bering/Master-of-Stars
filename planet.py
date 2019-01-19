@@ -64,7 +64,15 @@ class Planet:
 		self.industry += _production_bonuses[self.type]["ind"]
 		self.science += _production_bonuses[self.type]["sci"]
 		return True
-	
+
+	def build_ship(self, ship_type):
+		if not self.fleets:
+			fleet = self.player.create_fleet(self)
+			self.fleets.append(fleet)
+
+		fleet = self.fleets[0]
+		fleet.create_ship(ship_type, self.tech_levels[ship_type])
+
 	def set_production(self, production):
 		"""Set the planet's production (ProductionBase object)"""
 		self.production = production
