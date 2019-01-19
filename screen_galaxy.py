@@ -44,6 +44,12 @@ class GalaxyScreen(ScreenBase):
 		for s in self._app.world.stars:
 			surface.blit(s.surface, s.rect)
 			surface.blit(s.name_surf, s.name_rect)
+
+			for p in s.planets:
+				if p.player:
+					self.owned_star_rect.center = s.rect.center
+					surface.blit(self.owned_star_surface, self.owned_star_rect)
+					break; # as soon as one planet is owned we can stop looking
 		
 		if self.selected_star:
 			surface.blit(self.selected_star_surface, self.selected_star_rect)
