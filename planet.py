@@ -42,6 +42,7 @@ class Planet:
 			"Destroyer" : 0,
 			"Colony" : 0
 		}
+		self.fleets = []
 
 		n = random.randrange(8) + 1 # TODO: Pick image based on type and size
 		image_file = os.path.join("images", "planet" + str(n) + ".png")
