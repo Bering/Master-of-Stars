@@ -13,7 +13,7 @@ class PlanetScreen(ScreenBase):
 		self.ownermarker_rect = ownermarker.get_rect()
 		self.ownermarker_rect.width *= 3
 		self.ownermarker_rect.height *= 3
-		self.ownermarker = pygame.transform.scale(ownermarker, self.ownermarker_rect.size)
+		self.ownermarker = pygame.transform.smoothscale(ownermarker, self.ownermarker_rect.size)
 
 		self._font = pygame.font.Font(None, 18)
 
@@ -45,6 +45,7 @@ class PlanetScreen(ScreenBase):
 	def render(self, surface):
 		self.centered_rect.center = surface.get_rect().center
 		surface.blit(self.centered_surface, self.centered_rect)
+
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.name_surf, self.name_rect)
 
@@ -58,11 +59,10 @@ class PlanetScreen(ScreenBase):
 		self.centered_rect = planet.rect.copy()
 		self.centered_rect.width *= 3
 		self.centered_rect.height *= 3
-		self.centered_surface = pygame.transform.scale(planet.surface, self.centered_rect.size)
+		self.centered_surface = pygame.transform.smoothscale(planet.surface, self.centered_rect.size)
 
 		self.name_surf = self._font.render(self.planet.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
-		self.name_rect.midtop = self.centered_rect.midbottom
 
 	def on_planet_clicked(self):
 		self._app.change_screen("Star")
