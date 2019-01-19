@@ -9,7 +9,11 @@ class PlanetScreen(ScreenBase):
 		self.planet = None
 
 		filename = os.path.join("images", "ownermarker.png")
-		self.owned_planet_surface = pygame.image.load(filename)
+		ownermarker = pygame.image.load(filename)
+		self.ownermarker_rect = ownermarker.get_rect()
+		self.ownermarker_rect.width *= 3
+		self.ownermarker_rect.height *= 3
+		self.ownermarker = pygame.transform.scale(ownermarker, self.ownermarker_rect.size)
 
 		self._font = pygame.font.Font(None, 18)
 
@@ -44,7 +48,9 @@ class PlanetScreen(ScreenBase):
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.name_surf, self.name_rect)
 
-		# TODO: Render self.owned_planet_surface if planet is owned
+		if self.planet.player:
+			self.ownermarker_rect.center = surface.get_rect().center
+			surface.blit(self.ownermarker, self.ownermarker_rect)
 
 	def select_planet(self, planet):
 		self.planet = planet
