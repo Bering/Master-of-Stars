@@ -28,9 +28,9 @@ class Application:
 			"Planet" : PlanetScreen(self),
 			"Quit" : QuitScreen(self)
 		}
-		self._previous_screen = None
-		self._current_screen = self.screens["Quit"]
-		self.change_screen(self.screens["Galaxy"])
+		self._previous_screen_name = "None"
+		self._current_screen_name = "None"
+		self.change_screen("Galaxy")
 
 		self.players = []
 		for n in range(config.nb_players):
@@ -64,7 +64,7 @@ class Application:
 		while(not self.quit):
 			for event in pygame.event.get():
 				if (event.type == pygame.QUIT):
-					self.change_screen(self.screens["Quit"])
+					self.change_screen("Quit")
 				else:
 					self._current_screen.on_event(event)
 
@@ -75,14 +75,16 @@ class Application:
 			self._current_screen.render(self._surface)
 			pygame.display.flip()
 
-	def change_screen(self, screen):
-		if (screen == self._current_screen): return
+	def change_screen(self, screen_name):
+		if screen_name not in self.screens:
+			raise KeyError("Invalid screen name")
 
-		self._previous_screen = self._current_screen
-		self._current_screen = screen
+		self._previous_screen_name = self._current_screen_name
+		self._current_screen_name = screen_name
+		self._current_screen = self.screens[screen_name]
 
 	def change_screen_back(self):
-		self.change_screen(self._previous_screen)
+		self.change_screen(self._previous_screen_name)
 
 	def on_quit(self):
 		self.quit = True
