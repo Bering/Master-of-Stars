@@ -10,10 +10,7 @@ import config
 from world import World
 from player import Player
 from ai import AI
-from screen_galaxy import GalaxyScreen
-from screen_star import StarScreen
-from screen_planet import PlanetScreen
-from screen_quit import QuitScreen
+import screens
 import pygame
 
 class Application:
@@ -21,16 +18,8 @@ class Application:
 	def __init__(self):
 		pygame.init()
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
-
-		self.screens = {
-			"Galaxy" : GalaxyScreen(self),
-			"Star" : StarScreen(self),
-			"Planet" : PlanetScreen(self),
-			"Quit" : QuitScreen(self)
-		}
-		self._previous_screen_name = "None"
-		self._current_screen_name = "None"
-		self.change_screen("Galaxy")
+		self.screens = screens.ScreensManager(self)
+		self.screens.change_to("Galaxy")
 
 		self.players = []
 		for n in range(config.nb_players):
@@ -64,27 +53,16 @@ class Application:
 		while(not self.quit):
 			for event in pygame.event.get():
 				if (event.type == pygame.QUIT):
-					self.change_screen("Quit")
+					self.screens.change_to("Quit")
 				else:
-					self._current_screen.on_event(event)
+					self.screens.on_event(event)
 
 			self.clock.tick(config.max_fps)
-			self._current_screen.update(self.clock.get_time())
+			self.screens.update(self.clock.get_time())
 
 			self._surface.fill((0, 0, 0))
-			self._current_screen.render(self._surface)
+			self.screens.render(self._surface)
 			pygame.display.flip()
-
-	def change_screen(self, screen_name):
-		if screen_name not in self.screens:
-			raise KeyError("Invalid screen name")
-
-		self._previous_screen_name = self._current_screen_name
-		self._current_screen_name = screen_name
-		self._current_screen = self.screens[screen_name]
-
-	def change_screen_back(self):
-		self.change_screen(self._previous_screen_name)
 
 	def on_quit(self):
 		self.quit = True

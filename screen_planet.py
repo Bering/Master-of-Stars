@@ -27,11 +27,11 @@ class PlanetScreen(ScreenBase):
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
-				self._app.change_screen("Quit")
+				self._app.screens.change_to("Quit")
 			elif (event.key == pygame.K_g):
-				self._app.change_screen("Galaxy")
+				self._app.screens.change_to("Galaxy")
 			elif (event.key == pygame.K_s):
-				self._app.change_screen("Star")
+				self._app.screens.change_to("Star")
 			elif (event.key == pygame.K_PERIOD):
 				self.on_next_planet()
 			elif (event.key == pygame.K_p):
@@ -78,7 +78,7 @@ class PlanetScreen(ScreenBase):
 		self.name_rect = self.name_surf.get_rect()
 
 	def on_planet_clicked(self):
-		self._app.change_screen("Star")
+		self._app.screens.change_to("Star")
 
 	def on_next_planet(self):
 		self.select_planet(self._app.local_player.next_planet(self.selected_planet).star)
