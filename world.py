@@ -2,6 +2,8 @@ import random
 from star import Star
 from star_names_stack import StarNamesStack
 
+# TODO: Many magic numbers in there. All relative to stars size (16x16).
+
 class World:
 
 	def __init__(self, config, players, ais):
@@ -10,8 +12,8 @@ class World:
 		for n in range(config.nb_stars):
 			star = Star(
 				self._star_names.pop(),
-				random.randrange(config.window_width - 16),
-				random.randrange(config.window_height - 16)
+				random.randrange(config.window_width - 32) + 16,
+				random.randrange(config.window_height - 32) + 16
 			)
 			self.stars.append(star)
 
@@ -20,8 +22,8 @@ class World:
 				config.max_planets_per_star + 1)
 			for n in range(nb_planets):
 				star.add_planet(
-					random.randrange(config.window_width - 16),
-					random.randrange(config.window_height - 16)
+					random.randrange(config.window_width - 32) + 16,
+					random.randrange(config.window_height - 32) + 16
 				)
 
 			self._scatter_planets(config, star)
@@ -37,7 +39,19 @@ class World:
 			colony = self._colonize_random_planet(ai)
 
 	def _scatter_planets(self, config, star):
+		screen_center_x = config.window_width / 2
+		screen_center_y = config.window_height / 2
+
 		for p in star.planets:
+
+			# Move planets out of (scaled up) star's way
+			if screen_center_x - 64 < p.rect.x < screen_center_x + 64:
+				if screen_center_y - 64 < p.rect.y < screen_center_y + 64:
+					p.rect.x = random.randrange(config.window_width - 32) + 16
+					p.rect.y = random.randrange(config.window_height - 32) + 16
+					p.name_rect.midtop = p.rect.midbottom
+
+			# Move planets out of each other's way
 			for o in star.planets:
 				if (o == p): continue
 

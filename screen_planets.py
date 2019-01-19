@@ -65,7 +65,8 @@ class PlanetsScreen(ScreenBase):
 	def select_star(self, star):
 		self.star = star
 		self.centered_rect = star.rect.copy()
-		self.centered_rect.width, self.centered_rect.height = star.rect.width * 3, star.rect.height * 3
+		self.centered_rect.width = star.rect.width * 3
+		self.centered_rect.height = star.rect.height * 3
 		self.centered_surface = pygame.transform.scale(star.surface, self.centered_rect.size)
 		self.selected_planet = None
 
