@@ -48,9 +48,8 @@ class StarScreen(ScreenBase):
 		self.centered_rect.center = surface.get_rect().center
 		surface.blit(self.centered_surface, self.centered_rect)
 		
-		name_rect = self.star.name_surf.get_rect()
-		name_rect.midtop = self.centered_rect.midbottom
-		surface.blit(self.star.name_surf, name_rect)
+		self.name_rect.midtop = self.centered_rect.midbottom
+		surface.blit(self.star.name_surf, self.name_rect)
 
 		for p in self.star.planets:
 			surface.blit(p.surface, p.rect)
@@ -64,11 +63,14 @@ class StarScreen(ScreenBase):
 
 	def select_star(self, star):
 		self.star = star
+		self.selected_planet = None
+
 		self.centered_rect = star.rect.copy()
 		self.centered_rect.width *= 3
 		self.centered_rect.height *= 3
-		self.centered_surface = pygame.transform.scale(star.surface, self.centered_rect.size)
-		self.selected_planet = None
+		self.centered_surface = pygame.transform.smoothscale(star.surface, self.centered_rect.size)
+
+		self.name_rect = self.star.name_surf.get_rect()
 
 	def on_star_clicked(self):
 		self._app.change_screen("Galaxy")
