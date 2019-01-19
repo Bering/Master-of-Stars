@@ -1,4 +1,5 @@
 from planet import Planet
+import random
 import pygame
 import os
 
@@ -8,7 +9,8 @@ class Star:
 		self.name = name
 		self.planets = []
 
-		image_file = os.path.join("images", "star.png")
+		n = random.randrange(5) + 1
+		image_file = os.path.join("images", "star" + str(n) + ".png")
 		self.surface = pygame.image.load(image_file).convert_alpha()
 		self.rect = self.surface.get_rect().move(x, y)
 
