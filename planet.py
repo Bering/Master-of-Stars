@@ -43,7 +43,7 @@ class Planet:
 			"Colony" : 0
 		}
 
-		n = random.randrange(4) + 1
+		n = random.randrange(8) + 1
 		image_file = os.path.join("images", "planet" + str(n) + ".png")
 		self.surface = pygame.image.load(image_file).convert_alpha()
 		self.rect = self.surface.get_rect().move(x, y)
