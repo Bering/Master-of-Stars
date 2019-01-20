@@ -18,9 +18,16 @@ class PlanetScreen(ScreenBase):
 		filename = os.path.join("images", "fleet.png")
 		surface = pygame.image.load(filename)
 		self.fleet_rect = surface.get_rect()
-		self.fleet_rect.width *= 3
-		self.fleet_rect.height *= 3
+		self.fleet_rect.width *= 2
+		self.fleet_rect.height *= 2
 		self.fleet_surface = pygame.transform.smoothscale(surface, self.fleet_rect.size)
+
+		filename = os.path.join("images", "shipyard.png")
+		surface = pygame.image.load(filename)
+		self.shipyard_rect = surface.get_rect()
+		self.shipyard_rect.width *= 2
+		self.shipyard_rect.height *= 2
+		self.shipyard_surface = pygame.transform.smoothscale(surface, self.shipyard_rect.size)
 
 		self._font = pygame.font.Font(None, 18)
 
@@ -65,6 +72,10 @@ class PlanetScreen(ScreenBase):
 		if self.planet.fleets:
 			self.fleet_rect.midleft = self.centered_rect.topright
 			surface.blit(self.fleet_surface, self.fleet_rect)
+
+		if self.planet.research.tech_levels["Shipyard"] > 0:
+			self.shipyard_rect.midleft = self.centered_rect.bottomright
+			surface.blit(self.shipyard_surface, self.shipyard_rect)
 
 	def select_planet(self, planet):
 		self.planet = planet
