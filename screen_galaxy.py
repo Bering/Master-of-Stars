@@ -9,12 +9,10 @@ class GalaxyScreen(ScreenBase):
 		self.selected_star = None
 		
 		filename = os.path.join("images", "selection.png")
-		self.selected_star_surface = pygame.image.load(filename)
-		self.selected_star_rect = self.selected_star_surface.get_rect()
+		self.selection_marker_surface = pygame.image.load(filename)
 
 		filename = os.path.join("images", "ownermarker.png")
 		self.owned_star_surface = pygame.image.load(filename)
-		self.owned_star_rect = self.owned_star_surface.get_rect()
 
 		filename = os.path.join("images", "fleet.png")
 		self.fleet_surface = pygame.image.load(filename)
@@ -52,8 +50,7 @@ class GalaxyScreen(ScreenBase):
 
 			for p in s.planets:
 				if p.player:
-					self.owned_star_rect.center = s.rect.center
-					surface.blit(self.owned_star_surface, self.owned_star_rect)
+					surface.blit(self.owned_star_surface, s.rect)
 
 				if p.fleets:
 					rect = s.rect.copy()
@@ -68,15 +65,17 @@ class GalaxyScreen(ScreenBase):
 			surface.blit(s.name_surf, s.name_rect)
 			
 		if self.selected_star:
-			surface.blit(self.selected_star_surface, self.selected_star_rect)
+			surface.blit(self.selection_marker_surface, self.selected_star.rect)
 
-	def on_select_star(self, star):
+	def select_star(self, star):
 		if self.selected_star == star:
 			screen = self._app.screens.change_to("Star")
 			screen.select_star(star)
 		else:
 			self.selected_star = star
-			self.selected_star_rect.center = star.rect.center
+
+	def on_select_star(self, star):
+		select_star(star)
 
 	def on_next_planet(self):
 		screen = self._app.screens.change_to("Star")
