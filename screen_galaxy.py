@@ -19,6 +19,9 @@ class GalaxyScreen(ScreenBase):
 		filename = os.path.join("images", "fleet.png")
 		self.fleet_surface = pygame.image.load(filename)
 
+		filename = os.path.join("images", "shipyard.png")
+		self.shipyard_surface = pygame.image.load(filename)
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -57,7 +60,12 @@ class GalaxyScreen(ScreenBase):
 					rect = s.rect.copy()
 					rect.midleft = s.rect.topright
 					surface.blit(self.fleet_surface, rect)
-						
+				
+				if p.research.tech_levels["Shipyard"] > 0:
+					rect = s.rect.copy()
+					rect.midleft = s.rect.bottomright
+					surface.blit(self.shipyard_surface, rect)
+
 		if self.selected_star:
 			surface.blit(self.selected_star_surface, self.selected_star_rect)
 
