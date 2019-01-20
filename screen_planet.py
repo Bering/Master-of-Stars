@@ -1,6 +1,8 @@
 import os
 import pygame
 from screen_base import ScreenBase
+from button import Button
+from text_renderer import TextRenderer
 
 class PlanetScreen(ScreenBase):
 
@@ -37,7 +39,11 @@ class PlanetScreen(ScreenBase):
 		self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self.name_font = pygame.font.Font(None, 18)
-		self.info_font = pygame.font.Font(None, 24)
+		self.info_font = TextRenderer(None, 24)
+
+		self.button_production = Button("Change Production", self.on_change_production_clicked)
+		self.button_research = Button("Change Research", self.on_change_research_clicked)
+		self.buttons = [self.button_production, self.button_research]
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -62,6 +68,10 @@ class PlanetScreen(ScreenBase):
 		elif (event.type == pygame.MOUSEBUTTONUP):
 			if self.centered_rect.collidepoint(event.pos):
 				self.on_planet_clicked()
+			else:
+				for b in self.buttons:
+					if b.rect.collidepoint(event.pos):
+						b.on_click()
 
 	def update(self, delta_time):
 		pass
@@ -89,50 +99,15 @@ class PlanetScreen(ScreenBase):
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.name_surf, self.name_rect)
 
-		text = "Class: " + self.planet.size + " " + self.planet.type
-		cls_surf = self.info_font.render(text, True, (255, 255, 255))
-		cls_rect = cls_surf.get_rect()
+		info_rect = self.render_info_text(surface)
 
-		text = "Population: " + str(self.planet.population)
-		pop_surf = self.info_font.render(text, True, (255, 255, 255))
-		pop_rect = pop_surf.get_rect()
+		self.button_research.rect.topright = info_rect.topleft
+		self.button_research.rect.x -= 16
+		self.button_research.render(surface)
 
-		text = "Industry: " + str(self.planet.industry)
-		ind_surf = self.info_font.render(text, True, (255, 255, 255))
-		ind_rect = ind_surf.get_rect()
-
-		text = "Science: " + str(self.planet.science)
-		sci_surf = self.info_font.render(text, True, (255, 255, 255))
-		sci_rect = sci_surf.get_rect()
-
-		text = "Defense: " + str(self.planet.defense)
-		def_surf = self.info_font.render(text, True, (255, 255, 255))
-		def_rect = def_surf.get_rect()
-
-		text = "Shipyard: lvl" + str(self.planet.research.tech_levels["Shipyard"])
-		sy_surf = self.info_font.render(text, True, (255, 255, 255))
-		sy_rect = sy_surf.get_rect()
-
-		cls_rect.midtop = self.centered_rect.midbottom
-		cls_rect.centery += 48
-		pop_rect.topleft = cls_rect.bottomleft
-		ind_rect.topleft = pop_rect.bottomleft
-		sci_rect.topleft = ind_rect.bottomleft
-		def_rect.topleft = sci_rect.bottomleft
-		sy_rect.topleft = def_rect.bottomleft
-
-		surface.blit(cls_surf, cls_rect)
-		surface.blit(pop_surf, pop_rect)
-		surface.blit(ind_surf, ind_rect)
-		surface.blit(sci_surf, sci_rect)
-		surface.blit(def_surf, def_rect)
-		surface.blit(sy_surf, sy_rect)
-
-		info_rect = cls_rect.unionall(
-			[pop_rect, ind_rect, sci_rect, def_rect, sy_rect]
-		)
-		info_rect.inflate_ip(12, 12)
-		pygame.draw.rect(surface, (255,255,255), info_rect, 2)
+		self.button_production.rect.topleft = info_rect.topright
+		self.button_production.rect.x += 16
+		self.button_production.render(surface)
 
 	def select_planet(self, planet):
 		self.planet = planet
@@ -145,8 +120,37 @@ class PlanetScreen(ScreenBase):
 		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
 
+	def render_info_text(self, surface):
+		text = ""
+		text += "Class: " + self.planet.size + " " + self.planet.type + ("\n")
+		text += "Population: " + str(self.planet.population) + ("\n")
+		text += "Industry: " + str(self.planet.industry) + ("\n")
+		text += "Science: " + str(self.planet.science) + ("\n")
+		text += "Defense: " + str(self.planet.defense) + ("\n")
+		text += "Shipyard: lvl" + str(self.planet.research.tech_levels["Shipyard"])
+		text_surface = self.info_font.render(text, True, (255,255,255))
+
+		text_rect = text_surface.get_rect()
+		text_rect.midtop = self.centered_rect.midbottom
+		text_rect.y += 48
+		surface.blit(text_surface, text_rect)
+
+		text_rect.inflate_ip(12, 12)
+		pygame.draw.rect(surface, (255,255,255), text_rect, 2)
+
+		return text_rect
+
+	def render_research_text(self, surface):
+		pass
+
 	def on_planet_clicked(self):
 		self._app.screens.change_to("Star")
+
+	def on_change_production_clicked(self):
+		print("TODO: Change production screen")
+
+	def on_change_research_clicked(self):
+		print("TODO: Change research screen")
 
 	def on_next_planet(self):
 		self.select_planet(self._app.local_player.next_planet(self.selected_planet).star)
