@@ -3,7 +3,7 @@ Stars
 
 Bunch of modules and classes that I made to learn Python.
 
-Starting to look like a 4x game.
+Starting to look like a 4x game!
 """
 
 import config
@@ -20,8 +20,6 @@ class Application:
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
 
 		self.screens = screens.ScreensManager(self)
-		self.screens.change_to("Galaxy")
-
 
 		self.players = []
 		for n in range(config.nb_players):
@@ -33,6 +31,15 @@ class Application:
 			self.ais.append(AI("AI " + str(n+1)))
 		
 		self.world = World(config, self.players, self.ais)
+
+		p = self.local_player.planets[0]
+		s = self.screens.change_to("Galaxy")
+		s.select_star(p.star)
+		s = self.screens.change_to("Star")
+		s.select_star(p.star)
+		s.select_planet(p)
+		s = self.screens.change_to("Planet")
+		s.select_planet(p)
 
 	def print_players(self):
 		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
