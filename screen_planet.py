@@ -139,6 +139,16 @@ class PlanetScreen(ScreenBase):
 		self.button_production.rect.move_ip(0, 6)
 		self.button_production.render(surface)
 
+		# Fleet info
+		fleet_surface = self.render_fleet_text()
+		fleet_rect = fleet_surface.get_rect()
+		fleet_rect.bottomleft = info_rect.topright
+		fleet_rect.move_ip(16, -16)
+		surface.blit(fleet_surface, fleet_rect)
+
+		fleet_rect.inflate_ip(12, 12)
+		pygame.draw.rect(surface, (255,255,255), fleet_rect, 2)
+
 	def select_planet(self, planet):
 		self.planet = planet
 
@@ -200,6 +210,23 @@ class PlanetScreen(ScreenBase):
 		text += "Cost: " + str(self.planet.production.current_project.cost) + "\n"
 		text += "Progress: " + str(self.planet.production.current_project.progress) + "\n"
 		text += "In " + str(remaining_turns) + " turn(s)\n"
+		return self.info_font.render(text, True, (255,255,255))
+
+	def render_fleet_text(self):
+		if not self.planet.fleets:
+			text = "No fleet"
+		else:
+			# TODO: Figure out if we allow more than one fleet in orbit
+			fleet = self.planet.fleets[0]
+			ship_counts = fleet.get_ship_counts()
+			text = ""
+			text += "Scout(s): " + str(ship_counts["Scout"]) + "\n"
+			text += "Fighter(s): " + str(ship_counts["Fighter"]) + "\n"
+			text += "Frigate(s): " + str(ship_counts["Frigate"]) + "\n"
+			text += "Destroyer(s): " + str(ship_counts["Destroyer"]) + "\n"
+			text += "Colony(s): " + str(ship_counts["Colony"]) + "\n"
+			text += "Total: " + str(ship_counts["Total"])
+
 		return self.info_font.render(text, True, (255,255,255))
 
 	def on_planet_clicked(self):

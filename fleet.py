@@ -36,3 +36,18 @@ class Fleet:
 	def create_ship(self, ship_type, tech_level):
 		ship = Ship(ship_type, tech_level)
 		self.ships.append(ship)
+
+	def get_ship_counts(self):
+		counts = {
+			"Scout" : 0,
+			"Fighter" : 0,
+			"Frigate" : 0,
+			"Destroyer" : 0,
+			"Colony" : 0,
+			"Total" : 0
+		}
+		for ship in self.ships:
+			counts[ship.type] += 1
+			counts["Total"] += 1
+
+		return counts
