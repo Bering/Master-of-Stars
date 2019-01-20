@@ -1,3 +1,5 @@
+import production
+import research
 import random
 import pygame
 import os
@@ -28,21 +30,14 @@ class Planet:
 		self.size = _sizes[random.randrange(len(_sizes))]
 		self.type = _types[random.randrange(len(_types))]
 		self.player = None
+		self.fleets = []
+		self.production = production.ProductionManager(self)
+		self.research = research.ResearchManager(self)
+		
 		self.population = 0
 		self.industry = 0
 		self.science = 0
 		self.defense = 0
-		self.shipyard_level = 0
-		self.production = None
-		self.research = None
-		self.tech_levels = {
-			"Shipyard" : 1,
-			"Scout" : 1,
-			"Fighter" : 0,
-			"Destroyer" : 0,
-			"Colony" : 0
-		}
-		self.fleets = []
 
 		n = random.randrange(8) + 1 # TODO: Pick image based on type and size
 		image_file = os.path.join("images", "planet" + str(n) + ".png")
@@ -71,15 +66,13 @@ class Planet:
 			self.fleets.append(fleet)
 
 		fleet = self.fleets[0]
-		fleet.create_ship(ship_type, self.tech_levels[ship_type])
+		fleet.create_ship(ship_type, self.research.tech_levels[ship_type])
 
-	def set_production(self, production):
-		"""Set the planet's production (ProductionBase object)"""
-		self.production = production
+	def set_production(self, project_name):
+		self.production.change_to(project_name)
 
-	def set_research(self, research):
-		"""Set the planet's research project (ResearchBase object)"""
-		self.research = research
+	def set_research(self, project_name):
+		self.research.change_to(project_name)
 
 	def next_turn(self):
 		self.population += _production_bonuses[self.type]["pop"]

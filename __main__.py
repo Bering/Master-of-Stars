@@ -3,7 +3,7 @@ Stars
 
 Bunch of modules and classes that I made to learn Python.
 
-Might end up being some kind of game some day.
+Starting to look like a 4x game.
 """
 
 import config
@@ -18,8 +18,10 @@ class Application:
 	def __init__(self):
 		pygame.init()
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
+
 		self.screens = screens.ScreensManager(self)
 		self.screens.change_to("Galaxy")
+
 
 		self.players = []
 		for n in range(config.nb_players):

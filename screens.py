@@ -17,7 +17,7 @@ class ScreensManager:
 
 	def change_to(self, screen_name):
 		if screen_name not in self.screens:
-			raise KeyError("Invalid screen name")
+			raise KeyError("Invalid screen name: " + screen_name)
 
 		self._previous_screen_name = self._current_screen_name
 		self._current_screen_name = screen_name
