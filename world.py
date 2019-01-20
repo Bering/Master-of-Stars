@@ -34,10 +34,16 @@ class World:
 
 		for p in players:
 			colony = self._colonize_random_planet(p)
+			colony.research.tech_levels["Shipyard"] = 1
+			colony.research.tech_levels["Defence"] = 1
+			colony.research.tech_levels["Scout"] = 1
 			colony.build_ship("Scout")
 
 		for ai in ais:
 			colony = self._colonize_random_planet(ai)
+			colony.research.tech_levels["Shipyard"] = 1
+			colony.research.tech_levels["Defence"] = 1
+			colony.research.tech_levels["Scout"] = 1
 			colony.build_ship("Scout")
 
 	def _scatter_planets(self, config, star):

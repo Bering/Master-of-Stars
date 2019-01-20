@@ -49,7 +49,6 @@ class GalaxyScreen(ScreenBase):
 	def render(self, surface):
 		for s in self._app.world.stars:
 			surface.blit(s.surface, s.rect)
-			surface.blit(s.name_surf, s.name_rect)
 
 			for p in s.planets:
 				if p.player:
@@ -65,7 +64,9 @@ class GalaxyScreen(ScreenBase):
 					rect = s.rect.copy()
 					rect.midleft = s.rect.bottomright
 					surface.blit(self.shipyard_surface, rect)
-
+			
+			surface.blit(s.name_surf, s.name_rect)
+			
 		if self.selected_star:
 			surface.blit(self.selected_star_surface, self.selected_star_rect)
 

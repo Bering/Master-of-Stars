@@ -21,6 +21,9 @@ class StarScreen(ScreenBase):
 		filename = os.path.join("images", "shipyard.png")
 		self.shipyard_surface = pygame.image.load(filename)
 
+		filename = os.path.join("images", "defence.png")
+		self.defence_surface = pygame.image.load(filename)
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -53,13 +56,11 @@ class StarScreen(ScreenBase):
 	def render(self, surface):
 		self.centered_rect.center = surface.get_rect().center
 		surface.blit(self.centered_surface, self.centered_rect)
-		
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.star.name_surf, self.name_rect)
 
 		for p in self.star.planets:
 			surface.blit(p.surface, p.rect)
-			surface.blit(p.name_surf, p.name_rect)
 
 			if self.selected_planet:
 				surface.blit(self.selected_planet_surface, self.selected_planet.rect)
@@ -76,6 +77,13 @@ class StarScreen(ScreenBase):
 				rect = p.rect.copy()
 				rect.midleft = p.rect.bottomright
 				surface.blit(self.shipyard_surface, rect)
+
+			if p.research.tech_levels["Defence"] > 0:
+				rect = p.rect.copy()
+				rect.midright = p.rect.bottomleft
+				surface.blit(self.defence_surface, rect)
+			
+			surface.blit(p.name_surf, p.name_rect)
 				
 	def select_star(self, star):
 		self.star = star

@@ -2,9 +2,9 @@ class ResearchManager:
 	def __init__(self, planet):
 		self.planet = planet
 		self.tech_levels = {
-			"Shipyard" : 1,
-			"Defence" : 1,
-			"Scout" : 1,
+			"Shipyard" : 0,
+			"Defence" : 0,
+			"Scout" : 0,
 			"Fighter" : 0,
 			"Frigate" : 0,
 			"Destroyer" : 0,
