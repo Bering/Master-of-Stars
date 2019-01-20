@@ -29,12 +29,12 @@ class PlanetScreen(ScreenBase):
 		self.shipyard_rect.height *= 2
 		self.shipyard_surface = pygame.transform.smoothscale(surface, self.shipyard_rect.size)
 
-		filename = os.path.join("images", "defence.png")
+		filename = os.path.join("images", "defense.png")
 		surface = pygame.image.load(filename)
-		self.defence_rect = surface.get_rect()
-		self.defence_rect.width *= 2
-		self.defence_rect.height *= 2
-		self.defence_surface = pygame.transform.smoothscale(surface, self.defence_rect.size)
+		self.defense_rect = surface.get_rect()
+		self.defense_rect.width *= 2
+		self.defense_rect.height *= 2
+		self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self._font = pygame.font.Font(None, 18)
 
@@ -81,9 +81,9 @@ class PlanetScreen(ScreenBase):
 			self.shipyard_rect.midleft = self.centered_rect.bottomright
 			surface.blit(self.shipyard_surface, self.shipyard_rect)
 
-		if self.planet.research.tech_levels["Defence"] > 0:
-			self.defence_rect.midright = self.centered_rect.bottomleft
-			surface.blit(self.defence_surface, self.defence_rect)
+		if self.planet.research.tech_levels["Defense"] > 0:
+			self.defense_rect.midright = self.centered_rect.bottomleft
+			surface.blit(self.defense_surface, self.defense_rect)
 
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.name_surf, self.name_rect)

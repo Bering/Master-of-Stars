@@ -5,7 +5,7 @@ class ProductionManager:
 			"Population" : ProdPop(planet),
 			"Industry" : ProdInd(planet),
 			"Science" : ProdSci(planet),
-			"Defences" : ProdDef(planet),
+			"Defenses" : ProdDef(planet),
 			"Scout" : ProdScout(planet)
 		}
 		self.current_project = None

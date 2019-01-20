@@ -3,7 +3,7 @@ class ResearchManager:
 		self.planet = planet
 		self.tech_levels = {
 			"Shipyard" : 0,
-			"Defence" : 0,
+			"Defense" : 0,
 			"Scout" : 0,
 			"Fighter" : 0,
 			"Frigate" : 0,
@@ -12,7 +12,7 @@ class ResearchManager:
 		}
 		self.projects = {
 			"Shipyard" : ResearchShipyard(planet),
-			"Defence" : ResearchDefence(planet),
+			"Defense" : ResearchDefense(planet),
 			"Scout" : ResearchScout(planet),
 			"Fighter" : ResearchFighter(planet),
 			"Frigate" : ResearchFrigate(planet),
@@ -66,17 +66,17 @@ class ResearchShipyard(ResearchBase):
 	def effect(self):
 		self.planet.research.tech_levels["Shipyard"] += 1
 
-class ResearchDefence(ResearchBase):
+class ResearchDefense(ResearchBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Upgrade Defences", 50)
+		super().__init__(planet, "Upgrade Defenses", 50)
 
 	def change_to():
 		super().change_to()
-		self.cost = 50 * (self.planet.research.tech_levels["Defence"] + 1)
+		self.cost = 50 * (self.planet.research.tech_levels["Defense"] + 1)
 
 	def effect(self):
-		self.planet.research.tech_levels["Defence"] += 1
+		self.planet.research.tech_levels["Defense"] += 1
 
 class ResearchScout(ResearchBase):
 
