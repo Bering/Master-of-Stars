@@ -7,9 +7,7 @@ class StarNamesStack:
 		self.names = f.readlines()
 		f.close()
 		
-		for item in enumerate(self.names):
-			index = item[0]
-			name = item[1]
+		for index, name in enumerate(self.names):
 			self.names[index] = name.strip()
 
 	def pop(self):
