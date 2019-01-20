@@ -34,17 +34,9 @@ class World:
 
 		for p in players:
 			colony = self._colonize_random_planet(p)
-			colony.research.tech_levels["Shipyard"] = 1
-			colony.research.tech_levels["Defense"] = 1
-			colony.research.tech_levels["Scout"] = 1
-			colony.build_ship("Scout")
 
 		for ai in ais:
 			colony = self._colonize_random_planet(ai)
-			colony.research.tech_levels["Shipyard"] = 1
-			colony.research.tech_levels["Defense"] = 1
-			colony.research.tech_levels["Scout"] = 1
-			colony.build_ship("Scout")
 
 	def _scatter_planets(self, config, star):
 		screen_center_x = config.window_width / 2
@@ -110,7 +102,11 @@ class World:
 			owner = planet.player
 		
 		player.colonize_planet(planet)
+		planet.research.tech_levels["Defense"] = 1
 		planet.defense = 5
+		planet.research.tech_levels["Shipyard"] = 1
+		planet.research.tech_levels["Scout"] = 1
+		planet.build_ship("Scout")
 		return planet
 
 	def next_turn(self):
