@@ -5,7 +5,6 @@ class ResearchManager:
 			"Shipyard" : 0,
 			"Defense" : 0,
 			"Scout" : 0,
-			"Fighter" : 0,
 			"Frigate" : 0,
 			"Destroyer" : 0,
 			"Colony" : 0
@@ -14,7 +13,6 @@ class ResearchManager:
 			"Shipyard" : ResearchShipyard(planet),
 			"Defense" : ResearchDefense(planet),
 			"Scout" : ResearchScout(planet),
-			"Fighter" : ResearchFighter(planet),
 			"Frigate" : ResearchFrigate(planet),
 			"Destroyer" : ResearchDestroyer(planet),
 			"Colony" : ResearchColony(planet)
@@ -89,18 +87,6 @@ class ResearchScout(ResearchBase):
 
 	def effect(self):
 		self.planet.research.tech_levels["Scout"] += 1
-
-class ResearchFighter(ResearchBase):
-
-	def __init__(self, planet):
-		super().__init__(planet, "Upgrade Fighters", 50)
-
-	def change_to():
-		super().change_to()
-		self.cost = 50 * (self.planet.research.tech_levels["Fighter"] + 1)
-
-	def effect(self):
-		self.planet.research.tech_levels["Fighter"] += 1
 
 class ResearchFrigate(ResearchBase):
 
