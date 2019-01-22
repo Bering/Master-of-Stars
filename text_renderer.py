@@ -3,10 +3,8 @@ import pygame
 """ Text renderer that can render multiple lines of text separated by '\n'"""
 class TextRenderer:
 
-	def __init__(self, filename, font_size):
-		"""Same parameters than the Font object"""
-
-		self.font = pygame.font.Font(filename, font_size)
+	def __init__(self, font):
+		self.font = font
 
 	def render(self, text, antialias, color, background=None):
 		"""Same parameters than the Font.render() function"""

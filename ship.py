@@ -1,4 +1,4 @@
-_types = ["Scout", "Fighter", "Frigate", "Destroyer", "Colony"]
+_types = ["Scout", "Frigate", "Destroyer", "Colony"]
 
 class Ship:
 

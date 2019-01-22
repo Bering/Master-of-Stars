@@ -55,6 +55,7 @@ class Planet:
 
 		self.player = player
 		self.population = 1
+		self.industry = 1
 		self.population += _production_bonuses[self.type]["pop"]
 		self.industry += _production_bonuses[self.type]["ind"]
 		self.science += _production_bonuses[self.type]["sci"]

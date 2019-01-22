@@ -4,6 +4,7 @@ import pygame
 from screen_base import ScreenBase
 from button import Button
 from text_renderer import TextRenderer
+from tile_renderer import TileRenderer
 
 class PlanetScreen(ScreenBase):
 
@@ -40,8 +41,11 @@ class PlanetScreen(ScreenBase):
 		self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self.name_font = pygame.font.Font(None, 18)
+		
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
-		self.info_font = TextRenderer(filename, 16)
+		info_font = pygame.font.Font(filename, 16)
+		text_renderer = TextRenderer(info_font)
+		self.tile_renderer = TileRenderer(text_renderer)
 
 		self.button_production = Button("Change", self.on_change_production_clicked)
 		self.button_research = Button("Change", self.on_change_research_clicked)
@@ -109,18 +113,12 @@ class PlanetScreen(ScreenBase):
 		info_rect.move_ip(-32, -32)
 		surface.blit(info_surface, info_rect)
 
-		info_rect.inflate_ip(12, 12)
-		pygame.draw.rect(surface, (255,255,255), info_rect, 2)
-
 		# Research info
 		research_surface = self.render_research_text()
 		research_rect = research_surface.get_rect()
 		research_rect.topright = self.centered_rect.bottomleft
 		research_rect.move_ip(-32, 32)
 		surface.blit(research_surface, research_rect)
-
-		research_rect.inflate_ip(12, 12)
-		pygame.draw.rect(surface, (255,255,255), research_rect, 2)
 
 		self.button_research.rect.midtop = research_rect.midbottom
 		self.button_research.rect.move_ip(0, 6)
@@ -133,9 +131,6 @@ class PlanetScreen(ScreenBase):
 		production_rect.move_ip(32, 32)
 		surface.blit(production_surface, production_rect)
 
-		production_rect.inflate_ip(12, 12)
-		pygame.draw.rect(surface, (255,255,255), production_rect, 2)
-
 		self.button_production.rect.midtop = production_rect.midbottom
 		self.button_production.rect.move_ip(0, 6)
 		self.button_production.render(surface)
@@ -147,8 +142,6 @@ class PlanetScreen(ScreenBase):
 		fleet_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, fleet_rect)
 
-		fleet_rect.inflate_ip(12, 12)
-		pygame.draw.rect(surface, (255,255,255), fleet_rect, 2)
 
 	def select_planet(self, planet):
 		self.planet = planet
@@ -169,7 +162,7 @@ class PlanetScreen(ScreenBase):
 		text += "Science: " + str(self.planet.science) + "\n"
 		text += "Defense: " + str(self.planet.defense) + "\n"
 		text += "Shipyard: lvl" + str(self.planet.research.tech_levels["Shipyard"])
-		return self.info_font.render(text, True, (255,255,255))
+		return self.tile_renderer.render(text, (255,255,255))
 
 	def render_research_text(self):
 		if self.planet.research.current_project == None:
@@ -179,7 +172,7 @@ class PlanetScreen(ScreenBase):
 			text += "Cost: N/A\n"
 			text += "Progress: N/A\n"
 			text += "ETA: N/A\n"
-			return self.info_font.render(text, True, (200,200,255))
+			return self.tile_renderer.render(text, (200,200,255))
 
 		remaining_turns = math.ceil((self.planet.research.current_project.cost
 						- self.planet.research.current_project.progress)
@@ -190,7 +183,7 @@ class PlanetScreen(ScreenBase):
 		text += "Cost: " + str(self.planet.research.current_project.cost) + "\n"
 		text += "Progress: " + str(self.planet.research.current_project.progress) + "\n"
 		text += "ETA: " + str(remaining_turns) + " turn(s)\n"
-		return self.info_font.render(text, True, (200,200,255))
+		return self.tile_renderer.render(text, (200,200,255))
 
 	def render_production_text(self):
 		if self.planet.production.current_project == None:
@@ -200,18 +193,23 @@ class PlanetScreen(ScreenBase):
 			text += "Cost: N/A\n"
 			text += "Progress: N/A\n"
 			text += "ETA: N/A\n"
-			return self.info_font.render(text, True, (255,255,200))
+			return self.tile_renderer.render(text, (255,255,200))
 
-		remaining_turns = math.ceil((self.planet.production.current_project.cost
-						- self.planet.production.current_project.progress)
-						/ self.planet.industry)
+		if self.planet.industry == 0:
+			remaining_turns = "N/A"
+		else:
+			remaining_turns = str(math.ceil(
+				(self.planet.production.current_project.cost
+				- self.planet.production.current_project.progress)
+				/ self.planet.industry
+			)) + " turn(s)"
 		text = ""
 		text += "Producing:\n"
 		text += self.planet.production.current_project.name + "\n"
 		text += "Cost: " + str(self.planet.production.current_project.cost) + "\n"
 		text += "Progress: " + str(self.planet.production.current_project.progress) + "\n"
-		text += "ETA: " + str(remaining_turns) + " turn(s)\n"
-		return self.info_font.render(text, True, (255,255,200))
+		text += "ETA: " + remaining_turns + "\n"
+		return self.tile_renderer.render(text, (255,255,200))
 
 	def render_fleet_text(self):
 		if not self.planet.fleets:
@@ -222,19 +220,19 @@ class PlanetScreen(ScreenBase):
 			ship_counts = fleet.get_ship_counts()
 			text = ""
 			text += "Scout(s): " + str(ship_counts["Scout"]) + "\n"
-			text += "Fighter(s): " + str(ship_counts["Fighter"]) + "\n"
+			text += "Colony Ship(s): " + str(ship_counts["Colony"]) + "\n"
 			text += "Frigate(s): " + str(ship_counts["Frigate"]) + "\n"
 			text += "Destroyer(s): " + str(ship_counts["Destroyer"]) + "\n"
-			text += "Colony(s): " + str(ship_counts["Colony"]) + "\n"
 			text += "Total: " + str(ship_counts["Total"])
 
-		return self.info_font.render(text, True, (255,200,200))
+		return self.tile_renderer.render(text, (255,200,200))
 
 	def on_planet_clicked(self):
 		self._app.screens.change_to("Star")
 
 	def on_change_production_clicked(self):
-		print("TODO: Change production screen")
+		s = self._app.screens.change_to("Production")
+		s.select_planet(self.planet)
 
 	def on_change_research_clicked(self):
 		print("TODO: Change research screen")

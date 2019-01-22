@@ -40,7 +40,6 @@ class Fleet:
 	def get_ship_counts(self):
 		counts = {
 			"Scout" : 0,
-			"Fighter" : 0,
 			"Frigate" : 0,
 			"Destroyer" : 0,
 			"Colony" : 0,

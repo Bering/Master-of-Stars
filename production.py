@@ -2,16 +2,19 @@ class ProductionManager:
 
 	def __init__(self, planet):
 		self.projects = {
-			"Population" : ProdPop(planet),
-			"Industry" : ProdInd(planet),
-			"Science" : ProdSci(planet),
+			"Farms" : ProdPop(planet),
+			"Mines" : ProdInd(planet),
+			"Laboratories" : ProdSci(planet),
 			"Defenses" : ProdDef(planet),
-			"Scout" : ProdScout(planet)
+			"Scout" : ProdScout(planet),
+			"Colony" : ProdColony(planet),
+			"Frigate" : ProdFrigate(planet),
+			"Destroyer" : ProdDestroyer(planet),
 		}
 		self.current_project = None
 
-	def change_to(project_name):
-		if project_name not in self.self.projects:
+	def change_to(self, project_name):
+		if project_name not in self.projects:
 			raise KeyError("Invalid production project name: " + project_name)
 
 		self.current_project = self.projects[project_name]
@@ -24,9 +27,10 @@ class ProductionManager:
 
 class ProductionBase:
 
-	def __init__(self, planet, name, cost):
+	def __init__(self, planet, name, desc, cost):
 		self.planet = planet
 		self.name = name
+		self.desc = desc
 		self.cost = cost
 		self.progress = 0
 
@@ -52,7 +56,7 @@ class ProductionBase:
 class ProdPop(ProductionBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Population", 5)
+		super().__init__(planet, "Farms", "Increase population", 5)
 
 	def effect(self, item_count):
 		self.planet.population += item_count
@@ -60,7 +64,7 @@ class ProdPop(ProductionBase):
 class ProdInd(ProductionBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Industry", 5)
+		super().__init__(planet, "Mines", "Increase industry", 5)
 
 	def effect(self, item_count):
 		self.planet.industry += item_count
@@ -68,7 +72,7 @@ class ProdInd(ProductionBase):
 class ProdSci(ProductionBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Science", 5)
+		super().__init__(planet, "Laboratories", "Increase science", 5)
 
 	def effect(self, item_count):
 		self.planet.science += item_count
@@ -76,7 +80,7 @@ class ProdSci(ProductionBase):
 class ProdDef(ProductionBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Defense", 10)
+		super().__init__(planet, "Defense platforms", "Increase defense", 10)
 
 	def effect(self, item_count):
 		self.planet.defense += item_count
@@ -84,10 +88,37 @@ class ProdDef(ProductionBase):
 class ProdScout(ProductionBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Ship: Scout", 10)
+		super().__init__(planet, "Scout", "Unarmed. Longer range.", 10)
 
 	def effect(self, item_count):
 		for n in range(item_count):
 			self.planet.build_ship("Scout")
 
-# TODO: Fighter, Frigate, Destroyer, Colony, Starbases, more, Refit
+class ProdColony(ProductionBase):
+
+	def __init__(self, planet):
+		super().__init__(planet, "Colony Ship", "Unarmed. Settlers for new colony.", 1000)
+
+	def effect(self, item_count):
+		for n in range(item_count):
+			self.planet.build_ship("Colony")
+
+class ProdFrigate(ProductionBase):
+
+	def __init__(self, planet):
+		super().__init__(planet, "Frigate", "Basic warship.", 100)
+
+	def effect(self, item_count):
+		for n in range(item_count):
+			self.planet.build_ship("Frigate")
+
+class ProdDestroyer(ProductionBase):
+
+	def __init__(self, planet):
+		super().__init__(planet, "Destroyer", "Great against frigates.", 1000)
+
+	def effect(self, item_count):
+		for n in range(item_count):
+			self.planet.build_ship("Destroyer")
+
+# TODO: Starbases?, More, Refit
