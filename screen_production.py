@@ -34,6 +34,10 @@ class ProductionScreen(ScreenBase):
 
 	def render(self, surface):
 
+		self.back_button.rect.midbottom = surface.get_rect().midbottom
+		self.back_button.rect.move_ip(0, -32)
+		self.back_button.render(surface)
+
 		project = self.selected_planet.production.projects["Farms"]
 		farm_surface = self.render_tile(project)
 		farm_rect = farm_surface.get_rect()
@@ -65,41 +69,52 @@ class ProductionScreen(ScreenBase):
 		surface.blit(def_surface, def_rect)
 		self.tiles["Defenses"] = def_rect
 
-		project = self.selected_planet.production.projects["Scout"]
-		scout_surface = self.render_tile(project, (255,200,200))
-		scout_rect = scout_surface.get_rect()
-		scout_rect.topright = surface.get_rect().topright
-		scout_rect.move_ip(-32, 32)
-		surface.blit(scout_surface, scout_rect)
-		self.tiles["Scout"] = scout_rect
+		if self.selected_planet.research.tech_levels["Shipyard"] == 0:
+			return
 
-		project = self.selected_planet.production.projects["Colony"]
-		colony_surface = self.render_tile(project, (255,255,255))
-		colony_rect = colony_surface.get_rect()
-		colony_rect.topright = scout_rect.bottomright
-		colony_rect.move_ip(0, 6)
-		surface.blit(colony_surface, colony_rect)
-		self.tiles["Colony"] = colony_rect
+		anchor = surface.get_rect().topright
+		anchor = anchor[0] - 32, anchor[1] + 32
 
-		project = self.selected_planet.production.projects["Frigate"]
-		frigate_surface = self.render_tile(project, (255,200,200))
-		frigate_rect = frigate_surface.get_rect()
-		frigate_rect.topright = colony_rect.bottomright
-		frigate_rect.move_ip(0, 6)
-		surface.blit(frigate_surface, frigate_rect)
-		self.tiles["Frigate"] = frigate_rect
+		if self.selected_planet.research.tech_levels["Scout"] > 0:
+			project = self.selected_planet.production.projects["Scout"]
+			scout_surface = self.render_tile(project, (255,200,200))
+			scout_rect = scout_surface.get_rect()
+			scout_rect.topright = anchor
+			surface.blit(scout_surface, scout_rect)
+			self.tiles["Scout"] = scout_rect
 
-		project = self.selected_planet.production.projects["Destroyer"]
-		destroyer_surface = self.render_tile(project, (255,200,200))
-		destroyer_rect = destroyer_surface.get_rect()
-		destroyer_rect.topright = frigate_rect.bottomright
-		destroyer_rect.move_ip(0, 6)
-		surface.blit(destroyer_surface, destroyer_rect)
-		self.tiles["Destroyer"] = destroyer_rect
+			anchor = scout_rect.bottomright
+			anchor = anchor[0], anchor[1] + 6
 
-		self.back_button.rect.midbottom = surface.get_rect().midbottom
-		self.back_button.rect.move_ip(0, -32)
-		self.back_button.render(surface)
+		if self.selected_planet.research.tech_levels["Colony"] > 0:
+			project = self.selected_planet.production.projects["Colony"]
+			colony_surface = self.render_tile(project, (255,255,255))
+			colony_rect = colony_surface.get_rect()
+			colony_rect.topright = anchor
+			surface.blit(colony_surface, colony_rect)
+			self.tiles["Colony"] = colony_rect
+
+			anchor = colony_rect.bottomright
+			anchor = anchor[0], anchor[1] + 6
+
+		if self.selected_planet.research.tech_levels["Frigate"] > 0:
+			project = self.selected_planet.production.projects["Frigate"]
+			frigate_surface = self.render_tile(project, (255,200,200))
+			frigate_rect = frigate_surface.get_rect()
+			frigate_rect.topright = anchor
+			surface.blit(frigate_surface, frigate_rect)
+			self.tiles["Frigate"] = frigate_rect
+
+			anchor = frigate_rect.bottomright
+			anchor = anchor[0], anchor[1] + 6
+
+		if self.selected_planet.research.tech_levels["Destroyer"] > 0:
+			project = self.selected_planet.production.projects["Destroyer"]
+			destroyer_surface = self.render_tile(project, (255,200,200))
+			destroyer_rect = destroyer_surface.get_rect()
+			destroyer_rect.topright = anchor
+			surface.blit(destroyer_surface, destroyer_rect)
+			self.tiles["Destroyer"] = destroyer_rect
 
 	def select_planet(self, planet):
 		self.selected_planet = planet
