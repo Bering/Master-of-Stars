@@ -1,6 +1,8 @@
 from screen_base import ScreenBase
 from text_renderer import TextRenderer
 from tile_renderer import TileRenderer
+from button import Button
+
 import pygame
 import os
 
@@ -17,16 +19,18 @@ class ProductionScreen(ScreenBase):
 
 		self.tiles = {}
 
+		self.back_button = Button("Cancel", self.on_back_button_clicked)
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
-			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
-				self._app.screens.change_to("Quit")
 			if event.key == pygame.K_ESCAPE:
-				self._app.screens.change_back()
+				self.on_back_button_clicked()
 		elif event.type == pygame.MOUSEBUTTONUP:
 			for project, tile_rect in self.tiles.items():
 				if tile_rect.collidepoint(event.pos):
 					self.change_production(project)
+			if self.back_button.rect.collidepoint(event.pos):
+				self.back_button.on_click()
 
 	def render(self, surface):
 
@@ -93,8 +97,15 @@ class ProductionScreen(ScreenBase):
 		surface.blit(destroyer_surface, destroyer_rect)
 		self.tiles["Destroyer"] = destroyer_rect
 
+		self.back_button.rect.midbottom = surface.get_rect().midbottom
+		self.back_button.rect.move_ip(0, -32)
+		self.back_button.render(surface)
+
 	def select_planet(self, planet):
 		self.selected_planet = planet
+
+	def on_back_button_clicked(self):
+		self._app.screens.change_to("Planet")
 
 	def render_tile(self, project, color=(255,255,255)):
 		text = ""
@@ -105,4 +116,4 @@ class ProductionScreen(ScreenBase):
 
 	def change_production(self, project):
 		self.selected_planet.production.change_to(project)
-		self._app.screens.change_back()
+		self._app.screens.change_to("Planet")
