@@ -105,8 +105,8 @@ class PlanetScreen(ScreenBase):
 		# Planet info
 		info_surface = self.render_info_text()
 		info_rect = info_surface.get_rect()
-		info_rect.midtop = self.centered_rect.midbottom
-		info_rect.y += 48
+		info_rect.bottomright = self.centered_rect.topleft
+		info_rect.move_ip(-32, -32)
 		surface.blit(info_surface, info_rect)
 
 		info_rect.inflate_ip(12, 12)
@@ -115,8 +115,8 @@ class PlanetScreen(ScreenBase):
 		# Research info
 		research_surface = self.render_research_text()
 		research_rect = research_surface.get_rect()
-		research_rect.topright = info_rect.topleft
-		research_rect.move_ip(-16, 6)
+		research_rect.topright = self.centered_rect.bottomleft
+		research_rect.move_ip(-32, 32)
 		surface.blit(research_surface, research_rect)
 
 		research_rect.inflate_ip(12, 12)
@@ -129,8 +129,8 @@ class PlanetScreen(ScreenBase):
 		# Production info
 		production_surface = self.render_production_text()
 		production_rect = production_surface.get_rect()
-		production_rect.topleft = info_rect.topright
-		production_rect.move_ip(16, 6)
+		production_rect.topleft = self.centered_rect.bottomright
+		production_rect.move_ip(32, 32)
 		surface.blit(production_surface, production_rect)
 
 		production_rect.inflate_ip(12, 12)
@@ -143,8 +143,8 @@ class PlanetScreen(ScreenBase):
 		# Fleet info
 		fleet_surface = self.render_fleet_text()
 		fleet_rect = fleet_surface.get_rect()
-		fleet_rect.bottomleft = info_rect.topright
-		fleet_rect.move_ip(16, -16)
+		fleet_rect.bottomleft = self.centered_rect.topright
+		fleet_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, fleet_rect)
 
 		fleet_rect.inflate_ip(12, 12)
