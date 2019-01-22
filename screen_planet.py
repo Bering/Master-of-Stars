@@ -178,8 +178,8 @@ class PlanetScreen(ScreenBase):
 			text += "(Nothing)\n"
 			text += "Cost: N/A\n"
 			text += "Progress: N/A\n"
-			text += "\n"
-			return self.info_font.render(text, True, (255,255,255))
+			text += "ETA: N/A\n"
+			return self.info_font.render(text, True, (200,200,255))
 
 		remaining_turns = math.ceil((self.planet.research.current_project.cost
 						- self.planet.research.current_project.progress)
@@ -189,8 +189,8 @@ class PlanetScreen(ScreenBase):
 		text += self.planet.research.current_project.name + "\n"
 		text += "Cost: " + str(self.planet.research.current_project.cost) + "\n"
 		text += "Progress: " + str(self.planet.research.current_project.progress) + "\n"
-		text += "In " + str(remaining_turns) + " turn(s)\n"
-		return self.info_font.render(text, True, (255,255,255))
+		text += "ETA: " + str(remaining_turns) + " turn(s)\n"
+		return self.info_font.render(text, True, (200,200,255))
 
 	def render_production_text(self):
 		if self.planet.production.current_project == None:
@@ -199,8 +199,8 @@ class PlanetScreen(ScreenBase):
 			text += "(Nothing)\n"
 			text += "Cost: N/A\n"
 			text += "Progress: N/A\n"
-			text += "\n"
-			return self.info_font.render(text, True, (255,255,255))
+			text += "ETA: N/A\n"
+			return self.info_font.render(text, True, (255,255,200))
 
 		remaining_turns = math.ceil((self.planet.production.current_project.cost
 						- self.planet.production.current_project.progress)
@@ -210,8 +210,8 @@ class PlanetScreen(ScreenBase):
 		text += self.planet.production.current_project.name + "\n"
 		text += "Cost: " + str(self.planet.production.current_project.cost) + "\n"
 		text += "Progress: " + str(self.planet.production.current_project.progress) + "\n"
-		text += "In " + str(remaining_turns) + " turn(s)\n"
-		return self.info_font.render(text, True, (255,255,255))
+		text += "ETA: " + str(remaining_turns) + " turn(s)\n"
+		return self.info_font.render(text, True, (255,255,200))
 
 	def render_fleet_text(self):
 		if not self.planet.fleets:
@@ -228,7 +228,7 @@ class PlanetScreen(ScreenBase):
 			text += "Colony(s): " + str(ship_counts["Colony"]) + "\n"
 			text += "Total: " + str(ship_counts["Total"])
 
-		return self.info_font.render(text, True, (255,255,255))
+		return self.info_font.render(text, True, (255,200,200))
 
 	def on_planet_clicked(self):
 		self._app.screens.change_to("Star")
