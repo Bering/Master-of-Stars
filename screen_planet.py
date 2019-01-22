@@ -40,7 +40,8 @@ class PlanetScreen(ScreenBase):
 		self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self.name_font = pygame.font.Font(None, 18)
-		self.info_font = TextRenderer(None, 24)
+		filename = os.path.join("fonts", "OpenSansRegular.ttf")
+		self.info_font = TextRenderer(filename, 16)
 
 		self.button_production = Button("Change", self.on_change_production_clicked)
 		self.button_research = Button("Change", self.on_change_research_clicked)
