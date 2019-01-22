@@ -26,18 +26,19 @@ class Button:
 		self.on_click = on_click
 
 		font = pygame.font.Font(font_name, font_size)
-		surface = font.render(label, True, color, background)
-		rect = surface.get_rect()
+		text_surface = font.render(label, True, color, background)
+		text_rect = text_surface.get_rect()
 
-		self.rect = rect.inflate(padding)
-		self.surface = pygame.Surface(self.rect.size, flags=surface.get_flags())
+		self.rect = text_rect.inflate(padding)
+		self.surface = pygame.Surface(self.rect.size, flags=text_surface.get_flags())
+		self.rect = self.surface.get_rect()
+		
 		self.surface.fill(background)
 
-		self.rect = self.surface.get_rect()
-		rect.center = self.rect.center
-		self.surface.blit(surface, rect)
+		text_rect.center = self.rect.center
+		self.surface.blit(text_surface, text_rect)
+		
 		pygame.draw.rect(self.surface, color_border, self.rect, 2)
-
 		p1 = self.rect.bottomleft[0] + 2, self.rect.bottomleft[1] - 2
 		p2 = self.rect.bottomright[0] - 2, self.rect.bottomright[1] - 2
 		p3 = self.rect.topright[0] - 2, self.rect.topright[1] + 2
