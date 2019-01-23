@@ -57,7 +57,7 @@ class GalaxyScreen(ScreenBase):
 					rect.midleft = s.rect.topright
 					surface.blit(self.fleet_surface, rect)
 				
-				if p.research.tech_levels["Shipyard"] > 0:
+				if p.shipyard_level > 0:
 					rect = s.rect.copy()
 					rect.midleft = s.rect.bottomright
 					surface.blit(self.shipyard_surface, rect)

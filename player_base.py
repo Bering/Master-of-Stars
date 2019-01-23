@@ -1,4 +1,5 @@
 from fleet import Fleet
+import research
 
 class PlayerBase:
 
@@ -8,6 +9,21 @@ class PlayerBase:
 		self.selected_planet_index = 0
 		self.fleets = []
 		self.fleets_counter = 0
+		self.tech_levels = {
+			"Shipyard" : 1,
+			"Scout" : 1,
+			"Frigate" : 0,
+			"Destroyer" : 0,
+			"Colony" : 0
+		}
+		self.projects = {
+			"Shipyard2" : research.ResearchShipyard2(self),
+			"Shipyard3" : research.ResearchShipyard3(self),
+			"Scout" : research.ResearchScout(self),
+			"Frigate" : research.ResearchFrigate(self),
+			"Destroyer" : research.ResearchDestroyer(self),
+			"Colony" : research.ResearchColony(self)
+		}
 
 	def next_planet(self, current_planet):
 		if current_planet == None:

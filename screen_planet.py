@@ -94,11 +94,11 @@ class PlanetScreen(ScreenBase):
 			self.fleet_rect.midleft = self.centered_rect.topright
 			surface.blit(self.fleet_surface, self.fleet_rect)
 
-		if self.planet.research.tech_levels["Shipyard"] > 0:
+		if self.planet.shipyard_level > 0:
 			self.shipyard_rect.midleft = self.centered_rect.bottomright
 			surface.blit(self.shipyard_surface, self.shipyard_rect)
 
-		if self.planet.research.tech_levels["Defense"] > 0:
+		if self.planet.defense > 0:
 			self.defense_rect.midright = self.centered_rect.bottomleft
 			surface.blit(self.defense_surface, self.defense_rect)
 
@@ -161,28 +161,28 @@ class PlanetScreen(ScreenBase):
 		text += "Industry: " + str(self.planet.industry) + "\n"
 		text += "Science: " + str(self.planet.science) + "\n"
 		text += "Defense: " + str(self.planet.defense) + "\n"
-		text += "Shipyard: lvl" + str(self.planet.research.tech_levels["Shipyard"])
+
+		if self.planet.shipyard_level == 0:
+			text += "Shipyard: None"
+		else:
+			text += "Shipyard: Lvl." + str(self.planet.shipyard_level)
+
 		return self.tile_renderer.render(text, (255,255,255))
 
 	def render_research_text(self):
-		if self.planet.research.current_project == None:
+		if self.planet.current_research_project == None:
 			text = ""
 			text += "Researching:\n"
 			text += "(Nothing)\n"
 			text += "Cost: N/A\n"
-			text += "Progress: N/A\n"
-			text += "ETA: N/A\n"
+			text += "Progress: N/A"
 			return self.tile_renderer.render(text, (200,200,255))
 
-		remaining_turns = math.ceil((self.planet.research.current_project.cost
-						- self.planet.research.current_project.progress)
-						/ self.planet.science)
 		text = ""
 		text += "Researching:\n"
-		text += self.planet.research.current_project.name + "\n"
-		text += "Cost: " + str(self.planet.research.current_project.cost) + "\n"
-		text += "Progress: " + str(self.planet.research.current_project.progress) + "\n"
-		text += "ETA: " + str(remaining_turns) + " turn(s)\n"
+		text += self.planet.current_research_project.name + "\n"
+		text += "Cost: " + str(self.planet.current_research_project.cost) + "\n"
+		text += "Progress: " + str(self.planet.current_research_project.progress) + "\n"
 		return self.tile_renderer.render(text, (200,200,255))
 
 	def render_production_text(self):

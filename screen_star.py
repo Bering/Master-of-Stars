@@ -73,12 +73,12 @@ class StarScreen(ScreenBase):
 				rect.midleft = p.rect.topright
 				surface.blit(self.fleet_surface, rect)
 
-			if p.research.tech_levels["Shipyard"] > 0:
+			if p.shipyard_level > 0:
 				rect = p.rect.copy()
 				rect.midleft = p.rect.bottomright
 				surface.blit(self.shipyard_surface, rect)
 
-			if p.research.tech_levels["Defense"] > 0:
+			if p.defense > 0:
 				rect = p.rect.copy()
 				rect.midright = p.rect.bottomleft
 				surface.blit(self.defense_surface, rect)

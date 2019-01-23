@@ -6,6 +6,9 @@ class ProductionManager:
 			"Mines" : ProdInd(planet),
 			"Laboratories" : ProdSci(planet),
 			"Defenses" : ProdDef(planet),
+			"Shipyard1" : ProdShipyard1(planet),
+			"Shipyard2" : ProdShipyard2(planet),
+			"Shipyard3" : ProdShipyard3(planet),
 			"Scout" : ProdScout(planet),
 			"Colony" : ProdColony(planet),
 			"Frigate" : ProdFrigate(planet),
@@ -84,6 +87,33 @@ class ProdDef(ProductionBase):
 
 	def effect(self, item_count):
 		self.planet.defense += item_count
+
+class ProdShipyard1(ProductionBase):
+
+	def __init__(self, planet):
+		super().__init__(planet, "Shipyard", "Allow production of Scout ships.", 50)
+
+	def effect(self, item_count):
+		for n in range(item_count):
+			self.planet.shipyard_level = 1
+
+class ProdShipyard2(ProductionBase):
+
+	def __init__(self, planet):
+		super().__init__(planet, "Shipyard Upgrade", "Allow production of Frigates.", 500)
+
+	def effect(self, item_count):
+		for n in range(item_count):
+			self.planet.shipyard_level = 2
+
+class ProdShipyard3(ProductionBase):
+
+	def __init__(self, planet):
+		super().__init__(planet, "Shipyard Upgrade", "Allow Colony ships and Destroyers.", 5000)
+
+	def effect(self, item_count):
+		for n in range(item_count):
+			self.planet.shipyard_level = 3
 
 class ProdScout(ProductionBase):
 

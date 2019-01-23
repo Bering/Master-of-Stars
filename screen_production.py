@@ -69,13 +69,10 @@ class ProductionScreen(ScreenBase):
 		surface.blit(def_surface, def_rect)
 		self.tiles["Defenses"] = def_rect
 
-		if self.selected_planet.research.tech_levels["Shipyard"] == 0:
-			return
-
 		anchor = surface.get_rect().topright
 		anchor = anchor[0] - 32, anchor[1] + 32
 
-		if self.selected_planet.research.tech_levels["Scout"] > 0:
+		if self.selected_planet.shipyard_level >= 1:
 			project = self.selected_planet.production.projects["Scout"]
 			scout_surface = self.render_tile(project, (255,200,200))
 			scout_rect = scout_surface.get_rect()
@@ -86,7 +83,7 @@ class ProductionScreen(ScreenBase):
 			anchor = scout_rect.bottomright
 			anchor = anchor[0], anchor[1] + 6
 
-		if self.selected_planet.research.tech_levels["Colony"] > 0:
+		if self.selected_planet.shipyard_level >= 3:
 			project = self.selected_planet.production.projects["Colony"]
 			colony_surface = self.render_tile(project, (255,255,255))
 			colony_rect = colony_surface.get_rect()
@@ -97,7 +94,7 @@ class ProductionScreen(ScreenBase):
 			anchor = colony_rect.bottomright
 			anchor = anchor[0], anchor[1] + 6
 
-		if self.selected_planet.research.tech_levels["Frigate"] > 0:
+		if self.selected_planet.shipyard_level >= 2:
 			project = self.selected_planet.production.projects["Frigate"]
 			frigate_surface = self.render_tile(project, (255,200,200))
 			frigate_rect = frigate_surface.get_rect()
@@ -108,7 +105,7 @@ class ProductionScreen(ScreenBase):
 			anchor = frigate_rect.bottomright
 			anchor = anchor[0], anchor[1] + 6
 
-		if self.selected_planet.research.tech_levels["Destroyer"] > 0:
+		if self.selected_planet.shipyard_level >= 3:
 			project = self.selected_planet.production.projects["Destroyer"]
 			destroyer_surface = self.render_tile(project, (255,200,200))
 			destroyer_rect = destroyer_surface.get_rect()

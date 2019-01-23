@@ -102,10 +102,8 @@ class World:
 			owner = planet.player
 		
 		player.colonize_planet(planet)
-		planet.research.tech_levels["Defense"] = 1
 		planet.defense = 5
-		planet.research.tech_levels["Shipyard"] = 1
-		planet.research.tech_levels["Scout"] = 1
+		planet.shipyard_level = 1
 		planet.build_ship("Scout")
 		return planet
 
