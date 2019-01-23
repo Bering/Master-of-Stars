@@ -49,7 +49,12 @@ class PlanetScreen(ScreenBase):
 
 		self.button_production = Button("Change", self.on_change_production_clicked)
 		self.button_research = Button("Change", self.on_change_research_clicked)
-		self.buttons = [self.button_production, self.button_research]
+		self.button_colonize = Button("Colonize", self.on_colonize_clicked)
+		self.buttons = [
+			self.button_production,
+			self.button_research,
+			self.button_colonize
+		]
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -113,28 +118,6 @@ class PlanetScreen(ScreenBase):
 		info_rect.move_ip(-32, -32)
 		surface.blit(info_surface, info_rect)
 
-		# Research info
-		research_surface = self.render_research_text()
-		research_rect = research_surface.get_rect()
-		research_rect.topright = self.centered_rect.bottomleft
-		research_rect.move_ip(-32, 32)
-		surface.blit(research_surface, research_rect)
-
-		self.button_research.rect.midtop = research_rect.midbottom
-		self.button_research.rect.move_ip(0, 6)
-		self.button_research.render(surface)
-
-		# Production info
-		production_surface = self.render_production_text()
-		production_rect = production_surface.get_rect()
-		production_rect.topleft = self.centered_rect.bottomright
-		production_rect.move_ip(32, 32)
-		surface.blit(production_surface, production_rect)
-
-		self.button_production.rect.midtop = production_rect.midbottom
-		self.button_production.rect.move_ip(0, 6)
-		self.button_production.render(surface)
-
 		# Fleet info
 		fleet_surface = self.render_fleet_text()
 		fleet_rect = fleet_surface.get_rect()
@@ -142,6 +125,36 @@ class PlanetScreen(ScreenBase):
 		fleet_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, fleet_rect)
 
+		if self.planet.player:
+
+			# Research info
+			research_surface = self.render_research_text()
+			research_rect = research_surface.get_rect()
+			research_rect.topright = self.centered_rect.bottomleft
+			research_rect.move_ip(-32, 32)
+			surface.blit(research_surface, research_rect)
+
+			self.button_research.rect.midtop = research_rect.midbottom
+			self.button_research.rect.move_ip(0, 6)
+			self.button_research.render(surface)
+
+			# Production info
+			production_surface = self.render_production_text()
+			production_rect = production_surface.get_rect()
+			production_rect.topleft = self.centered_rect.bottomright
+			production_rect.move_ip(32, 32)
+			surface.blit(production_surface, production_rect)
+
+			self.button_production.rect.midtop = production_rect.midbottom
+			self.button_production.rect.move_ip(0, 6)
+			self.button_production.render(surface)
+
+		else:
+			if self.planet.fleets:
+				if self.planet.fleets[0].get_ship_counts()["Colony"] > 0:
+					self.button_colonize.rect.topright = self.centered_rect.bottomleft
+					self.button_colonize.rect.move_ip(-32, 32)
+					self.button_colonize.render(surface)
 
 	def select_planet(self, planet):
 		self.planet = planet
@@ -238,6 +251,9 @@ class PlanetScreen(ScreenBase):
 		s = self._app.screens.change_to("Research")
 		s.select_planet(self.planet)
 
+	def on_colonize_clicked(self):
+		self._app.local_player.found_colony(self.planet)
+	
 	def on_next_planet(self):
 		self.select_planet(self._app.local_player.next_planet(self.selected_planet).star)
 

@@ -46,12 +46,14 @@ class PlayerBase:
 
 		return self.planets[self.selected_planet_index]
 
-	def colonize_planet(self, planet):
+	def found_colony(self, planet):
 		self.planets.append(planet)
-		planet.colonize(self)
+		planet.found_colony(self)
 
 	def create_fleet(self, planet):
 		self.fleets_counter += 1
 		fleet = Fleet(planet, self.fleets_counter)
 		self.fleets.append(fleet)
 		return fleet
+
+

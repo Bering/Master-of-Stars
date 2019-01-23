@@ -75,7 +75,7 @@ class GalaxyScreen(ScreenBase):
 			self.selected_star = star
 
 	def on_select_star(self, star):
-		select_star(star)
+		self.select_star(star)
 
 	def on_next_planet(self):
 		screen = self._app.screens.change_to("Star")

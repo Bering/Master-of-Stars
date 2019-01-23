@@ -50,12 +50,16 @@ class Planet:
 		self.name_rect = self.name_surf.get_rect()
 		self.name_rect.midtop = self.rect.midbottom
 
-	def colonize(self, player):
-		if (self.player): return False
+	def found_colony(self, player):
+		fleet = self.fleets[0]
+		best_colony_ship = fleet.get_best_ship("Colony")
+		fleet.destroy_ship(best_colony_ship)
+		if fleet.get_ship_counts()["Total"] == 0:
+			self.fleets.remove(fleet)
 
 		self.player = player
-		self.population = 1
-		self.industry = 1
+		self.population = best_colony_ship.tech_level
+		self.industry = best_colony_ship.tech_level
 		self.population += _production_bonuses[self.type]["pop"]
 		self.industry += _production_bonuses[self.type]["ind"]
 		self.science += _production_bonuses[self.type]["sci"]

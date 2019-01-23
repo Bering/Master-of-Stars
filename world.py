@@ -101,10 +101,12 @@ class World:
 			planet = star.planets[random.randrange(len(star.planets))]
 			owner = planet.player
 		
-		player.colonize_planet(planet)
+		planet.player = player
+		planet.build_ship("Scout")
+		planet.build_ship("Colony")
+		player.found_colony(planet)
 		planet.defense = 5
 		planet.shipyard_level = 1
-		planet.build_ship("Scout")
 		return planet
 
 	def next_turn(self):

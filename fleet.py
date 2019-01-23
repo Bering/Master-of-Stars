@@ -50,3 +50,19 @@ class Fleet:
 			counts["Total"] += 1
 
 		return counts
+
+	def get_best_ship(self, ship_type):
+		best_ship = None
+
+		for ship in self.ships:
+			if ship.type == ship_type:
+				if not best_ship:
+					best_ship = ship
+				if ship.tech_level > best_ship.tech_level:
+					best_ship = ship
+
+		return best_ship
+
+	def destroy_ship(self, ship):
+		self.ships.remove(ship)
+	
