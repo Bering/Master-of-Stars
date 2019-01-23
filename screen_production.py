@@ -26,9 +26,9 @@ class ProductionScreen(ScreenBase):
 			if event.key == pygame.K_ESCAPE:
 				self.on_back_button_clicked()
 		elif event.type == pygame.MOUSEBUTTONUP:
-			for project, tile_rect in self.tiles.items():
+			for project_name, tile_rect in self.tiles.items():
 				if tile_rect.collidepoint(event.pos):
-					self.change_production(project)
+					self.change_production(project_name)
 			if self.back_button.rect.collidepoint(event.pos):
 				self.back_button.on_click()
 

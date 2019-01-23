@@ -2,6 +2,7 @@ from screen_galaxy import GalaxyScreen
 from screen_star import StarScreen
 from screen_planet import PlanetScreen
 from screen_production import ProductionScreen
+from screen_research import ResearchScreen
 from screen_quit import QuitScreen
 
 class ScreensManager:
@@ -12,6 +13,7 @@ class ScreensManager:
 			"Star" : StarScreen(app),
 			"Planet" : PlanetScreen(app),
 			"Production" : ProductionScreen(app),
+			"Research" : ResearchScreen(app),
 			"Quit" : QuitScreen(app)
 		}
 		self._previous_screen_name = "None"

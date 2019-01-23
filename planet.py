@@ -69,9 +69,6 @@ class Planet:
 		fleet = self.fleets[0]
 		fleet.create_ship(ship_type, self.player.tech_levels[ship_type])
 
-	def set_production(self, project_name):
-		self.production.change_to(project_name)
-
 	def set_research(self, project_name):
 		self.current_research_project = self.player.research_projects[project_name]
 

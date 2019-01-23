@@ -16,9 +16,8 @@ class PlayerBase:
 			"Destroyer" : 0,
 			"Colony" : 0
 		}
-		self.projects = {
-			"Shipyard2" : research.ResearchShipyard2(self),
-			"Shipyard3" : research.ResearchShipyard3(self),
+		self.research_projects = {
+			"Shipyard" : research.ResearchShipyard(self),
 			"Scout" : research.ResearchScout(self),
 			"Frigate" : research.ResearchFrigate(self),
 			"Destroyer" : research.ResearchDestroyer(self),

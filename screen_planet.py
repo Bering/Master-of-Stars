@@ -235,7 +235,8 @@ class PlanetScreen(ScreenBase):
 		s.select_planet(self.planet)
 
 	def on_change_research_clicked(self):
-		print("TODO: Change research screen")
+		s = self._app.screens.change_to("Research")
+		s.select_planet(self.planet)
 
 	def on_next_planet(self):
 		self.select_planet(self._app.local_player.next_planet(self.selected_planet).star)
