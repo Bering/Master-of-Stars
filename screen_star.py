@@ -28,6 +28,8 @@ class StarScreen(ScreenBase):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
 				self._app.screens.change_to("Quit")
+			elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+				self.on_next_turn_clicked()
 			elif (event.key == pygame.K_g):
 				self._app.screens.change_to("Galaxy")
 			elif (event.key == pygame.K_PERIOD):
@@ -108,6 +110,9 @@ class StarScreen(ScreenBase):
 
 	def on_planet_clicked(self, planet):
 		self.select_planet(planet)
+
+	def on_next_turn_clicked(self):
+		self._app.next_turn()
 
 	def on_next_planet(self):
 		self.selected_star = self._app.local_player.next_planet(self.selected_planet).star
