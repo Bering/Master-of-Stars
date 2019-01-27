@@ -80,13 +80,4 @@ print("Stars v.alpha0")
 app = Application()
 app.print_world()
 app.print_players()	
-
-for s in app.world.stars:
-	for p in s.planets:
-		if not p.player:
-			p.player = app.local_player
-			p.player.tech_levels["Colony"] = 1
-			p.build_ship("Colony")
-			p.player = None
-
 app.run()
