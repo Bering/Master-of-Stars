@@ -17,6 +17,8 @@ class Application:
 
 	def __init__(self):
 		pygame.init()
+		pygame.display.set_icon(pygame.image.load("images/star1.png"))
+		pygame.display.set_caption("STARS Alpha 0.1")
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
 
 		self.screens = screens.ScreensManager(self)
