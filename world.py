@@ -106,8 +106,10 @@ class World:
 		planet.build_ship("Colony")
 		player.found_colony(planet)
 
-		# Setup start conditions
+		# Setup start conditions. Remember that tech_level["Colony"] == 0
 		planet.build_ship("Scout")
+		planet.population += 1
+		planet.industry += 1
 		planet.defense = 5
 		planet.shipyard_level = 1
 		return planet
