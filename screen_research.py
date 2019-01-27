@@ -23,7 +23,7 @@ class ResearchScreen(ScreenBase):
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
-			if event.key == pygame.K_ESCAPE:
+			if event.key == pygame.K_ESCAPE or event.key == pygame.K_c:
 				self.on_back_button_clicked()
 		elif event.type == pygame.MOUSEBUTTONUP:
 			for project_name, tile_rect in self.tiles.items():
