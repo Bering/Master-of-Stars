@@ -83,6 +83,30 @@ class ProductionScreen(ScreenBase):
 			anchor = sy_rect.bottomright
 			anchor = anchor[0], anchor[1] + 6
 
+		if (self.selected_planet.player.tech_levels["Shipyard"] >= 2) \
+			and (self.selected_planet.shipyard_level == 1):
+			project = self.selected_planet.production.projects["Shipyard2"]
+			sy_surface = self.render_tile(project, (255,200,200))
+			sy_rect = sy_surface.get_rect()
+			sy_rect.topright = anchor
+			surface.blit(sy_surface, sy_rect)
+			self.tiles["Shipyard2"] = sy_rect
+
+			anchor = sy_rect.bottomright
+			anchor = anchor[0], anchor[1] + 6
+
+		if (self.selected_planet.player.tech_levels["Shipyard"] >= 3) \
+			and (self.selected_planet.shipyard_level == 2):
+			project = self.selected_planet.production.projects["Shipyard3"]
+			sy_surface = self.render_tile(project, (255,200,200))
+			sy_rect = sy_surface.get_rect()
+			sy_rect.topright = anchor
+			surface.blit(sy_surface, sy_rect)
+			self.tiles["Shipyard3"] = sy_rect
+
+			anchor = sy_rect.bottomright
+			anchor = anchor[0], anchor[1] + 6
+
 		if self.selected_planet.shipyard_level >= 1:
 			project = self.selected_planet.production.projects["Scout"]
 			scout_surface = self.render_tile(project, (255,200,200))

@@ -101,10 +101,13 @@ class World:
 			planet = star.planets[random.randrange(len(star.planets))]
 			owner = planet.player
 		
+		# Found colony
 		planet.player = player
-		planet.build_ship("Scout")
 		planet.build_ship("Colony")
 		player.found_colony(planet)
+
+		# Setup start conditions
+		planet.build_ship("Scout")
 		planet.defense = 5
 		planet.shipyard_level = 1
 		return planet
