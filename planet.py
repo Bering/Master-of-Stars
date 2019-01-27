@@ -77,15 +77,15 @@ class Planet:
 		self.current_research_project = self.player.research_projects[project_name]
 
 	def next_turn(self):
-		self.population += _production_bonuses[self.type]["pop"]
-		self.industry += _production_bonuses[self.type]["ind"]
-		self.science += _production_bonuses[self.type]["sci"]
+		#self.population += _production_bonuses[self.type]["pop"]
+		#self.industry += _production_bonuses[self.type]["ind"]
+		#self.science += _production_bonuses[self.type]["sci"]
 
 		if (self.population > _population_limits[self.size]):
 			self.population = _population_limits[self.size]
 
 		if (self.production):
-			self.production.next_turn(self)
+			self.production.next_turn()
 		
 		if (self.current_research_project):
 			self.current_research_project.next_turn(self.science)

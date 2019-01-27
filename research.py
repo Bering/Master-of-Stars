@@ -8,10 +8,12 @@ class ResearchBase:
 		self.progress = 0
 
 	def next_turn(self, science_units):
-		self.progress += science_units
 
-		if(self.progress >= self.cost):
-			self.effect()
+		if self.progress < self.cost:
+			self.progress += science_units
+
+			if(self.progress >= self.cost):
+				self.effect()
 
 	def effect(self):
 		pass

@@ -73,6 +73,9 @@ class Application:
 			self.screens.render(self._surface)
 			pygame.display.flip()
 
+	def next_turn(self):
+		self.world.next_turn()
+
 	def on_quit(self):
 		self.quit = True
 

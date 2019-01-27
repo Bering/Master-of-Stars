@@ -60,10 +60,16 @@ class PlanetScreen(ScreenBase):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
 				self._app.screens.change_to("Quit")
+			elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+				self.on_next_turn_clicked()
 			elif (event.key == pygame.K_g):
 				self._app.screens.change_to("Galaxy")
 			elif (event.key == pygame.K_s):
 				self._app.screens.change_to("Star")
+			elif (event.key == pygame.K_r):
+				self.on_change_research_clicked()
+			elif (event.key == pygame.K_p):
+				self.on_change_production_clicked()
 			elif (event.key == pygame.K_PERIOD):
 				self.on_next_planet()
 			elif (event.key == pygame.K_p):
@@ -195,7 +201,12 @@ class PlanetScreen(ScreenBase):
 		text += "Researching:\n"
 		text += self.planet.current_research_project.name + "\n"
 		text += "Cost: " + str(self.planet.current_research_project.cost) + "\n"
-		text += "Progress: " + str(self.planet.current_research_project.progress) + "\n"
+
+		if self.planet.current_research_project.progress < self.planet.current_research_project.cost:
+			text += "Progress: " + str(self.planet.current_research_project.progress) + "\n"
+		else:
+			text += "Progress: COMPLETE!"
+
 		return self.tile_renderer.render(text, (200,200,255))
 
 	def render_production_text(self):
@@ -239,6 +250,9 @@ class PlanetScreen(ScreenBase):
 			text += "Total: " + str(ship_counts["Total"])
 
 		return self.tile_renderer.render(text, (255,200,200))
+
+	def on_next_turn_clicked(self):
+		self._app.next_turn()
 
 	def on_planet_clicked(self):
 		self._app.screens.change_to("Star")
