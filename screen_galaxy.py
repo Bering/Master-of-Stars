@@ -1,6 +1,7 @@
 import os
 import pygame
 from screen_base import ScreenBase
+from button import Button
 
 class GalaxyScreen(ScreenBase):
 
@@ -19,6 +20,8 @@ class GalaxyScreen(ScreenBase):
 
 		filename = os.path.join("images", "shipyard.png")
 		self.shipyard_surface = pygame.image.load(filename)
+
+		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -42,6 +45,8 @@ class GalaxyScreen(ScreenBase):
 			for s in self._app.world.stars:
 				if s.rect.collidepoint(event.pos):
 					self.on_select_star(s)
+			if self.next_turn_button.rect.collidepoint(event.pos):
+				self.on_next_turn_clicked()
 
 	def update(self, delta_time):
 		pass
@@ -68,6 +73,9 @@ class GalaxyScreen(ScreenBase):
 			
 		if self.selected_star:
 			surface.blit(self.selection_marker_surface, self.selected_star.rect)
+
+		self.next_turn_button.rect.topright = surface.get_rect().topright
+		self.next_turn_button.render(surface)
 
 	def select_star(self, star):
 		if self.selected_star == star:

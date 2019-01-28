@@ -1,6 +1,7 @@
 import os
 import pygame
 from screen_base import ScreenBase
+from button import Button
 
 class StarScreen(ScreenBase):
 
@@ -23,6 +24,8 @@ class StarScreen(ScreenBase):
 
 		filename = os.path.join("images", "defense.png")
 		self.defense_surface = pygame.image.load(filename)
+
+		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -47,6 +50,8 @@ class StarScreen(ScreenBase):
 		elif (event.type == pygame.MOUSEBUTTONUP):
 			if self.selected_star and self.centered_rect.collidepoint(event.pos):
 				self.on_star_clicked()
+			elif self.next_turn_button.rect.collidepoint(event.pos):
+				self.on_next_turn_clicked()
 			else:
 				for p in self.selected_star.planets:
 					if p.rect.collidepoint(event.pos):
@@ -86,7 +91,10 @@ class StarScreen(ScreenBase):
 				surface.blit(self.defense_surface, rect)
 			
 			surface.blit(p.name_surf, p.name_rect)
-				
+		
+		self.next_turn_button.rect.topright = surface.get_rect().topright
+		self.next_turn_button.render(surface)
+
 	def select_star(self, star):
 		self.selected_star = star
 		self.selected_planet = None

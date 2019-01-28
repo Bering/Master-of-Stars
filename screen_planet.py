@@ -50,10 +50,12 @@ class PlanetScreen(ScreenBase):
 		self.button_production = Button("Change", self.on_change_production_clicked)
 		self.button_research = Button("Change", self.on_change_research_clicked)
 		self.button_colonize = Button("Colonize", self.on_colonize_clicked)
+		self.button_next_turn = Button("End Turn", self.on_next_turn_clicked)
 		self.buttons = [
 			self.button_production,
 			self.button_research,
-			self.button_colonize
+			self.button_colonize,
+			self.button_next_turn
 		]
 
 	def on_event(self, event):
@@ -162,6 +164,9 @@ class PlanetScreen(ScreenBase):
 					self.button_colonize.rect.move_ip(-32, 32)
 					self.button_colonize.render(surface)
 
+		self.button_next_turn.rect.topright = surface.get_rect().topright
+		self.button_next_turn.render(surface)
+		
 	def select_planet(self, planet):
 		self.planet = planet
 
