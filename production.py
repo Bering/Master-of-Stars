@@ -38,7 +38,6 @@ class ProductionBase:
 		self.progress = 0
 
 	def change_to(self):
-		# TODO: Should we keep the progress made during the previous project?
 		self.progress = 0
 
 	def next_turn(self):
