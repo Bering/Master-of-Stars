@@ -8,6 +8,7 @@ class GalaxyScreen(ScreenBase):
 	def __init__(self, app):
 		super().__init__(app)
 		self.selected_star = None
+		self.selected_fleet = None
 		
 		filename = os.path.join("images", "selection.png")
 		self.selection_marker_surface = pygame.image.load(filename)
@@ -45,6 +46,12 @@ class GalaxyScreen(ScreenBase):
 			for s in self._app.world.stars:
 				if s.rect.collidepoint(event.pos):
 					self.on_select_star(s)
+
+			for player in self._app.players + self._app.ais:
+				for fleet in player.fleets:
+					if fleet.rect.collidepoint(event.pos):
+						self.on_start_moving_fleet(fleet) # TODO: What about many fleets at the same star?
+
 			if self.next_turn_button.rect.collidepoint(event.pos):
 				self.on_next_turn_clicked()
 
@@ -59,30 +66,38 @@ class GalaxyScreen(ScreenBase):
 				if p.player:
 					surface.blit(self.owned_star_surface, s.rect)
 
-				if p.fleets:
-					rect = s.rect.copy()
-					rect.midleft = s.rect.topright
-					surface.blit(self.fleet_surface, rect)
-				
 				if p.shipyard_level > 0:
 					rect = s.rect.copy()
 					rect.midleft = s.rect.bottomright
 					surface.blit(self.shipyard_surface, rect)
 			
 			surface.blit(s.name_surf, s.name_rect)
+
+		for player in self._app.players + self._app.ais:
+			for f in player.fleets:
+				if f.destination_star:
+					pygame.draw.aaline(surface, (255,255,255), f.rect.center, f.destination_star.rect.center)
+				surface.blit(self.fleet_surface, f.rect)
 			
 		if self.selected_star:
 			surface.blit(self.selection_marker_surface, self.selected_star.rect)
+
+		if self.selected_fleet:
+			surface.blit(self.selection_marker_surface, self.selected_fleet.rect)
 
 		self.next_turn_button.rect.topright = surface.get_rect().topright
 		self.next_turn_button.render(surface)
 
 	def select_star(self, star):
-		if self.selected_star == star:
-			screen = self._app.screens.change_to("Star")
-			screen.select_star(star)
+		if self.selected_fleet:
+			self.selected_fleet.set_destination_star(star)
+			self.selected_fleet = None
 		else:
-			self.selected_star = star
+			if self.selected_star == star:
+				screen = self._app.screens.change_to("Star")
+				screen.select_star(star)
+			else:
+				self.selected_star = star
 
 	def on_select_star(self, star):
 		self.select_star(star)
@@ -90,14 +105,5 @@ class GalaxyScreen(ScreenBase):
 	def on_next_turn_clicked(self):
 		self._app.next_turn()
 
-	def on_next_planet(self):
-		screen = self._app.screens.change_to("Star")
-		screen.select_star(star)
-		planet = self._app.local_player.next_planet()
-		screen.select_planet(planet)
-
-	def on_prev_planet(self):
-		screen = self._app.screens.change_to("Star")
-		screen.select_star(star)
-		planet = self._app.local_player.prev_planet()
-		screen.select_planet(planet)
+	def on_start_moving_fleet(self, fleet):
+		self.selected_fleet = fleet

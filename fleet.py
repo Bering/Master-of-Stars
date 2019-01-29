@@ -6,13 +6,18 @@ class Fleet:
 
 	def __init__(self, planet, number):
 		self.name = self.generate_name(number)
+		self.star = planet.star
 		self.planet = planet
 		self.player = planet.player
 		self.ships = []
+		self.destination_star = None
+		self.destination_planet = None
 
 		image_file = os.path.join("images", "fleet.png")
 		self.surface = pygame.image.load(image_file).convert_alpha()
-		self.rect = self.surface.get_rect().move(planet.rect.x, planet.rect.y)
+		self.rect = self.surface.get_rect()
+		star_rect = planet.star.rect
+		self.rect.midleft = star_rect.topright
 
 		font = pygame.font.Font(None, 18)
 		self.name_surf = font.render(self.name, True, (255,255,255))
@@ -65,4 +70,13 @@ class Fleet:
 
 	def destroy_ship(self, ship):
 		self.ships.remove(ship)
-	
+
+	def next_turn(self):
+		# TODO: Move towards destination_star
+		if self.rect.colliderect(self.destination_star.rect):
+			self.rect.midleft = self.destination_star.rect.topright
+			self.destination_star = None
+
+	def set_destination_star(self, star):
+		self.destination_star = star
+		self.rect.midright = self.star.rect.topleft
