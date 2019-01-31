@@ -8,6 +8,7 @@ class Fleet:
 	def __init__(self, planet, number):
 		self.name = self.generate_name(number)
 		self.star = planet.star
+		self.star.fleets.append(self)
 		self.planet = planet
 		self.player = planet.player
 		self.ships = []
@@ -26,7 +27,6 @@ class Fleet:
 		self.name_rect.midleft = planet.rect.topright
 
 	def generate_name(self, number):
-
 		if number == 11: return "11th"
 		if number == 12: return "12th"
 		if number == 13: return "13th"
@@ -74,6 +74,8 @@ class Fleet:
 
 	def set_destination_star(self, star):
 		self.destination_star = star
+		self.planet.fleets.remove(self)
+		self.planet = None
 
 		# NOTE: This codes is assuming the fleet is in orbit around a star
 
@@ -89,10 +91,15 @@ class Fleet:
 		self.rect.midleft = self.destination_star.rect.topright
 		self.star = self.destination_star
 		self.destination_star = None
+		self.star.fleets.append(self)
 		
 	def next_turn(self):
 		if not self.destination_star:
 			return
+
+		if self.star:
+			self.star.fleets.remove(self)
+			self.star = None
 
 		delta_x = self.destination_star.rect.x - self.rect.x
 		delta_y = self.destination_star.rect.y - self.rect.y

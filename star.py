@@ -8,6 +8,7 @@ class Star:
 	def __init__(self, name, x, y):
 		self.name = name
 		self.planets = []
+		self.fleets = []
 
 		n = random.randrange(5) + 1
 		image_file = os.path.join("images", "star" + str(n) + ".png")

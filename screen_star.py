@@ -66,6 +66,12 @@ class StarScreen(ScreenBase):
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.selected_star.name_surf, self.name_rect)
 
+		for f in self.selected_star.fleets:
+			if not f.planet:
+				rect = f.rect.copy()
+				rect.midleft = self.centered_rect.topright
+				surface.blit(self.fleet_surface, rect)
+			
 		for p in self.selected_star.planets:
 			surface.blit(p.surface, p.rect)
 
