@@ -45,7 +45,7 @@ class GalaxyScreen(ScreenBase):
 		elif (event.type == pygame.MOUSEBUTTONUP):
 			for s in self._app.world.stars:
 				if s.rect.collidepoint(event.pos):
-					self.on_select_star(s)
+					self.on_star_clicked(s)
 
 			for player in self._app.players + self._app.ais:
 				for fleet in player.fleets:
@@ -99,7 +99,7 @@ class GalaxyScreen(ScreenBase):
 			else:
 				self.selected_star = star
 
-	def on_select_star(self, star):
+	def on_star_clicked(self, star):
 		self.select_star(star)
 
 	def on_next_turn_clicked(self):

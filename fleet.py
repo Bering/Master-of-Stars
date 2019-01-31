@@ -79,7 +79,7 @@ class Fleet:
 
 		delta_x = self.destination_star.rect.x - self.star.rect.x
 		delta_y = self.destination_star.rect.y - self.star.rect.y
-		
+
 		heading = math.atan2(delta_x, delta_y)
 
 		self.rect.center = self.star.rect.center
@@ -94,8 +94,8 @@ class Fleet:
 		if not self.destination_star:
 			return
 
-		delta_x = self.destination_star.rect.x - self.star.rect.x
-		delta_y = self.destination_star.rect.y - self.star.rect.y
+		delta_x = self.destination_star.rect.x - self.rect.x
+		delta_y = self.destination_star.rect.y - self.rect.y
 		remaining_distance = math.hypot(delta_x, delta_y)
 
 		max_speed = self.get_speed()

@@ -56,6 +56,7 @@ class Planet:
 		fleet.destroy_ship(best_colony_ship)
 		if fleet.get_ship_counts()["Total"] == 0:
 			self.fleets.remove(fleet)
+			# TODO: player.fleets.remove(fleet)
 
 		self.player = player
 		self.population = best_colony_ship.tech_level
