@@ -50,7 +50,7 @@ class GalaxyScreen(ScreenBase):
 			for player in self._app.players + self._app.ais:
 				for fleet in player.fleets:
 					if fleet.rect.collidepoint(event.pos):
-						self.on_start_moving_fleet(fleet) # TODO: What about many fleets at the same star?
+						self.on_fleet_clicked(fleet) # TODO: What about many fleets at the same star?
 
 			if self.next_turn_button.rect.collidepoint(event.pos):
 				self.on_next_turn_clicked()
@@ -105,5 +105,5 @@ class GalaxyScreen(ScreenBase):
 	def on_next_turn_clicked(self):
 		self._app.next_turn()
 
-	def on_start_moving_fleet(self, fleet):
+	def on_fleet_clicked(self, fleet):
 		self.selected_fleet = fleet

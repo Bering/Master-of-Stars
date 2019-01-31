@@ -1,5 +1,6 @@
 from ship import Ship
 import os
+import math
 import pygame
 
 class Fleet:
@@ -71,12 +72,32 @@ class Fleet:
 	def destroy_ship(self, ship):
 		self.ships.remove(ship)
 
+	def set_destination_star(self, star):
+		self.destination_star = star
+
+		# NOTE: This codes is assuming the fleet is in orbit around a star
+
+		headingx = self.destination_star.rect.x - self.star.rect.x
+		headingy = self.destination_star.rect.y - self.star.rect.y
+
+		hypot = math.hypot(headingx, headingy)
+		
+		# if the destination star is really really close, instant move
+		if hypot == 0:
+			self.arrive()
+			return
+
+		angle = math.atan2(headingx, headingy)
+
+		self.rect.center = self.star.rect.center
+		self.rect.move_ip(math.sin(angle) * 16, math.cos(angle) * 16)
+
+	def arrive(self):
+		self.rect.midleft = self.destination_star.rect.topright
+		self.star = self.destination_star
+		self.destination_star = None
+
 	def next_turn(self):
 		# TODO: Move towards destination_star
 		if self.rect.colliderect(self.destination_star.rect):
-			self.rect.midleft = self.destination_star.rect.topright
-			self.destination_star = None
-
-	def set_destination_star(self, star):
-		self.destination_star = star
-		self.rect.midright = self.star.rect.topleft
+			self.arrive()
