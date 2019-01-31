@@ -77,6 +77,10 @@ class Application:
 
 	def next_turn(self):
 		self.world.next_turn()
+		
+		for player in self.players + self.ais:
+			for fleet in player.fleets:
+				fleet.next_turn()
 
 	def on_quit(self):
 		self.quit = True

@@ -77,27 +77,45 @@ class Fleet:
 
 		# NOTE: This codes is assuming the fleet is in orbit around a star
 
-		headingx = self.destination_star.rect.x - self.star.rect.x
-		headingy = self.destination_star.rect.y - self.star.rect.y
-
-		hypot = math.hypot(headingx, headingy)
+		delta_x = self.destination_star.rect.x - self.star.rect.x
+		delta_y = self.destination_star.rect.y - self.star.rect.y
 		
-		# if the destination star is really really close, instant move
-		if hypot == 0:
-			self.arrive()
-			return
-
-		angle = math.atan2(headingx, headingy)
+		heading = math.atan2(delta_x, delta_y)
 
 		self.rect.center = self.star.rect.center
-		self.rect.move_ip(math.sin(angle) * 16, math.cos(angle) * 16)
+		self.rect.move_ip(math.sin(heading) * 16, math.cos(heading) * 16)
 
 	def arrive(self):
 		self.rect.midleft = self.destination_star.rect.topright
 		self.star = self.destination_star
 		self.destination_star = None
-
+		
 	def next_turn(self):
-		# TODO: Move towards destination_star
+		if not self.destination_star:
+			return
+
+		delta_x = self.destination_star.rect.x - self.star.rect.x
+		delta_y = self.destination_star.rect.y - self.star.rect.y
+		remaining_distance = math.hypot(delta_x, delta_y)
+
+		max_speed = self.get_speed()
+		distance_this_turn = min(remaining_distance, max_speed)
+
+		heading = math.atan2(delta_x, delta_y)
+
+		self.rect.move_ip(
+			math.sin(heading) * distance_this_turn,
+			math.cos(heading) * distance_this_turn
+		)
+
 		if self.rect.colliderect(self.destination_star.rect):
 			self.arrive()
+
+	def get_speed(self):
+		max_speed = math.inf
+
+		for s in self.ships:
+			if s.speed < max_speed:
+				max_speed = s.speed
+
+		return max_speed
