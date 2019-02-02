@@ -99,11 +99,14 @@ class GalaxyScreen(ScreenBase):
 			else:
 				self.selected_star = star
 
+	def select_fleet(self, fleet):
+		self.selected_fleet = fleet
+
 	def on_star_clicked(self, star):
 		self.select_star(star)
 
+	def on_fleet_clicked(self, fleet):
+		self.select_fleet(fleet)
+
 	def on_next_turn_clicked(self):
 		self._app.next_turn()
-
-	def on_fleet_clicked(self, fleet):
-		self.selected_fleet = fleet

@@ -84,8 +84,6 @@ class Fleet:
 				return
 
 		self.destination_star = star
-		self.planet.fleets.remove(self)
-		self.planet = None
 
 		delta_x = self.destination_star.rect.x - self.star.rect.x
 		delta_y = self.destination_star.rect.y - self.star.rect.y
@@ -96,35 +94,54 @@ class Fleet:
 		self.rect.move_ip(math.sin(heading) * 16, math.cos(heading) * 16)
 
 	def set_destination_planet(self, planet):
-		# Cannot change destination while moving
 		if self.destination_planet:
-			return
+			if not self.planet:
+				# Cannot change destination while moving
+				return None
+			elif self.planet == planet:
+				# But can cancel departure
+				self.destination_planet = planet
+				self.arrive()
+				return None
 
-		self.destination_star = star
-		self.planet.fleets.remove(self)
-		self.planet = None
+		self.destination_planet = planet
 
-		delta_x = self.destination_star.rect.x - self.star.rect.x
-		delta_y = self.destination_star.rect.y - self.star.rect.y
+	def get_departing_planet_rect(self, destination_rect):
+		delta_x = destination_rect.x - self.planet.rect.x
+		delta_y = destination_rect.y - self.planet.rect.y
 
 		heading = math.atan2(delta_x, delta_y)
 
-		self.rect.center = self.star.rect.center
-		self.rect.move_ip(math.sin(heading) * 16, math.cos(heading) * 16)
+		rect = self.planet.rect.copy()
+		rect.move_ip(math.sin(heading) * 16, math.cos(heading) * 16)
+		return rect
 
 	def arrive(self):
-		self.rect.midleft = self.destination_star.rect.topright
-		self.star = self.destination_star
-		self.destination_star = None
-		self.star.fleets.append(self)
-		
+		if self.destination_planet:
+			self.planet.fleets.remove(self)
+			self.planet = self.destination_planet
+			self.planet.fleets.append(self)
+			self.destination_planet = None
+		else:
+			self.rect.midleft = self.destination_star.rect.topright
+			self.star = self.destination_star
+			self.star.fleets.append(self)		
+			self.destination_star = None
+
 	def next_turn(self):
+		if self.destination_planet:
+			self.arrive()
+
 		if not self.destination_star:
 			return
 
 		if self.star:
 			self.star.fleets.remove(self)
 			self.star = None
+
+		if self.planet:
+			self.planet.fleets.remove(self)
+			self.planet = None
 
 		delta_x = self.destination_star.rect.x - self.rect.x
 		delta_y = self.destination_star.rect.y - self.rect.y
