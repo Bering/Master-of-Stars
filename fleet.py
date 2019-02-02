@@ -73,11 +73,36 @@ class Fleet:
 		self.ships.remove(ship)
 
 	def set_destination_star(self, star):
+		if self.destination_star:
+			if not self.star:
+				# Cannot change destination while moving
+				return
+			elif self.star == star:
+				# But can cancel departure
+				self.destination_star = star
+				self.arrive()
+				return
+
 		self.destination_star = star
 		self.planet.fleets.remove(self)
 		self.planet = None
 
-		# NOTE: This codes is assuming the fleet is in orbit around a star
+		delta_x = self.destination_star.rect.x - self.star.rect.x
+		delta_y = self.destination_star.rect.y - self.star.rect.y
+
+		heading = math.atan2(delta_x, delta_y)
+
+		self.rect.center = self.star.rect.center
+		self.rect.move_ip(math.sin(heading) * 16, math.cos(heading) * 16)
+
+	def set_destination_planet(self, planet):
+		# Cannot change destination while moving
+		if self.destination_planet:
+			return
+
+		self.destination_star = star
+		self.planet.fleets.remove(self)
+		self.planet = None
 
 		delta_x = self.destination_star.rect.x - self.star.rect.x
 		delta_y = self.destination_star.rect.y - self.star.rect.y
