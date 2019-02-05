@@ -54,53 +54,35 @@ class StarScreen(ScreenBase):
 			elif self.next_turn_button.rect.collidepoint(event.pos):
 				self.on_next_turn_clicked()
 			else:
-				rect = self.centered_rect.copy()
-				rect.midleft = self.centered_rect.topright
-				if rect.collidepoint(event.pos):
-					for f in self.star.fleets:
-						if not f.planet:
-							self.on_fleet_clicked(f)
-							return
+				for f in self.star.fleets:
+					if f.rect_s.collidepoint(event.pos):
+						self.on_fleet_clicked(f)
+						return
 				for p in self.star.planets:
 					if p.rect.collidepoint(event.pos):
 						self.on_planet_clicked(p)
-					else:
-						rect = p.rect.copy()
-						rect.midleft = p.rect.topright
-						if rect.collidepoint(event.pos):
-							if p.fleets:
-								self.on_fleet_clicked(p.fleets[0]) # TODO: What about many fleets at the same planet?
+						return
 
 	def update(self, delta_time):
 		pass
 
 	def render(self, surface):
-		for f in self.star.fleets:
-			if not f.planet:
-				rect = f.rect.copy()
-				rect.midleft = self.centered_rect.topright
-				surface.blit(self.fleet_surface, rect)
-			elif f.destination_planet:
-				rect = f.get_departing_planet_rect(f.destination_planet.rect)
-				surface.blit(self.fleet_surface, rect)
-				pygame.draw.aaline(surface, (255,255,255), rect.center, f.destination_planet.rect.center)
-			elif f.destination_star:
-				rect = f.get_departing_planet_rect(self.centered_rect)
-				surface.blit(self.fleet_surface, rect)
-				pygame.draw.aaline(surface, (255,255,255), rect.center, self.centered_rect.center)
-			else:
-				rect = f.planet.rect.copy()
-				rect.midleft = f.planet.rect.topright
-				surface.blit(self.fleet_surface, rect)
 
-			if f == self.selected_fleet:
-				if f.planet:
-					rect = f.planet.rect.copy()
-					rect.midleft = f.planet.rect.topright
-				else:
-					rect = self.centered_rect.copy()
-					rect.midleft = self.centered_rect.topright
-				surface.blit(self.selection_marker_surface, rect)
+		for f in self.star.fleets:
+
+			if not f.planet and not f.destination_planet:
+				f.rect_s.midleft = self.centered_rect.topright
+
+			if f.destination_star or f.destination_center_star_rect:
+				pygame.draw.aaline(surface, (255,255,255), f.rect_s.center, self.centered_rect.center)
+
+			if f.destination_planet:
+				pygame.draw.aaline(surface, (255,255,255), f.rect_s.center, f.destination_planet.rect.center)
+
+			surface.blit(self.fleet_surface, f.rect_s)
+
+		if self.selected_fleet:
+			surface.blit(self.selection_marker_surface, self.selected_fleet.rect_s)
 
 		for p in self.star.planets:
 			surface.blit(p.surface, p.rect)
@@ -146,7 +128,10 @@ class StarScreen(ScreenBase):
 
 	def select_planet(self, planet):
 		if self.selected_fleet:
-			self.selected_fleet.set_destination_planet(planet)
+			if self.selected_fleet.planet:
+				self.selected_fleet.set_destination_planet(self.selected_fleet.planet.rect, planet)
+			else:
+				self.selected_fleet.set_destination_planet(self.centered_rect, planet)
 			self.selected_fleet = None
 		else:
 			if self.selected_planet == planet:
@@ -160,7 +145,7 @@ class StarScreen(ScreenBase):
 
 	def on_star_clicked(self):
 		if self.selected_fleet:
-			self.selected_fleet.set_destination_star(self.star)
+			self.selected_fleet.set_destination_center_star(self.centered_rect)
 			self.selected_fleet = None
 		else:
 			self._app.screens.change_to("Galaxy")
