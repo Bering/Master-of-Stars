@@ -76,7 +76,8 @@ class Planet:
 
 	def set_research(self, project_name):
 		self.current_research_project = self.player.research_projects[project_name]
-
+		self.current_research_project.is_complete = False
+	
 	def next_turn(self):
 		#self.population += _production_bonuses[self.type]["pop"]
 		#self.industry += _production_bonuses[self.type]["ind"]
@@ -90,3 +91,5 @@ class Planet:
 		
 		if (self.current_research_project):
 			self.current_research_project.next_turn(self.science)
+			if self.current_research_project.is_complete:
+				self.current_research_project = None
