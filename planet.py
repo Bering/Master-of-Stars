@@ -13,13 +13,6 @@ _population_limits = {
 	"Large" : 10000,
 	"Huge" : 100000
 }
-_production_bonuses = {
-	"Baren" : { "pop": 0, "ind": 0, "sci": 0 },
-	"Arid" : { "pop": 0, "ind": 0, "sci": 0 },
-	"Terran" : { "pop": 1, "ind": 0, "sci": 0 },
-	"Rich" : { "pop": 0, "ind": 1, "sci": 0 },
-	"Gaia" : { "pop": 2, "ind": 2, "sci": 1 }
-}
 
 class Planet:
 
@@ -28,6 +21,7 @@ class Planet:
 		self.name = star.name + " " + _suffixes[len(star.planets)]
 		self.size = _sizes[random.randrange(len(_sizes))]
 		self.type = _types[random.randrange(len(_types))]
+		self.population_limit = _population_limits[self.size]
 		self.player = None
 		self.fleets = []
 		self.production = production.ProductionManager(self)
@@ -61,9 +55,9 @@ class Planet:
 		self.player = player
 		self.population = best_colony_ship.tech_level
 		self.industry = best_colony_ship.tech_level
-		self.population += _production_bonuses[self.type]["pop"]
-		self.industry += _production_bonuses[self.type]["ind"]
-		self.science += _production_bonuses[self.type]["sci"]
+		self.population = 1
+		self.industry = 1
+		self.science = 0
 		return True
 
 	def build_ship(self, ship_type):
@@ -79,13 +73,6 @@ class Planet:
 		self.current_research_project.is_complete = False
 	
 	def next_turn(self):
-		#self.population += _production_bonuses[self.type]["pop"]
-		#self.industry += _production_bonuses[self.type]["ind"]
-		#self.science += _production_bonuses[self.type]["sci"]
-
-		if (self.population > _population_limits[self.size]):
-			self.population = _population_limits[self.size]
-
 		if (self.production):
 			self.production.next_turn()
 		

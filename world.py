@@ -106,8 +106,8 @@ class World:
 		planet.build_ship("Colony")
 		planet.build_ship("Scout") # Build the scout before founding the colony so the 1st fleet doesn't dismantle
 		player.found_colony(planet)
-		planet.population += 1
-		planet.industry += 1
+		planet.population = 5
+		planet.industry = 5
 		planet.defense = 5
 		planet.shipyard_level = 1
 		return planet

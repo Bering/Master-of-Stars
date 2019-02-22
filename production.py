@@ -62,14 +62,18 @@ class ProdPop(ProductionBase):
 
 	def effect(self, item_count):
 		self.planet.population += item_count
+		if (self.planet.population > self.planet.population_limit):
+			self.planet.population = self.planet.population_limit
 
 class ProdInd(ProductionBase):
 
 	def __init__(self, planet):
-		super().__init__(planet, "Mines", "Increase industry", 5)
+		super().__init__(planet, "Factories", "Increase industry", 5)
 
 	def effect(self, item_count):
 		self.planet.industry += item_count
+		if self.planet.industry > self.planet.population:
+			self.planet.industry = self.planet.population
 
 class ProdSci(ProductionBase):
 
@@ -78,6 +82,8 @@ class ProdSci(ProductionBase):
 
 	def effect(self, item_count):
 		self.planet.science += item_count
+		if self.planet.science > self.planet.population:
+			self.planet.science = self.planet.population
 
 class ProdDef(ProductionBase):
 
@@ -86,6 +92,8 @@ class ProdDef(ProductionBase):
 
 	def effect(self, item_count):
 		self.planet.defense += item_count
+		if self.planet.science > self.planet.population:
+			self.planet.science = self.planet.population
 
 class ProdShipyard1(ProductionBase):
 
