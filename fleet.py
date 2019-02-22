@@ -92,42 +92,18 @@ class Fleet:
 				return
 
 		self.destination_star = star
-
-		delta_x = self.destination_star.rect.center[0] - self.star.rect.center[0]
-		delta_y = self.destination_star.rect.center[1] - self.star.rect.center[1]
-
-		heading = math.atan2(delta_x, delta_y)
-
-		self.rect.center = self.star.rect.center
-		self.rect.move_ip(math.sin(heading) * 16, math.cos(heading) * 16)
+		self.destination_planet = None
+		self.rect.midright = self.star.rect.topleft
+		self.rect_s.midright = self.planet.rect.topleft
 
 	def set_destination_center_star(self, star_rect):
 		"""Go to the star from a planet in the star screen"""
-		#if self.destination_planet:
-		#	if not self.planet:
-		#		# Cannot change destination while moving
-		#		return
-		#	elif self.planet == planet:
-		#		# But can cancel departure
-		#		self.destination_planet = planet
-		#		self.arrive()
-		#		return
-
 		self.destination_center_star_rect = star_rect
-
-		delta_x = star_rect.center[0] - self.planet.rect.center[0]
-		delta_y = star_rect.center[1] - self.planet.rect.center[1]
-
-		heading = math.atan2(delta_x, delta_y)
-
-		self.rect_s.center = self.planet.rect.center
-		self.rect_s.move_ip(
-			math.sin(heading) * self.planet.rect.width,
-			math.cos(heading) * self.planet.rect.height
-		)
+		self.rect_s.midright = self.planet.rect.topleft
 
 	def set_destination_planet(self, source_rect, planet):
 		"""Move between planets and from a planet to the star in the Star Screen"""
+		
 		if self.destination_planet:
 			if not self.planet:
 				# Cannot change destination while moving
@@ -138,15 +114,9 @@ class Fleet:
 				self.arrive()
 				return
 
+		self.destination_star = None
 		self.destination_planet = planet
-
-		delta_x = planet.rect.center[0] - source_rect.center[0]
-		delta_y = planet.rect.center[1] - source_rect.center[1]
-
-		heading = math.atan2(delta_x, delta_y)
-
-		self.rect_s.center = source_rect.center
-		self.rect_s.move_ip(math.sin(heading) * source_rect.width, math.cos(heading) * source_rect.height)
+		self.rect_s.midright = source_rect.topleft
 
 	def arrive(self):
 		if self.destination_star:
