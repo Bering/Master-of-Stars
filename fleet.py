@@ -71,7 +71,7 @@ class Fleet:
 			if ship.type == ship_type:
 				if not best_ship:
 					best_ship = ship
-				if ship.tech_level > best_ship.tech_level:
+				elif ship.tech_level > best_ship.tech_level:
 					best_ship = ship
 
 		return best_ship
