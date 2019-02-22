@@ -23,6 +23,9 @@ class ProductionManager:
 		self.current_project = self.projects[project_name]
 		self.current_project.change_to()
 
+	def clear_project(self):
+		self.current_project = None
+
 	def next_turn(self):
 		if self.current_project:
 			self.current_project.next_turn()
@@ -101,8 +104,8 @@ class ProdShipyard1(ProductionBase):
 		super().__init__(planet, "Shipyard", "Allow production of Scout ships.", 50)
 
 	def effect(self, item_count):
-		for n in range(item_count):
-			self.planet.shipyard_level = 1
+		self.planet.shipyard_level = 1
+		self.planet.production.clear_project()
 
 class ProdShipyard2(ProductionBase):
 
@@ -110,8 +113,8 @@ class ProdShipyard2(ProductionBase):
 		super().__init__(planet, "Shipyard Upgrade", "Allow production of Frigates.", 500)
 
 	def effect(self, item_count):
-		for n in range(item_count):
-			self.planet.shipyard_level = 2
+		self.planet.shipyard_level = 2
+		self.planet.production.clear_project()
 
 class ProdShipyard3(ProductionBase):
 
@@ -119,8 +122,8 @@ class ProdShipyard3(ProductionBase):
 		super().__init__(planet, "Shipyard Upgrade", "Allow Colony ships and Destroyers.", 5000)
 
 	def effect(self, item_count):
-		for n in range(item_count):
-			self.planet.shipyard_level = 3
+		self.planet.shipyard_level = 3
+		self.planet.production.clear_project()
 
 class ProdScout(ProductionBase):
 
