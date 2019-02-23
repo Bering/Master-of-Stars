@@ -128,10 +128,7 @@ class StarScreen(ScreenBase):
 
 	def select_planet(self, planet):
 		if self.selected_fleet:
-			if self.selected_fleet.planet:
-				self.selected_fleet.set_destination_planet(self.selected_fleet.planet.rect, planet)
-			else:
-				self.selected_fleet.set_destination_planet(self.centered_rect, planet)
+			self.selected_fleet.set_destination_planet(planet)
 			self.selected_fleet = None
 		else:
 			if self.selected_planet == planet:

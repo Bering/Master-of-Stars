@@ -28,6 +28,9 @@ class Fleet:
 		self.rect_s = planet.rect.copy()
 		self.rect_s.midleft = planet.rect.topright
 
+		# rect of orbiting body
+		self.rect_orbit = planet.rect.copy()
+
 		font = pygame.font.Font(None, 18)
 		self.name_surf = font.render(self.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
@@ -81,42 +84,64 @@ class Fleet:
 
 	def set_destination_star(self, star):
 		"""Move between stars in the galaxy screen"""
+
 		if self.destination_star:
+			# Cannot change destination while moving
 			if not self.star:
-				# Cannot change destination while moving
 				return
-			elif self.star == star:
-				# But can cancel departure
-				self.destination_star = star
-				self.arrive()
+
+			# Cancel departure
+			if star == self.star:
+				self.cancel_departure()
 				return
+
+		# Ignore setting destination to orbiting star
+		if star == self.star:
+			return
 
 		self.destination_star = star
 		self.destination_planet = None
+		self.destination_center_star_rect = None
+
 		self.rect.midright = self.star.rect.topleft
-		self.rect_s.midright = self.planet.rect.topleft
+		self.rect_s.midright = self.rect_orbit.topleft
 
 	def set_destination_center_star(self, star_rect):
 		"""Go to the star from a planet in the star screen"""
-		self.destination_center_star_rect = star_rect
-		self.rect_s.midright = self.planet.rect.topleft
-
-	def set_destination_planet(self, source_rect, planet):
-		"""Move between planets and from a planet to the star in the Star Screen"""
 		
 		if self.destination_planet:
-			if not self.planet:
-				# Cannot change destination while moving
-				return
-			elif self.planet == planet:
-				# But can cancel departure
-				self.destination_planet = planet
-				self.arrive()
-				return
+			self.cancel_departure()
+			return
+
+		self.destination_star = None
+		self.destination_planet = None
+		self.destination_center_star_rect = star_rect
+		
+		self.rect_s.midright = self.rect_orbit.topleft
+
+	def set_destination_planet(self, planet):
+		"""Move between planets and from a planet to the star in the Star Screen"""
+		
+		if self.destination_star or self.destination_planet or self.destination_center_star_rect:
+			if planet == self.planet:
+				self.cancel_departure()
+
+		if planet == self.planet:
+			return
 
 		self.destination_star = None
 		self.destination_planet = planet
-		self.rect_s.midright = source_rect.topleft
+		self.destination_center_star_rect = None
+		self.rect_s.midright = self.rect_orbit.topleft
+
+	def cancel_departure(self):
+		if self.star:
+			self.rect.midleft = self.star.rect.topright
+		self.rect_s.midleft = self.rect_orbit.topright
+		self.destination_star = None
+		self.destination_planet = None
+		self.destination_center_star_rect = None
+		return
 
 	def arrive(self):
 		if self.destination_star:
@@ -129,12 +154,15 @@ class Fleet:
 		if self.destination_planet:
 			self.planet = self.destination_planet
 			self.planet.fleets.append(self)
+			self.rect_orbit = self.planet.rect
 			self.rect_s.midleft = self.planet.rect.topright
 			self.destination_planet = None
 			return
 
 		if self.destination_center_star_rect:
-			self.rect_s.midleft = self.destination_center_star_rect.topright
+			self.planet = None
+			self.rect_orbit = self.destination_center_star_rect
+			self.rect_s.midleft = self.rect_orbit.topright
 			self.destination_center_star_rect = None
 			return
 
@@ -149,6 +177,7 @@ class Fleet:
 		if self.planet:
 			self.planet.fleets.remove(self)
 			self.planet = None
+			self.rect_orbit = None
 
 		if self.destination_planet or self.destination_center_star_rect:
 			self.arrive()
