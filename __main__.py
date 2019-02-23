@@ -43,19 +43,31 @@ class Application:
 		s = self.screens.change_to("Planet")
 		s.select_planet(p)
 
+	def print_world(self):
+		planet_count = 0
+		output = "\n"
+		for s in self.world.stars:
+			output += "* " + s.name + "\n"
+			for p in s.planets:
+				planet_count += 1
+				output += "  o " + p.name + " (" + p.size + " " + p.type + ")\n"
+
+		print(
+			"\nCreated world with",
+			str(len(self.world.stars)),
+			"stars and",
+			str(planet_count),
+			"planets:",
+			output
+		)
+
 	def print_players(self):
-		print("\nGame has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
+		print("Game has " + str(len(self.players)) + " player(s) and " + str(len(self.ais)) + " AI(s)")
 		for p in self.players:
 			print("- " + p.name + " (" + p.planets[0].name + ")")
 		for ai in self.ais:
 			print("- " + ai.name + " (" + ai.planets[0].name + ")")
-
-	def print_world(self):
-		print("\nCreated world with " + str(len(self.world.stars)) + " stars:")
-		for s in self.world.stars:
-			print("* " + s.name)
-			for p in s.planets:
-				print("  o " + p.name + " (" + p.size + " " + p.type + ")")
+		print("")
 
 	def run(self):
 		self.quit = False
