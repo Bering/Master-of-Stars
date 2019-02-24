@@ -48,7 +48,7 @@ class ProductionBase:
 
 		item_count = 0
 
-		while(self.progress > self.cost):
+		while(self.progress >= self.cost):
 			self.progress -= self.cost
 			item_count += 1
 
