@@ -2,6 +2,7 @@ import os
 import pygame
 from screen_base import ScreenBase
 from button import Button
+from popup import Popup
 
 class StarScreen(ScreenBase):
 
@@ -27,6 +28,7 @@ class StarScreen(ScreenBase):
 		self.defense_surface = pygame.image.load(filename)
 
 		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
+		self.fleet_selection_popup = None
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -49,19 +51,33 @@ class StarScreen(ScreenBase):
 				self.on_prev_planet()
 
 		elif (event.type == pygame.MOUSEBUTTONUP):
-			if self.star and self.centered_rect.collidepoint(event.pos):
-				self.on_star_clicked()
-			elif self.next_turn_button.rect.collidepoint(event.pos):
-				self.on_next_turn_clicked()
+			if self.fleet_selection_popup:
+				clicked_fleet = self.fleet_selection_popup.handle_click(event)
+				self.fleet_selection_popup = None
+				if clicked_fleet:
+					self.on_fleet_clicked(clicked_fleet)
 			else:
-				for f in self.star.fleets:
-					if f.rect_s.collidepoint(event.pos):
-						self.on_fleet_clicked(f)
-						return
-				for p in self.star.planets:
-					if p.rect.collidepoint(event.pos):
-						self.on_planet_clicked(p)
-						return
+				if self.star and self.centered_rect.collidepoint(event.pos):
+					self.on_star_clicked()
+				elif self.next_turn_button.rect.collidepoint(event.pos):
+					self.on_next_turn_clicked()
+				else:
+					for p in self.star.planets:
+						if p.rect.collidepoint(event.pos):
+							self.on_planet_clicked(p)
+							return
+
+					clicked_fleets = []
+					for f in self.star.fleets:
+						if f.rect_s.collidepoint(event.pos):
+							clicked_fleets.append(f)
+					if len(clicked_fleets) == 1:
+						self.on_fleet_clicked(clicked_fleets[0])
+					elif len(clicked_fleets) > 1:
+						self.fleet_selection_popup = Popup(
+							clicked_fleets,
+							clicked_fleets[0].rect_s.center
+						)
 
 	def update(self, delta_time):
 		pass
@@ -112,6 +128,9 @@ class StarScreen(ScreenBase):
 		
 		self.next_turn_button.rect.topright = surface.get_rect().topright
 		self.next_turn_button.render(surface)
+
+		if self.fleet_selection_popup:
+			self.fleet_selection_popup.render(surface)
 
 	def select_star(self, star):
 		"""Setup the screen around this star"""
