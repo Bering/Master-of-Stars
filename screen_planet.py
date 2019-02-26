@@ -5,6 +5,7 @@ from screen_base import ScreenBase
 from button import Button
 from text_renderer import TextRenderer
 from tile_renderer import TileRenderer
+from popup import Popup
 
 class PlanetScreen(ScreenBase):
 
@@ -58,6 +59,10 @@ class PlanetScreen(ScreenBase):
 			self.button_next_turn
 		]
 
+		self.fleet_selection_popup = None
+		self.fleet_info_rect = None
+		self.selected_fleet = None
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -85,12 +90,23 @@ class PlanetScreen(ScreenBase):
 				self.on_prev_planet()
 
 		elif (event.type == pygame.MOUSEBUTTONUP):
-			if self.centered_rect.collidepoint(event.pos):
-				self.on_planet_clicked()
+			if self.fleet_selection_popup:
+				self.selected_fleet = self.fleet_selection_popup.handle_click(event)
+				self.fleet_selection_popup = None
 			else:
-				for b in self.buttons:
-					if b.rect.collidepoint(event.pos):
-						b.on_click()
+				if self.centered_rect.collidepoint(event.pos):
+					self.on_planet_clicked()
+				else:
+					if self.planet and len(self.planet.fleets) > 0:
+						if self.fleet_info_rect.collidepoint(event.pos) \
+						or self.fleet_rect.collidepoint(event.pos):
+							self.fleet_selection_popup = Popup(
+								self.planet.fleets,
+								event.pos
+							)
+					for b in self.buttons:
+						if b.rect.collidepoint(event.pos):
+							b.on_click()
 
 	def update(self, delta_time):
 		pass
@@ -128,10 +144,10 @@ class PlanetScreen(ScreenBase):
 
 		# Fleet info
 		fleet_surface = self.render_fleet_text()
-		fleet_rect = fleet_surface.get_rect()
-		fleet_rect.bottomleft = self.centered_rect.topright
-		fleet_rect.move_ip(32, -32)
-		surface.blit(fleet_surface, fleet_rect)
+		self.fleet_info_rect = fleet_surface.get_rect() # self. because of the fleet selection popup
+		self.fleet_info_rect.bottomleft = self.centered_rect.topright
+		self.fleet_info_rect.move_ip(32, -32)
+		surface.blit(fleet_surface, self.fleet_info_rect)
 
 		if self.planet.player:
 
@@ -161,13 +177,16 @@ class PlanetScreen(ScreenBase):
 
 		else:
 			if self.planet.fleets:
-				if self.planet.fleets[0].get_ship_counts()["Colony"] > 0:
+				if self.selected_fleet.get_ship_counts()["Colony"] > 0:
 					self.button_colonize.rect.topright = self.centered_rect.bottomleft
 					self.button_colonize.rect.move_ip(-32, 32)
 					self.button_colonize.render(surface)
 
 		self.button_next_turn.rect.topright = surface.get_rect().topright
 		self.button_next_turn.render(surface)
+
+		if self.fleet_selection_popup:
+			self.fleet_selection_popup.render(surface)
 		
 	def select_planet(self, planet):
 		self.planet = planet
@@ -179,6 +198,11 @@ class PlanetScreen(ScreenBase):
 
 		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
+
+		if len(self.planet.fleets) > 0:
+			self.selected_fleet = self.planet.fleets[0]
+		else:
+			self.selected_fleet = None
 
 	def render_info_text(self):
 		text = ""
@@ -246,11 +270,9 @@ class PlanetScreen(ScreenBase):
 		if not self.planet.fleets:
 			text = "No fleet"
 		else:
-			# TODO: Figure out if we allow more than one fleet in orbit
-			fleet = self.planet.fleets[0]
-			ship_counts = fleet.get_ship_counts()
+			ship_counts = self.selected_fleet.get_ship_counts()
 			text = ""
-			text += fleet.name + "\n"
+			text += self.selected_fleet.name + "\n"
 			text += "Scout(s): " + str(ship_counts["Scout"]) + "\n"
 			text += "Colony Ship(s): " + str(ship_counts["Colony"]) + "\n"
 			text += "Frigate(s): " + str(ship_counts["Frigate"]) + "\n"
