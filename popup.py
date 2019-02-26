@@ -23,6 +23,7 @@ class Popup:
 				self.buttons[n].rect.center = position
 			else:
 				self.buttons[n].rect.topleft = self.buttons[n-1].rect.bottomleft
+				self.buttons[n].rect.y -= 1
 
 	def handle_click(self, event):
 		for n in range(len(self.buttons)):
