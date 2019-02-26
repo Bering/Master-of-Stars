@@ -250,7 +250,7 @@ class PlanetScreen(ScreenBase):
 			fleet = self.planet.fleets[0]
 			ship_counts = fleet.get_ship_counts()
 			text = ""
-			text += fleet.name + " fleet\n"
+			text += fleet.name + "\n"
 			text += "Scout(s): " + str(ship_counts["Scout"]) + "\n"
 			text += "Colony Ship(s): " + str(ship_counts["Colony"]) + "\n"
 			text += "Frigate(s): " + str(ship_counts["Frigate"]) + "\n"

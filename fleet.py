@@ -37,17 +37,17 @@ class Fleet:
 		self.name_rect.midleft = planet.rect.topright
 
 	def generate_name(self, number):
-		if number == 11: return "11th"
-		if number == 12: return "12th"
-		if number == 13: return "13th"
+		if number == 11: return "11th Fleet"
+		if number == 12: return "12th Fleet"
+		if number == 13: return "13th Fleet"
 
 		name = str(number)
 		last_char = name[-1]
 
-		if last_char == "1": return name + "st"
-		if last_char == "2": return name + "nd"
-		if last_char == "3": return name + "rd"
-		return name + "th"
+		if last_char == "1": return name + "st Fleet"
+		if last_char == "2": return name + "nd Fleet"
+		if last_char == "3": return name + "rd Fleet"
+		return name + "th Fleet"
 
 	def create_ship(self, ship_type, tech_level):
 		ship = Ship(ship_type, tech_level)
