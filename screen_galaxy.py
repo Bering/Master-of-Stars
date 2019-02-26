@@ -2,6 +2,7 @@ import os
 import pygame
 from screen_base import ScreenBase
 from button import Button
+from popup import Popup
 
 class GalaxyScreen(ScreenBase):
 
@@ -24,6 +25,8 @@ class GalaxyScreen(ScreenBase):
 
 		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
 
+		self.fleet_selection_popup = None
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -43,14 +46,28 @@ class GalaxyScreen(ScreenBase):
 					self.on_next_planet()
 		
 		elif (event.type == pygame.MOUSEBUTTONUP):
-			for s in self._app.world.stars:
-				if s.rect.collidepoint(event.pos):
-					self.on_star_clicked(s)
+			if self.fleet_selection_popup:
+				clicked_fleet = self.fleet_selection_popup.handle_click(event)
+				self.fleet_selection_popup = None
+				if clicked_fleet:
+					self.on_fleet_clicked(clicked_fleet)
+			else:
+				for s in self._app.world.stars:
+					if s.rect.collidepoint(event.pos):
+						self.on_star_clicked(s)
 
-			for player in self._app.players + self._app.ais:
-				for fleet in player.fleets:
-					if fleet.rect.collidepoint(event.pos):
-						self.on_fleet_clicked(fleet) # TODO: What about many fleets at the same star?
+				clicked_fleets = []
+				for player in self._app.players + self._app.ais:
+					for fleet in player.fleets:
+						if fleet.rect.collidepoint(event.pos):
+							clicked_fleets.append(fleet)
+				if len(clicked_fleets) == 1:
+					self.on_fleet_clicked(clicked_fleets[0])
+				elif len(clicked_fleets) > 1:
+					self.fleet_selection_popup = Popup(
+						clicked_fleets,
+						clicked_fleets[0].rect.center
+					)
 
 			if self.next_turn_button.rect.collidepoint(event.pos):
 				self.on_next_turn_clicked()
@@ -87,6 +104,9 @@ class GalaxyScreen(ScreenBase):
 
 		self.next_turn_button.rect.topright = surface.get_rect().topright
 		self.next_turn_button.render(surface)
+
+		if self.fleet_selection_popup:
+			self.fleet_selection_popup.render(surface)
 
 	def select_star(self, star):
 		if self.selected_fleet:
