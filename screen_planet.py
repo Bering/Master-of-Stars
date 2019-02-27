@@ -97,7 +97,7 @@ class PlanetScreen(ScreenBase):
 				if self.centered_rect.collidepoint(event.pos):
 					self.on_planet_clicked()
 				else:
-					if self.planet and len(self.planet.fleets) > 0:
+					if self.planet and len(self.planet.fleets) > 1:
 						if self.fleet_info_rect.collidepoint(event.pos) \
 						or self.fleet_rect.collidepoint(event.pos):
 							self.fleet_selection_popup = Popup(
