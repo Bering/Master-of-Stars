@@ -110,7 +110,7 @@ class GalaxyScreen(ScreenBase):
 
 	def select_star(self, star):
 		if self.selected_fleet:
-			self.selected_fleet.set_destination_star(star)
+			self.dispatch_fleet(self.selected_fleet, star)
 			self.selected_fleet = None
 		else:
 			if self.selected_star == star:
@@ -121,6 +121,21 @@ class GalaxyScreen(ScreenBase):
 
 	def select_fleet(self, fleet):
 		self.selected_fleet = fleet
+
+	def dispatch_fleet(self, fleet, star):
+		# Cannot change destination while traveling
+		if not fleet.star:
+			return
+			
+		# Cancel departure
+		if star == fleet.star:
+			fleet.cancel_departure()
+			fleet.rect.midleft = fleet.star.rect.topright
+			fleet = None
+			return
+
+		fleet.set_destination_star(star)
+		fleet.rect.midright = fleet.star.rect.topleft
 
 	def on_star_clicked(self, star):
 		self.select_star(star)

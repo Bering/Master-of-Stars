@@ -86,9 +86,6 @@ class StarScreen(ScreenBase):
 
 		for f in self.star.fleets:
 
-			if not f.planet and not f.destination_planet:
-				f.rect_s.midleft = self.centered_rect.topright
-
 			if f.destination_star or f.destination_center_star_rect:
 				pygame.draw.aaline(surface, (255,255,255), f.rect_s.center, self.centered_rect.center)
 
@@ -123,6 +120,7 @@ class StarScreen(ScreenBase):
 
 		self.centered_rect.center = surface.get_rect().center
 		surface.blit(self.centered_surface, self.centered_rect)
+		
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.star.name_surf, self.name_rect)
 		
@@ -147,7 +145,7 @@ class StarScreen(ScreenBase):
 
 	def select_planet(self, planet):
 		if self.selected_fleet:
-			self.selected_fleet.set_destination_planet(planet)
+			self.dispatch_fleet_to_planet(self.selected_fleet, planet)
 			self.selected_fleet = None
 		else:
 			if self.selected_planet == planet:
@@ -159,12 +157,43 @@ class StarScreen(ScreenBase):
 	def select_fleet(self, fleet):
 		self.selected_fleet = fleet
 
+	def dispatch_fleet_to_planet(self, fleet, planet):
+		# Cannot change destination while traveling
+		if not fleet.star:
+			return
+			
+		# Cancel departure
+		if planet == fleet.planet:
+			fleet.cancel_departure()
+			fleet.rect_s.midleft = fleet.planet.rect.topright
+			return
+
+		fleet.set_destination_planet(planet)
+		if fleet.planet:
+			fleet.rect_s.midright = fleet.planet.rect.topleft
+		else:
+			fleet.rect_s.midright = self.centered_rect.topleft
+
 	def on_star_clicked(self):
 		if self.selected_fleet:
-			self.selected_fleet.set_destination_center_star(self.centered_rect)
+			self.dispatch_fleet_to_star(self.selected_fleet, self.centered_rect)
 			self.selected_fleet = None
 		else:
 			self._app.screens.change_to("Galaxy")
+
+	def dispatch_fleet_to_star(self, fleet, star_rect):
+		# Cannot change destination while traveling
+		if not fleet.star:
+			return
+			
+		# Cancel departure
+		if not fleet.planet:
+			fleet.cancel_departure()
+			fleet.rect_s.midleft = star_rect.topright
+			return
+
+		fleet.set_destination_center_star(star_rect)
+		fleet.rect_s.midright = fleet.planet.rect.topleft
 
 	def on_planet_clicked(self, planet):
 		self.select_planet(planet)
