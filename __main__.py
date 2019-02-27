@@ -38,10 +38,10 @@ class Application:
 		s = self.screens.change_to("Galaxy")
 		s.select_star(p.star)
 		s = self.screens.change_to("Star")
-		s.select_star(p.star)
+		s.setup(p.star)
 		s.select_planet(p)
 		s = self.screens.change_to("Planet")
-		s.select_planet(p)
+		s.setup(p)
 
 	def print_world(self):
 		planet_count = 0

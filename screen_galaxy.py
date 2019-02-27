@@ -115,7 +115,7 @@ class GalaxyScreen(ScreenBase):
 		else:
 			if self.selected_star == star:
 				screen = self._app.screens.change_to("Star")
-				screen.select_star(star)
+				screen.setup(star)
 			else:
 				self.selected_star = star
 

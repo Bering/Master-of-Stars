@@ -62,6 +62,22 @@ class PlanetScreen(ScreenBase):
 		self.fleet_selection_popup = None
 		self.fleet_info_rect = None
 		self.selected_fleet = None
+		
+	def setup(self, planet):
+		self.planet = planet
+
+		self.centered_rect = planet.rect.copy()
+		self.centered_rect.width *= 3
+		self.centered_rect.height *= 3
+		self.centered_surface = pygame.transform.smoothscale(planet.surface, self.centered_rect.size)
+
+		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
+		self.name_rect = self.name_surf.get_rect()
+
+		if len(self.planet.fleets) > 0:
+			self.selected_fleet = self.planet.fleets[0]
+		else:
+			self.selected_fleet = None
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -187,22 +203,6 @@ class PlanetScreen(ScreenBase):
 
 		if self.fleet_selection_popup:
 			self.fleet_selection_popup.render(surface)
-		
-	def select_planet(self, planet):
-		self.planet = planet
-
-		self.centered_rect = planet.rect.copy()
-		self.centered_rect.width *= 3
-		self.centered_rect.height *= 3
-		self.centered_surface = pygame.transform.smoothscale(planet.surface, self.centered_rect.size)
-
-		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
-		self.name_rect = self.name_surf.get_rect()
-
-		if len(self.planet.fleets) > 0:
-			self.selected_fleet = self.planet.fleets[0]
-		else:
-			self.selected_fleet = None
 
 	def render_info_text(self):
 		text = ""
@@ -289,11 +289,11 @@ class PlanetScreen(ScreenBase):
 
 	def on_change_production_clicked(self):
 		s = self._app.screens.change_to("Production")
-		s.select_planet(self.planet)
+		s.setup(self.planet)
 
 	def on_change_research_clicked(self):
 		s = self._app.screens.change_to("Research")
-		s.select_planet(self.planet)
+		s.setup(self.planet)
 
 	def on_colonize_clicked(self):
 		self._app.local_player.found_colony(self.planet)

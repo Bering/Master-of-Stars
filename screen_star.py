@@ -30,6 +30,19 @@ class StarScreen(ScreenBase):
 		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
 		self.fleet_selection_popup = None
 
+	def setup(self, star):
+		"""Setup the screen around this star"""
+		self.star = star
+		self.selected_planet = None
+		self.selected_fleet = None
+
+		self.centered_rect = star.rect.copy()
+		self.centered_rect.width *= 3
+		self.centered_rect.height *= 3
+		self.centered_surface = pygame.transform.smoothscale(star.surface, self.centered_rect.size)
+
+		self.name_rect = self.star.name_surf.get_rect()
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if (event.key == pygame.K_q) or (event.key == pygame.K_ESCAPE):
@@ -130,19 +143,6 @@ class StarScreen(ScreenBase):
 		if self.fleet_selection_popup:
 			self.fleet_selection_popup.render(surface)
 
-	def select_star(self, star):
-		"""Setup the screen around this star"""
-		self.star = star
-		self.selected_planet = None
-		self.selected_fleet = None
-
-		self.centered_rect = star.rect.copy()
-		self.centered_rect.width *= 3
-		self.centered_rect.height *= 3
-		self.centered_surface = pygame.transform.smoothscale(star.surface, self.centered_rect.size)
-
-		self.name_rect = self.star.name_surf.get_rect()
-
 	def select_planet(self, planet):
 		if self.selected_fleet:
 			self.dispatch_fleet_to_planet(self.selected_fleet, planet)
@@ -150,7 +150,7 @@ class StarScreen(ScreenBase):
 		else:
 			if self.selected_planet == planet:
 				screen = self._app.screens.change_to("Planet")
-				screen.select_planet(planet)
+				screen.setup(planet)
 			else:
 				self.selected_planet = planet
 
@@ -174,7 +174,7 @@ class StarScreen(ScreenBase):
 		else:
 			fleet.rect_s.midright = self.centered_rect.topleft
 
-	def on_star_clicked(self):
+	def select_star(self):
 		if self.selected_fleet:
 			self.dispatch_fleet_to_star(self.selected_fleet, self.centered_rect)
 			self.selected_fleet = None
@@ -194,6 +194,9 @@ class StarScreen(ScreenBase):
 
 		fleet.set_destination_center_star(star_rect)
 		fleet.rect_s.midright = fleet.planet.rect.topleft
+
+	def on_star_clicked(self):
+		self.select_star()
 
 	def on_planet_clicked(self, planet):
 		self.select_planet(planet)

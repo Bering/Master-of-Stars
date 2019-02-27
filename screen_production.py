@@ -21,6 +21,9 @@ class ProductionScreen(ScreenBase):
 
 		self.back_button = Button("Cancel", self.on_back_button_clicked)
 
+	def setup(self, planet):
+		self.selected_planet = planet
+
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if event.key == pygame.K_ESCAPE or event.key == pygame.K_c:
@@ -151,18 +154,15 @@ class ProductionScreen(ScreenBase):
 			surface.blit(destroyer_surface, destroyer_rect)
 			self.tiles["Destroyer"] = destroyer_rect
 
-	def select_planet(self, planet):
-		self.selected_planet = planet
-
-	def on_back_button_clicked(self):
-		self._app.screens.change_to("Planet")
-
 	def render_tile(self, project, color=(255,255,255)):
 		text = ""
 		text += project.name + "\n"
 		text += project.desc + "\n"
 		text += "Cost: " + str(project.cost)
 		return self.tile_renderer.render(text, color)
+
+	def on_back_button_clicked(self):
+		self._app.screens.change_to("Planet")
 
 	def change_production(self, project):
 		self.selected_planet.production.change_to(project)
