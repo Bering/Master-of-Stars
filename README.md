@@ -1,5 +1,5 @@
-Stars
-=====
+Master of Stars
+===============
 
 4x game made in Python 3 with the PyGame library
 
