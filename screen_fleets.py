@@ -43,32 +43,32 @@ class FleetsScreen(ScreenBase):
 
 		self.buttons = []
 
-		b = Button("< 1", self.on_left_clicked)
+		b = Button("< 1", self.on_left_1_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(-32, -32)
 		self.buttons.append(b)
 
-		b = Button("< 10", self.on_left_clicked)
+		b = Button("< 10", self.on_left_10_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(-32, 0)
 		self.buttons.append(b)
 
-		b = Button("< 100", self.on_left_clicked)
+		b = Button("< 100", self.on_left_100_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(-32, 32)
 		self.buttons.append(b)
 
-		b = Button("100 >", self.on_right_clicked)
+		b = Button("100 >", self.on_right_100_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(32, -32)
 		self.buttons.append(b)
 	
-		b = Button("10 >", self.on_right_clicked)
+		b = Button("10 >", self.on_right_10_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(32, 0)
 		self.buttons.append(b)
 	
-		b = Button("1 >", self.on_right_clicked)
+		b = Button("1 >", self.on_right_1_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(32, 32)
 		self.buttons.append(b)
@@ -238,10 +238,28 @@ class FleetsScreen(ScreenBase):
 			background
 		)
 
-	def on_left_clicked(self):
+	def on_left_1_clicked(self):
+		self.move_left(1)
+
+	def on_left_10_clicked(self):
+		self.move_left(10)
+
+	def on_left_100_clicked(self):
+		self.move_left(100)
+
+	def move_right(self, amount):
 		pass
 
-	def on_right_clicked(self):
+	def on_right_1_clicked(self):
+		self.move_right(1)
+
+	def on_right_10_clicked(self):
+		self.move_right(10)
+
+	def on_right_100_clicked(self):
+		self.move_right(100)
+
+	def move_right(self, amount):
 		pass
 
 	def on_ok_clicked(self):
