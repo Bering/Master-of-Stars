@@ -52,11 +52,14 @@ class PlanetScreen(ScreenBase):
 		self.button_research = Button("Change", self.on_change_research_clicked)
 		self.button_colonize = Button("Colonize", self.on_colonize_clicked)
 		self.button_next_turn = Button("End Turn", self.on_next_turn_clicked)
+		self.button_fleet = Button("Manage", self.on_fleet_manage_clicked)
+
 		self.buttons = [
 			self.button_production,
 			self.button_research,
 			self.button_colonize,
-			self.button_next_turn
+			self.button_next_turn,
+			self.button_fleet
 		]
 
 		self.fleet_selection_popup = None
@@ -164,6 +167,10 @@ class PlanetScreen(ScreenBase):
 		self.fleet_info_rect.bottomleft = self.centered_rect.topright
 		self.fleet_info_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, self.fleet_info_rect)
+
+		self.button_fleet.rect.midtop = self.fleet_info_rect.midbottom
+		self.button_fleet.rect.move_ip(0, 6)
+		self.button_fleet.render(surface)
 
 		if self.planet.player:
 
@@ -295,9 +302,13 @@ class PlanetScreen(ScreenBase):
 		s = self._app.screens.change_to("Research")
 		s.setup(self.planet)
 
+	def on_fleet_manage_clicked(self):
+		s = self._app.screens.change_to("Fleet")
+		s.setup("Planet", self.selected_fleet)
+
 	def on_colonize_clicked(self):
 		self._app.local_player.found_colony(self.planet)
-	
+
 	def on_next_planet(self):
 		self.select_planet(self._app.local_player.next_planet(self.selected_planet).star)
 
