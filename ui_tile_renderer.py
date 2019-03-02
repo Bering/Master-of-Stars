@@ -1,4 +1,4 @@
-from text_renderer import TextRenderer
+from ui_text_renderer import UITextRenderer
 import pygame
 
 default_color = (255,255,255)
@@ -7,7 +7,7 @@ default_padding = (12,12)
 default_border_size = 2
 default_border_color = (255,255,255)
 
-class TileRenderer:
+class UITileRenderer:
 
 	def __init__(self, text_renderer):
 		self.text_renderer = text_renderer

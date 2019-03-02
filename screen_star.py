@@ -1,8 +1,8 @@
 import os
 import pygame
 from screen_base import ScreenBase
-from button import Button
-from popup import Popup
+from ui_button import UIButton
+from ui_popup import UIPopup
 
 class StarScreen(ScreenBase):
 
@@ -27,7 +27,7 @@ class StarScreen(ScreenBase):
 		filename = os.path.join("images", "defense.png")
 		self.defense_surface = pygame.image.load(filename)
 
-		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
+		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
 		self.fleet_selection_popup = None
 
 	def setup(self, star):
@@ -87,7 +87,7 @@ class StarScreen(ScreenBase):
 					if len(clicked_fleets) == 1:
 						self.on_fleet_clicked(clicked_fleets[0])
 					elif len(clicked_fleets) > 1:
-						self.fleet_selection_popup = Popup(
+						self.fleet_selection_popup = UIPopup(
 							clicked_fleets,
 							clicked_fleets[0].rect_s.center
 						)

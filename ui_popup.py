@@ -1,24 +1,24 @@
 import os
 import pygame
-from text_renderer import TextRenderer
-from tile_renderer import TileRenderer
+from ui_text_renderer import UITextRenderer
+from ui_tile_renderer import UITileRenderer
 
-class PopupButton:
+class UIPopupButton:
 	def __init__(self, surface):
 		self.surface = surface
 		self.rect = self.surface.get_rect()
 
-class Popup:	
+class UIPopup:	
 	def __init__(self, options, position):
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
 		font = pygame.font.Font(filename, 14)
-		text_renderer = TextRenderer(font)
-		tile_renderer = TileRenderer(text_renderer)
+		text_renderer = UITextRenderer(font)
+		tile_renderer = UITileRenderer(text_renderer)
 
 		self.options = options
 		self.buttons = []
 		for n in range(len(options)):
-			self.buttons.append(PopupButton(tile_renderer.render(options[n].name)))
+			self.buttons.append(UIPopupButton(tile_renderer.render(options[n].name)))
 			if n == 0:
 				self.buttons[n].rect.center = position
 			else:

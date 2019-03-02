@@ -2,10 +2,10 @@ import os
 import math
 import pygame
 from screen_base import ScreenBase
-from button import Button
-from text_renderer import TextRenderer
-from tile_renderer import TileRenderer
-from popup import Popup
+from ui_button import UIButton
+from ui_text_renderer import UITextRenderer
+from ui_tile_renderer import UITileRenderer
+from ui_popup import UIPopup
 
 class PlanetScreen(ScreenBase):
 
@@ -45,14 +45,14 @@ class PlanetScreen(ScreenBase):
 		
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
 		info_font = pygame.font.Font(filename, 16)
-		text_renderer = TextRenderer(info_font)
-		self.tile_renderer = TileRenderer(text_renderer)
+		text_renderer = UITextRenderer(info_font)
+		self.tile_renderer = UITileRenderer(text_renderer)
 
-		self.button_production = Button("Change", self.on_change_production_clicked)
-		self.button_research = Button("Change", self.on_change_research_clicked)
-		self.button_colonize = Button("Colonize", self.on_colonize_clicked)
-		self.button_next_turn = Button("End Turn", self.on_next_turn_clicked)
-		self.button_fleet = Button("Manage", self.on_fleet_manage_clicked)
+		self.button_production = UIButton("Change", self.on_change_production_clicked)
+		self.button_research = UIButton("Change", self.on_change_research_clicked)
+		self.button_colonize = UIButton("Colonize", self.on_colonize_clicked)
+		self.button_next_turn = UIButton("End Turn", self.on_next_turn_clicked)
+		self.button_fleet = UIButton("Manage", self.on_fleet_manage_clicked)
 
 		self.buttons = [
 			self.button_production,
@@ -121,7 +121,7 @@ class PlanetScreen(ScreenBase):
 					if self.planet and len(self.planet.fleets) > 1:
 						if self.fleet_info_rect.collidepoint(event.pos) \
 						or self.fleet_rect.collidepoint(event.pos):
-							self.fleet_selection_popup = Popup(
+							self.fleet_selection_popup = UIPopup(
 								self.planet.fleets,
 								event.pos
 							)

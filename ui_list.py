@@ -1,23 +1,29 @@
 import os
 import pygame
-from text_renderer import TextRenderer
+from ui_text_renderer import UITextRenderer
 
 default_color = (255, 255, 255)
 default_highlight_color = (48, 48, 48)
 
 class UIListItem:
-	def __init__(self, surface, obj, highlighted):
+	def __init__(self, surface, obj, is_highlighted):
 		self.surface = surface
 		self.rect = self.surface.get_rect()
 		self.object = obj
-		self.is_highlighted = highlighted
+		self.is_highlighted = is_highlighted
 
-# TODO: add a center parameter? Then we could use either position or center to place the list
 class UIList:
-	def __init__(self, items, position, color=default_color, highlight_color=default_highlight_color):
+	def __init__(
+		self,
+		items,
+		position=None,
+		center=None,
+		color=default_color,
+		highlight_color=default_highlight_color
+	):
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
 		font = pygame.font.Font(filename, 16)
-		text_renderer = TextRenderer(font)
+		text_renderer = UITextRenderer(font)
 
 		self.items = items
 		self.buttons = []
@@ -61,7 +67,21 @@ class UIList:
 				self.buttons[n].rect.y -= 1
 
 		self.rect = pygame.Rect((0, 0), (width + padding, height - (len(self.buttons) - 1)))
-		self.rect.center = position
+		if position:
+			self.rect.topleft = position
+		if center:
+			self.rect.center = center
+
+	def select(self, index):
+		self.selected_index = index
+		for n in range(len(self.buttons)):
+			self.buttons[n].is_highlighted = (index == n)
+
+	def get_selected_index(self):
+		return self.selected_index
+
+	def get_selected_item(self):
+		return self.buttons[self.selected_index].item
 
 	def handle_click(self, event):
 		for n in range(len(self.buttons)):
@@ -69,11 +89,6 @@ class UIList:
 				self.select(n)
 				return n
 		return None
-
-	def select(self, index):
-		self.selected_index = index
-		for n in range(len(self.buttons)):
-			self.buttons[n].is_highlighted = (index == n)
 
 	def render(self, surface):
 		delta_x = self.rect.topleft[0] - self.buttons[0].rect.x

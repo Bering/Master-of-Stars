@@ -1,7 +1,7 @@
 import pygame
 
 """ Text renderer that can render multiple lines of text separated by '\n'"""
-class TextRenderer:
+class UITextRenderer:
 
 	def __init__(self, font):
 		self.font = font

@@ -9,7 +9,7 @@ default_padding = (12, 12)
 
 # TODO: tooltips
 
-class Button:
+class UIButton:
 
 	def __init__(
 		self,

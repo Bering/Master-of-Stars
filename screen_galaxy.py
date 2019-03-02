@@ -1,8 +1,8 @@
 import os
 import pygame
 from screen_base import ScreenBase
-from button import Button
-from popup import Popup
+from ui_button import UIButton
+from ui_popup import UIPopup
 
 class GalaxyScreen(ScreenBase):
 
@@ -23,7 +23,7 @@ class GalaxyScreen(ScreenBase):
 		filename = os.path.join("images", "shipyard.png")
 		self.shipyard_surface = pygame.image.load(filename)
 
-		self.next_turn_button = Button("End Turn", self.on_next_turn_clicked)
+		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
 
 		self.fleet_selection_popup = None
 

@@ -1,11 +1,11 @@
 import os
 import pygame
 from screen_base import ScreenBase
-from button import Button
-from popup import Popup
+from ui_button import UIButton
+from ui_popup import UIPopup
 from ui_list import UIList
-from text_renderer import TextRenderer
-from tile_renderer import TileRenderer
+from ui_text_renderer import UITextRenderer
+from ui_tile_renderer import UITileRenderer
 
 class NewFleet:
 	def __init__(self):
@@ -34,8 +34,8 @@ class FleetsScreen(ScreenBase):
 
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
 		font = pygame.font.Font(filename, 16)
-		self.text_renderer = TextRenderer(font)
-		self.tile_renderer = TileRenderer(self.text_renderer)
+		self.text_renderer = UITextRenderer(font)
+		self.tile_renderer = UITileRenderer(self.text_renderer)
 
 		filename = os.path.join("images", "fleet.png")
 		self.fleet_surface = pygame.image.load(filename)
@@ -44,48 +44,48 @@ class FleetsScreen(ScreenBase):
 
 		self.buttons = []
 
-		b = Button("< 1", self.on_left_1_clicked)
+		b = UIButton("< 1", self.on_left_1_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(-32, -32)
 		self.buttons.append(b)
 
-		b = Button("< 10", self.on_left_10_clicked)
+		b = UIButton("< 10", self.on_left_10_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(-32, 0)
 		self.buttons.append(b)
 
-		b = Button("< 100", self.on_left_100_clicked)
+		b = UIButton("< 100", self.on_left_100_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(-32, 32)
 		self.buttons.append(b)
 
-		b = Button("100 >", self.on_right_100_clicked)
+		b = UIButton("100 >", self.on_right_100_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(32, -32)
 		self.buttons.append(b)
 	
-		b = Button("10 >", self.on_right_10_clicked)
+		b = UIButton("10 >", self.on_right_10_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(32, 0)
 		self.buttons.append(b)
 	
-		b = Button("1 >", self.on_right_1_clicked)
+		b = UIButton("1 >", self.on_right_1_clicked)
 		b.rect.center = screen_rect.center
 		b.rect.move_ip(32, 32)
 		self.buttons.append(b)
 	
-		b = Button("Cancel", self.on_cancel_clicked)
+		b = UIButton("Cancel", self.on_cancel_clicked)
 		b.rect.bottomright = screen_rect.bottomright
 		prev_button_rect = b.rect
 		self.buttons.append(b)
 
-		b = Button("Apply", self.on_apply_clicked)
+		b = UIButton("Apply", self.on_apply_clicked)
 		b.rect.midright = prev_button_rect.midleft
 		b.rect.move_ip(-16, 0)
 		prev_button_rect = b.rect
 		self.buttons.append(b)
 
-		b = Button("OK", self.on_ok_clicked)
+		b = UIButton("OK", self.on_ok_clicked)
 		b.rect.midright = prev_button_rect.midleft
 		b.rect.move_ip(-16, 0)
 		self.buttons.append(b)
@@ -122,7 +122,7 @@ class FleetsScreen(ScreenBase):
 		if self.header_left:
 			self.buttons.remove(self.header_left)
 		
-		self.header_left = Button(self.fleet_left.name, self.header_left_clicked)
+		self.header_left = UIButton(self.fleet_left.name, self.header_left_clicked)
 		self.header_left.rect.midbottom = self.list_left.rect.midtop
 		self.buttons.append(self.header_left)
 
@@ -135,7 +135,7 @@ class FleetsScreen(ScreenBase):
 		if self.header_right:
 			self.buttons.remove(self.header_right)
 		
-		self.header_right = Button(self.fleet_right.name, self.header_right_clicked)
+		self.header_right = UIButton(self.fleet_right.name, self.header_right_clicked)
 		self.header_right.rect.midbottom = self.list_right.rect.midtop
 		self.buttons.append(self.header_right)
 
@@ -147,7 +147,7 @@ class FleetsScreen(ScreenBase):
 			"Destroyers: " + str(counts["Destroyer"]),
 			"Colony Ships: " + str(counts["Colony"])
 		]
-		return UIList(ship_buttons, position)
+		return UIList(ship_buttons, center=position)
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -191,14 +191,14 @@ class FleetsScreen(ScreenBase):
 		fleet_list.append(self.new_fleet)
 		fleet_list.remove(self.fleet_right)
 		if len(fleet_list) > 1:
-			self.popup_left = Popup(fleet_list, self.header_left.rect.center)
+			self.popup_left = UIPopup(fleet_list, self.header_left.rect.center)
 
 	def header_right_clicked(self):
 		fleet_list = self.fleets[:]
 		fleet_list.append(self.new_fleet)
 		fleet_list.remove(self.fleet_left)
 		if len(fleet_list) > 1:
-			self.popup_right = Popup(fleet_list, self.header_right.rect.center)
+			self.popup_right = UIPopup(fleet_list, self.header_right.rect.center)
 
 	def on_left_1_clicked(self):
 		self.move_left(1)

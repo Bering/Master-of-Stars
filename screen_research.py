@@ -1,7 +1,7 @@
 from screen_base import ScreenBase
-from text_renderer import TextRenderer
-from tile_renderer import TileRenderer
-from button import Button
+from ui_text_renderer import UITextRenderer
+from ui_tile_renderer import UITileRenderer
+from ui_button import UIButton
 
 import pygame
 import os
@@ -14,12 +14,12 @@ class ResearchScreen(ScreenBase):
 
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
 		font = pygame.font.Font(filename, 16)
-		text_renderer = TextRenderer(font)
-		self.tile_renderer = TileRenderer(text_renderer)
+		text_renderer = UITextRenderer(font)
+		self.tile_renderer = UITileRenderer(text_renderer)
 
 		self.tiles = {}
 
-		self.back_button = Button("Cancel", self.on_back_button_clicked)
+		self.back_button = UIButton("Cancel", self.on_back_button_clicked)
 
 	def setup(self, planet):
 		self.selected_planet = planet
