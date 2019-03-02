@@ -96,6 +96,8 @@ class PlanetScreen(ScreenBase):
 				self.on_change_research_clicked()
 			elif (event.key == pygame.K_p):
 				self.on_change_production_clicked()
+			elif (event.key == pygame.K_f):
+				self.on_fleet_manage_clicked()
 			elif (event.key == pygame.K_PERIOD):
 				self.on_next_planet()
 			elif (event.key == pygame.K_p):

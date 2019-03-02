@@ -3,6 +3,7 @@ import pygame
 from screen_base import ScreenBase
 from button import Button
 from popup import Popup
+from ui_list import UIList
 from text_renderer import TextRenderer
 from tile_renderer import TileRenderer
 
@@ -101,44 +102,52 @@ class FleetsScreen(ScreenBase):
 		self.ship_type_left = None
 		self.ship_type_right = None
 
-		# Fleets at the same location
+		# Get fleets at the same location
 		self.fleets = []
 		for f in fleet_left.player.fleets:
 			if f.star == fleet_left.star and f.planet == fleet_left.planet:
 				self.fleets.append(f)
 
+		self.header_left = None
+		self.header_right = None
+		self.update_left_fleet()
+		self.update_right_fleet()
+
+	def update_left_fleet(self):
 		screen_rect = self._app._surface.get_rect()
+		pos = screen_rect.center
+		pos = (pos[0] - 160, pos[1])
+		self.list_left = self.make_list(self.fleet_left, pos)
 
-		self.list_left, self.list_left_rect = self.make_list(
-			self.fleet_left,
-			self.ship_type_left
-		)
-		self.list_left_rect.center = screen_rect.center
-		self.list_left_rect.move_ip(-160, 0)
+		if self.header_left:
+			self.buttons.remove(self.header_left)
+		
+		self.header_left = Button(self.fleet_left.name, self.header_left_clicked)
+		self.header_left.rect.midbottom = self.list_left.rect.midtop
+		self.buttons.append(self.header_left)
 
-		self.list_right, self.list_right_rect = self.make_list(
-			self.fleet_right,
-			self.ship_type_right
-		)
-		self.list_right_rect.center = screen_rect.center
-		self.list_right_rect.move_ip(160, 0)
+	def update_right_fleet(self):
+		screen_rect = self._app._surface.get_rect()
+		pos = screen_rect.center
+		pos = (pos[0] + 160, pos[1])
+		self.list_right = self.make_list(self.fleet_right, pos)
 
-		self.header_left = self.tile_renderer.render(
-			self.fleet_left.name,
-			(255,255,255),
-			(64,64,64)
-		)
-		self.header_left_rect = self.header_left.get_rect()
-		self.header_left_rect.midbottom = self.list_left_rect.midtop
+		if self.header_right:
+			self.buttons.remove(self.header_right)
+		
+		self.header_right = Button(self.fleet_right.name, self.header_right_clicked)
+		self.header_right.rect.midbottom = self.list_right.rect.midtop
+		self.buttons.append(self.header_right)
 
-		self.header_right = self.tile_renderer.render(
-			self.fleet_right.name,
-			(255,255,255),
-			(64,64,64)
-		)
-		self.header_right_rect = self.header_right.get_rect()
-		self.header_right_rect.midbottom = self.list_right_rect.midtop
-
+	def make_list(self, fleet, position):
+		counts = fleet.get_ship_counts()
+		ship_buttons = [
+			"Scouts: " + str(counts["Scout"]),
+			"Frigates: " + str(counts["Frigate"]),
+			"Destroyers: " + str(counts["Destroyer"]),
+			"Colony Ships: " + str(counts["Colony"])
+		]
+		return UIList(ship_buttons, position)
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -150,26 +159,24 @@ class FleetsScreen(ScreenBase):
 				clicked_fleet = self.popup_left.handle_click(event)
 				self.popup_left = None
 				if clicked_fleet:
-					self.select_left_fleet(clicked_fleet)
+					self.fleet_left = clicked_fleet
+					self.update_left_fleet()
 			elif self.popup_right:
 				clicked_fleet = self.popup_right.handle_click(event)
 				self.popup_right = None
 				if clicked_fleet:
-					self.select_right_fleet(clicked_fleet)
-			elif self.header_left_rect.collidepoint(event.pos):
-				self.header_left_clicked(event.pos)
-			elif self.header_right_rect.collidepoint(event.pos):
-				self.header_right_clicked(event.pos)
+					self.fleet_right = clicked_fleet
+					self.update_right_fleet()
 			else:
+				self.list_left.handle_click(event)
+				self.list_right.handle_click(event)
 				for button in self.buttons:
 					if button.rect.collidepoint(event.pos):
 						button.on_click()
 
 	def render(self, surface):
-		surface.blit(self.header_left, self.header_left_rect)
-		surface.blit(self.header_right, self.header_right_rect)
-		surface.blit(self.list_left, self.list_left_rect)
-		surface.blit(self.list_right, self.list_right_rect)
+		self.list_left.render(surface)
+		self.list_right.render(surface)
 		
 		if self.popup_left:
 			self.popup_left.render(surface)
@@ -179,64 +186,19 @@ class FleetsScreen(ScreenBase):
 		for button in self.buttons:
 			button.render(surface)
 
-	def make_list(self, fleet, highlighted_ship_type):
-		counts = fleet.get_ship_counts()
+	def header_left_clicked(self):
+		fleet_list = self.fleets[:]
+		fleet_list.append(self.new_fleet)
+		fleet_list.remove(self.fleet_right)
+		if len(fleet_list) > 1:
+			self.popup_left = Popup(fleet_list, self.header_left.rect.center)
 
-		scouts = self.make_ship("Scout", counts, highlighted_ship_type)
-		scouts_rect = scouts.get_rect()
-		scouts_rect.move_ip(8, 8)
-
-		frigates = self.make_ship("Frigate", counts, highlighted_ship_type)
-		frigates_rect = frigates.get_rect(topleft=scouts_rect.bottomleft)
-		frigates_rect.move_ip(0, 8)
-
-		destroyers = self.make_ship("Destroyer", counts, highlighted_ship_type)
-		destroyers_rect = destroyers.get_rect(topleft=frigates_rect.bottomleft)
-		destroyers_rect.move_ip(0, 8)
-
-		colony = self.make_ship("Colony", counts, highlighted_ship_type)
-		colony_rect = colony.get_rect(topleft=destroyers_rect.bottomleft)
-		colony_rect.move_ip(0, 8)
-
-		width = max(0, scouts_rect.width)
-		width = max(width, frigates_rect.width)
-		width = max(width, destroyers_rect.width)
-		width = max(width, colony_rect.width)
-
-		height = scouts_rect.height + 8 \
-				+ frigates_rect.height + 8 \
-				+ destroyers_rect.height + 8 \
-				+ colony_rect.height
-
-		surface = pygame.Surface((width + 16, height + 16))
-		rect = surface.get_rect()
-
-		surface.blit(scouts, scouts_rect)
-		surface.blit(frigates, frigates_rect)
-		surface.blit(destroyers, destroyers_rect)
-		surface.blit(colony, colony_rect)
-
-		pygame.draw.rect(surface, (255,255,255), rect, 2)
-
-		return surface, rect
-
-	def make_ship(self, ship_type, counts, highlighted_ship_type):
-		if ship_type == highlighted_ship_type:
-			background = (64,64,64)
-		else:
-			background = (0,0,0)
-
-		if ship_type == "Colony":
-			ship_label = "Colony Ship"
-		else:
-			ship_label = ship_type
-
-		return self.text_renderer.render(
-			ship_label + "s: " + str(counts[ship_type]),
-			True,
-			(255,255,255),
-			background
-		)
+	def header_right_clicked(self):
+		fleet_list = self.fleets[:]
+		fleet_list.append(self.new_fleet)
+		fleet_list.remove(self.fleet_left)
+		if len(fleet_list) > 1:
+			self.popup_right = Popup(fleet_list, self.header_right.rect.center)
 
 	def on_left_1_clicked(self):
 		self.move_left(1)
@@ -247,7 +209,7 @@ class FleetsScreen(ScreenBase):
 	def on_left_100_clicked(self):
 		self.move_left(100)
 
-	def move_right(self, amount):
+	def move_left(self, amount):
 		pass
 
 	def on_right_1_clicked(self):
@@ -272,16 +234,3 @@ class FleetsScreen(ScreenBase):
 	def on_cancel_clicked(self):
 		self._app.screens.change_to(self.prev_screen_name)
 
-	def header_left_clicked(self, position):
-		fleet_list = self.fleets[:]
-		fleet_list.append(self.new_fleet)
-		fleet_list.remove(self.fleet_right)
-		if len(fleet_list) > 1:
-			self.popup_left = Popup(fleet_list, position)
-
-	def header_right_clicked(self, position):
-		fleet_list = self.fleets[:]
-		fleet_list.append(self.new_fleet)
-		fleet_list.remove(self.fleet_left)
-		if len(fleet_list) > 1:
-			self.popup_right = Popup(fleet_list, position)
