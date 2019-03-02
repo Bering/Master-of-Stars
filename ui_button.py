@@ -1,12 +1,5 @@
 import pygame
 
-default_font_name = None
-default_font_size = 24
-default_color = (255, 255, 255)
-default_background = (64, 64, 64)
-default_border_color = (255,255,255)
-default_padding = (12, 12)
-
 # TODO: tooltips
 
 class UIButton:
@@ -15,17 +8,17 @@ class UIButton:
 		self,
 		label,
 		on_click,
-		font_name=default_font_name,
-		font_size=default_font_size,
-		color=default_color,
-		background=default_background,
-		color_border=default_border_color,
-		padding=default_padding
+		font = None,
+		color = (255, 255, 255),
+		background = (64, 64, 64),
+		color_border = (255, 255, 255),
+		padding = (12, 12)
 	):
-		self.padding = padding
+		self.label = label
 		self.on_click = on_click
 
-		font = pygame.font.Font(font_name, font_size)
+		if not font:
+			font = pygame.font.Font(None, 24)
 		text_surface = font.render(label, True, color, background)
 		text_rect = text_surface.get_rect()
 
