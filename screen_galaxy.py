@@ -64,7 +64,7 @@ class GalaxyScreen(ScreenBase):
 				if len(clicked_fleets) == 1:
 					self.on_fleet_clicked(clicked_fleets[0])
 				elif len(clicked_fleets) > 1:
-					self.fleet_selection_popup = Popup(
+					self.fleet_selection_popup = UIPopup(
 						clicked_fleets,
 						clicked_fleets[0].rect.center
 					)
