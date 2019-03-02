@@ -105,10 +105,6 @@ class FleetsScreen(ScreenBase):
 		self.update_left_list()
 		self.update_right_list()
 
-		print(str(len(self.buttons)))
-		for b in self.buttons:
-			print(b.label)
-
 	def update_left_list(self):
 		if self.list_left:
 			selected_index = self.list_left.get_selected_index()
