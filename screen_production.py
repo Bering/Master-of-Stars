@@ -38,7 +38,7 @@ class ProductionScreen(ScreenBase):
 	def render(self, surface):
 
 		self.back_button.rect.midbottom = surface.get_rect().midbottom
-		self.back_button.rect.move_ip(0, -32)
+		self.back_button.rect.move_ip(0, -16)
 		self.back_button.render(surface)
 
 		project = self.selected_planet.production.projects["Farms"]

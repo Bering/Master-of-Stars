@@ -138,6 +138,7 @@ class StarScreen(ScreenBase):
 		surface.blit(self.star.name_surf, self.name_rect)
 		
 		self.next_turn_button.rect.topright = surface.get_rect().topright
+		self.next_turn_button.rect.move_ip(-16, 16)
 		self.next_turn_button.render(surface)
 
 		if self.fleet_selection_popup:

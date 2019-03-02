@@ -170,9 +170,12 @@ class PlanetScreen(ScreenBase):
 		self.fleet_info_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, self.fleet_info_rect)
 
-		self.button_fleet.rect.midtop = self.fleet_info_rect.midbottom
-		self.button_fleet.rect.move_ip(0, 6)
-		self.button_fleet.render(surface)
+		if self.planet.fleets:
+			self.button_fleet.rect.midtop = self.fleet_info_rect.midbottom
+			self.button_fleet.rect.move_ip(0, 6)
+			self.button_fleet.render(surface)
+		else:
+			self.button_fleet.rect.bottomright = (0, 0)
 
 		if self.planet.player:
 
@@ -200,6 +203,8 @@ class PlanetScreen(ScreenBase):
 				self.button_production.rect.move_ip(0, 6)
 				self.button_production.render(surface)
 
+			self.button_colonize.rect.bottomright = (0, 0)
+			
 		else:
 			if self.planet.fleets:
 				if self.selected_fleet.get_ship_counts()["Colony"] > 0:
@@ -208,6 +213,7 @@ class PlanetScreen(ScreenBase):
 					self.button_colonize.render(surface)
 
 		self.button_next_turn.rect.topright = surface.get_rect().topright
+		self.button_next_turn.rect.move_ip(-16, 16)
 		self.button_next_turn.render(surface)
 
 		if self.fleet_selection_popup:

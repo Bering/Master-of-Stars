@@ -103,6 +103,7 @@ class GalaxyScreen(ScreenBase):
 			surface.blit(self.selection_marker_surface, self.selected_fleet.rect)
 
 		self.next_turn_button.rect.topright = surface.get_rect().topright
+		self.next_turn_button.rect.move_ip(-16, 16)
 		self.next_turn_button.render(surface)
 
 		if self.fleet_selection_popup:

@@ -64,11 +64,11 @@ class FleetsScreen(ScreenBase):
 		b.rect.move_ip(32, 32)
 		self.buttons.append(b)
 	
-		#self.disband_fleet_left = UIButton("Disband", self.on_disband_fleet_left_clicked)
-		#self.buttons.append(self.disband_fleet_left)
+		self.disband_fleet_left = UIButton("Disband", self.on_disband_fleet_left_clicked)
+		self.buttons.append(self.disband_fleet_left)
 	
-		#self.disband_fleet_right = UIButton("Disband", self.on_disband_fleet_right_clicked)
-		#self.buttons.append(self.disband_fleet_right)
+		self.disband_fleet_right = UIButton("Disband", self.on_disband_fleet_right_clicked)
+		self.buttons.append(self.disband_fleet_right)
 	
 		b = UIButton("OK", self.on_ok_clicked)
 		b.rect.bottomright = screen_rect.bottomright
@@ -114,10 +114,13 @@ class FleetsScreen(ScreenBase):
 		screen_rect = self._app._surface.get_rect()
 		pos = screen_rect.center
 		pos = (pos[0] - 160, pos[1])
-		self.list_left = self.make_list(self.fleet_left, pos)
+		if self.fleet_left:
+			self.list_left = self.make_list(self.fleet_left, pos)
 
-		if selected_index != None:
-			self.list_left.select(selected_index)
+			if selected_index != None:
+				self.list_left.select(selected_index)
+		else:
+			self.list_left = None
 
 		if self.header_left:
 			self.buttons.remove(self.header_left)
@@ -125,11 +128,18 @@ class FleetsScreen(ScreenBase):
 		if self.fleet_left:
 			self.header_left = UIButton(self.fleet_left.name, self.header_left_clicked)
 			self.header_left.rect.midbottom = self.list_left.rect.midtop
+			self.header_left.rect.y += 1
+
+			self.disband_fleet_left.rect.topleft = self.list_left.rect.bottomleft
+			self.disband_fleet_left.rect.move_ip(0, -1)
 		else:
 			self.header_left = UIButton("New Fleet", self.header_left_clicked)
 			self.header_left.rect.midbottom = pos
-		self.header_left.rect.y += 1
+
+			self.disband_fleet_left.rect.bottomright = (0, 0)
+
 		self.buttons.append(self.header_left)
+
 
 	def update_right_list(self):
 		if self.list_right:
@@ -145,6 +155,8 @@ class FleetsScreen(ScreenBase):
 
 			if selected_index != None:
 				self.list_right.select(selected_index)
+		else:
+			self.list_right = None
 
 		if self.header_right:
 			self.buttons.remove(self.header_right)
@@ -152,11 +164,18 @@ class FleetsScreen(ScreenBase):
 		if self.fleet_right:
 			self.header_right = UIButton(self.fleet_right.name, self.header_right_clicked)
 			self.header_right.rect.midbottom = self.list_right.rect.midtop
+			self.header_right.rect.y += 1
+
+			self.disband_fleet_right.rect.topright = self.list_right.rect.bottomright
+			self.disband_fleet_right.rect.move_ip(0, -1)
 		else:
 			self.header_right = UIButton("New Fleet", self.header_right_clicked)
 			self.header_right.rect.midbottom = pos
-		self.header_right.rect.y += 1
+	
+			self.disband_fleet_right.rect.bottomright = (0, 0)
+
 		self.buttons.append(self.header_right)
+
 
 	def make_list(self, fleet, position):
 		counts = fleet.get_ship_counts()
@@ -184,7 +203,7 @@ class FleetsScreen(ScreenBase):
 				self.popup_right = None
 				if clicked_fleet:
 					self.right_fleet_selected(clicked_fleet)
-			elif self.list_left.handle_click(event):
+			elif self.list_left and self.list_left.handle_click(event):
 				return
 			elif self.list_right and self.list_right.handle_click(event):
 				return
@@ -194,7 +213,9 @@ class FleetsScreen(ScreenBase):
 						button.on_click()
 
 	def render(self, surface):
-		self.list_left.render(surface)
+
+		if self.list_left:
+			self.list_left.render(surface)
 
 		if self.list_right:
 			self.list_right.render(surface)
@@ -217,6 +238,7 @@ class FleetsScreen(ScreenBase):
 		fleet_list = self.fleets[:]
 		if self.fleet_right:
 			fleet_list.remove(self.fleet_right)
+		fleet_list.append(NewFleetOption())
 		if len(fleet_list) > 1:
 			self.popup_left = UIPopup(fleet_list, self.header_left.rect.center)
 
@@ -228,7 +250,8 @@ class FleetsScreen(ScreenBase):
 			return
 
 		fleet_list = self.fleets[:]
-		fleet_list.remove(self.fleet_left)
+		if self.fleet_left:
+			fleet_list.remove(self.fleet_left)
 		fleet_list.append(NewFleetOption())
 		if len(fleet_list) > 1:
 			self.popup_right = UIPopup(fleet_list, self.header_right.rect.center)
@@ -294,6 +317,17 @@ class FleetsScreen(ScreenBase):
 			self.update_left_list()
 			self.update_right_list()
 
+	def on_disband_fleet_left_clicked(self):
+		self.player.disband_fleet(self.fleet_left)
+		self.fleets.remove(self.fleet_left)
+		self.fleet_left = None
+		self.update_left_list()
+
+	def on_disband_fleet_right_clicked(self):
+		self.player.disband_fleet(self.fleet_right)
+		self.fleets.remove(self.fleet_right)
+		self.fleet_right = None
+		self.update_right_list()
+
 	def on_ok_clicked(self):
 		self._app.screens.change_to(self.prev_screen_name)
-
