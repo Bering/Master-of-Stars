@@ -6,10 +6,10 @@ default_color = (255, 255, 255)
 default_highlight_color = (48, 48, 48)
 
 class UIListItem:
-	def __init__(self, surface, obj, is_highlighted):
+	def __init__(self, surface, item, is_highlighted):
 		self.surface = surface
 		self.rect = self.surface.get_rect()
-		self.object = obj
+		self.item = item
 		self.is_highlighted = is_highlighted
 
 class UIList:
@@ -81,14 +81,17 @@ class UIList:
 		return self.selected_index
 
 	def get_selected_item(self):
+		if self.selected_index == None:
+			return None
+
 		return self.buttons[self.selected_index].item
 
 	def handle_click(self, event):
 		for n in range(len(self.buttons)):
 			if self.buttons[n].rect.collidepoint(event.pos):
 				self.select(n)
-				return n
-		return None
+				return True
+		return False
 
 	def render(self, surface):
 		delta_x = self.rect.topleft[0] - self.buttons[0].rect.x

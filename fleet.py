@@ -8,7 +8,6 @@ class Fleet:
 	def __init__(self, planet, number):
 		self.name = self.generate_name(number)
 		self.star = planet.star
-		self.star.fleets.append(self)
 		self.planet = planet
 		self.player = planet.player
 		self.ships = []
@@ -75,6 +74,17 @@ class Fleet:
 					best_ship = ship
 
 		return best_ship
+
+	def extract(self, ship_type, amount=1):
+		extracted_ships = []
+		for ship in self.ships:
+			if ship.type == ship_type:
+				self.ships.remove(ship)
+				extracted_ships.append(ship)
+				if len(extracted_ships) == amount:
+					break
+
+		return extracted_ships
 
 	def destroy_ship(self, ship):
 		self.ships.remove(ship)

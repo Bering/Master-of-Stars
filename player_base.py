@@ -50,10 +50,18 @@ class PlayerBase:
 		self.planets.append(planet)
 		planet.found_colony(self)
 
+	# TODO: This requires a planet but I want to be able to manage fleets in orbit around stars
 	def create_fleet(self, planet):
 		self.fleets_counter += 1
 		fleet = Fleet(planet, self.fleets_counter)
 		self.fleets.append(fleet)
+		planet.star.fleets.append(fleet)
+		planet.fleets.append(fleet)
 		return fleet
 
-
+	def disband_fleet(self, fleet):
+		fleet.planet.fleets.remove(fleet)
+		fleet.planet.star.fleets.remove(fleet)
+		self.fleets.remove(fleet)
+		fleet.ships.clear()
+	
