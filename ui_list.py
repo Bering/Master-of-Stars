@@ -18,6 +18,7 @@ class UIList:
 		items,
 		position=None,
 		center=None,
+		padding = 16,
 		color=default_color,
 		highlight_color=default_highlight_color
 	):
@@ -45,7 +46,6 @@ class UIList:
 			self.buttons.append(b)
 			width = max(width, b.rect.width)
 
-		padding = 16
 		for b in self.buttons:
 			text_surface = b.surface.copy()
 			text_surface_h = b.surface_highlighted.copy()
