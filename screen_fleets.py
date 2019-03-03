@@ -133,7 +133,7 @@ class FleetsScreen(ScreenBase):
 			self.disband_fleet_left.rect.topleft = self.list_left.rect.bottomleft
 			self.disband_fleet_left.rect.move_ip(0, -1)
 		else:
-			self.header_left = UIButton("New Fleet", self.header_left_clicked)
+			self.header_left = UIButton("No Fleet", self.header_left_clicked)
 			self.header_left.rect.midbottom = pos
 
 			self.disband_fleet_left.rect.bottomright = (0, 0)
@@ -169,7 +169,7 @@ class FleetsScreen(ScreenBase):
 			self.disband_fleet_right.rect.topright = self.list_right.rect.bottomright
 			self.disband_fleet_right.rect.move_ip(0, -1)
 		else:
-			self.header_right = UIButton("New Fleet", self.header_right_clicked)
+			self.header_right = UIButton("No Fleet", self.header_right_clicked)
 			self.header_right.rect.midbottom = pos
 	
 			self.disband_fleet_right.rect.bottomright = (0, 0)
@@ -229,31 +229,19 @@ class FleetsScreen(ScreenBase):
 			self.popup_right.render(surface)
 
 	def header_left_clicked(self):
-		if self.header_left.label == "New Fleet":
-			self.fleet_left = self.player.create_fleet(self.planet)
-			self.fleets.append(self.fleet_left)
-			self.update_left_list()
-			return
-
 		fleet_list = self.fleets[:]
 		if self.fleet_right:
 			fleet_list.remove(self.fleet_right)
 		fleet_list.append(NewFleetOption())
-		if len(fleet_list) > 1:
+		if len(fleet_list) > 0:
 			self.popup_left = UIPopup(fleet_list, self.header_left.rect.center)
 
 	def header_right_clicked(self):
-		if self.header_right.label == "New Fleet":
-			self.fleet_right = self.player.create_fleet(self.planet)
-			self.fleets.append(self.fleet_right)
-			self.update_right_list()
-			return
-
 		fleet_list = self.fleets[:]
 		if self.fleet_left:
 			fleet_list.remove(self.fleet_left)
 		fleet_list.append(NewFleetOption())
-		if len(fleet_list) > 1:
+		if len(fleet_list) > 0:
 			self.popup_right = UIPopup(fleet_list, self.header_right.rect.center)
 
 	def left_fleet_selected(self, fleet):
