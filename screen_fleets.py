@@ -320,14 +320,37 @@ class FleetsScreen(ScreenBase):
 	def on_disband_fleet_left_clicked(self):
 		self.player.disband_fleet(self.fleet_left)
 		self.fleets.remove(self.fleet_left)
-		self.fleet_left = None
+
+		other_fleets = self.fleets[:]
+		if self.fleet_right:
+			other_fleets.remove(self.fleet_right)
+		if len(other_fleets) == 0:
+			self.fleet_left = None
+		else:
+			self.fleet_left = other_fleets[0]
+
 		self.update_left_list()
 
 	def on_disband_fleet_right_clicked(self):
 		self.player.disband_fleet(self.fleet_right)
 		self.fleets.remove(self.fleet_right)
-		self.fleet_right = None
+
+		other_fleets = self.fleets[:]
+		if self.fleet_left:
+			other_fleets.remove(self.fleet_left)
+		if len(other_fleets) == 0:
+			self.fleet_right = None
+		else:
+			self.fleet_right = other_fleets[0]
+
 		self.update_right_list()
 
 	def on_ok_clicked(self):
-		self._app.screens.change_to(self.prev_screen_name)
+		screen = self._app.screens.change_to(self.prev_screen_name)
+
+		if self.fleet_left:
+			screen.selected_fleet = self.fleet_left
+		elif len(self.fleets) > 0:
+			screen.selected_fleet = self.fleets[0]
+		else:
+			screen.selected_fleet = None
