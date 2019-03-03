@@ -44,8 +44,7 @@ class Planet:
 		self.name_rect = self.name_surf.get_rect()
 		self.name_rect.midtop = self.rect.midbottom
 
-	def found_colony(self, player):
-		fleet = self.fleets[0]
+	def found_colony(self, player, fleet):
 		best_colony_ship = fleet.get_best_ship("Colony")
 		fleet.destroy_ship(best_colony_ship)
 		if fleet.get_ship_counts()["Total"] == 0:

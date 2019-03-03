@@ -163,6 +163,14 @@ class PlanetScreen(ScreenBase):
 		info_rect.move_ip(-32, -32)
 		surface.blit(info_surface, info_rect)
 
+		# Colonize button
+		if self.planet.player:
+			self.button_colonize.rect.bottomright = (0, 0)
+		elif self.planet.fleets and self.selected_fleet.get_ship_counts()["Colony"] > 0:
+			self.button_colonize.rect.midtop = info_rect.midbottom
+			self.button_colonize.rect.move_ip(0, 6)
+			self.button_colonize.render(surface)
+
 		# Fleet info
 		fleet_surface = self.render_fleet_text()
 		self.fleet_info_rect = fleet_surface.get_rect() # self. because of the fleet selection popup
@@ -202,15 +210,6 @@ class PlanetScreen(ScreenBase):
 				self.button_production.rect.midtop = production_rect.midbottom
 				self.button_production.rect.move_ip(0, 6)
 				self.button_production.render(surface)
-
-			self.button_colonize.rect.bottomright = (0, 0)
-			
-		else:
-			if self.planet.fleets:
-				if self.selected_fleet.get_ship_counts()["Colony"] > 0:
-					self.button_colonize.rect.topright = self.centered_rect.bottomleft
-					self.button_colonize.rect.move_ip(-32, 32)
-					self.button_colonize.render(surface)
 
 		self.button_next_turn.rect.topright = surface.get_rect().topright
 		self.button_next_turn.rect.move_ip(-16, 16)
@@ -315,7 +314,7 @@ class PlanetScreen(ScreenBase):
 		s.setup("Planet", self.selected_fleet)
 
 	def on_colonize_clicked(self):
-		self._app.local_player.found_colony(self.planet)
+		self.planet.player.found_colony(self.planet, self.selected_fleet)
 
 	def on_next_planet(self):
 		self.select_planet(self._app.local_player.next_planet(self.selected_planet).star)

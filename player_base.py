@@ -46,9 +46,9 @@ class PlayerBase:
 
 		return self.planets[self.selected_planet_index]
 
-	def found_colony(self, planet):
+	def found_colony(self, planet, fleet):
 		self.planets.append(planet)
-		planet.found_colony(self)
+		planet.found_colony(self, fleet)
 
 	# TODO: This requires a planet but I want to be able to manage fleets in orbit around stars
 	def create_fleet(self, planet):

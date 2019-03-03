@@ -101,11 +101,11 @@ class World:
 			planet = star.planets[random.randrange(len(star.planets))]
 			owner = planet.player
 		
-		# Setup start conditions. Remember that tech_level["Colony"] == 0
 		planet.player = player
+		fleet = player.create_fleet(planet)
+		planet.build_ship("Scout")
 		planet.build_ship("Colony")
-		planet.build_ship("Scout") # Build the scout before founding the colony so the 1st fleet doesn't dismantle
-		player.found_colony(planet)
+		player.found_colony(planet, fleet)
 		planet.population = 5
 		planet.industry = 5
 		planet.defense = 5
