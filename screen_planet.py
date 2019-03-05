@@ -84,8 +84,17 @@ class PlanetScreen(ScreenBase):
 
 		if len(self.player_fleets) > 0:
 			self.selected_fleet = self.player_fleets[0]
+		elif len(self.planet.fleets) > 0:
+			self.selected_fleet = self.planet.fleets[0]
 		else:
 			self.selected_fleet = None
+
+		if self.selected_fleet:
+			surface = self.selected_fleet.surface
+			self.fleet_rect = surface.get_rect()
+			self.fleet_rect.width *= 2
+			self.fleet_rect.height *= 2
+			self.fleet_surface = pygame.transform.smoothscale(surface, self.fleet_rect.size)
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
