@@ -105,6 +105,10 @@ class StarScreen(ScreenBase):
 			if f.destination_planet:
 				pygame.draw.aaline(surface, (255,255,255), f.rect_s.center, f.destination_planet.rect.center)
 
+			# req. for arriving fleets after interstellar travel
+			if not f.planet:
+				f.rect_s.midleft = self.centered_rect.topright
+
 			surface.blit(self.fleet_surface, f.rect_s)
 
 		if self.selected_fleet:
