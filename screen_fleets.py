@@ -335,6 +335,7 @@ class FleetsScreen(ScreenBase):
 
 	def on_ok_clicked(self):
 		screen = self._app.screens.change_to(self.prev_screen_name)
+		screen.setup(self.planet)
 
 		if self.fleet_left:
 			screen.selected_fleet = self.fleet_left

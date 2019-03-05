@@ -77,8 +77,13 @@ class PlanetScreen(ScreenBase):
 		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
 
-		if len(self.planet.fleets) > 0:
-			self.selected_fleet = self.planet.fleets[0]
+		self.player_fleets = []
+		for f in self.planet.fleets:
+			if f.player == self._app.local_player:
+				self.player_fleets.append(f)
+
+		if len(self.player_fleets) > 0:
+			self.selected_fleet = self.player_fleets[0]
 		else:
 			self.selected_fleet = None
 
@@ -118,11 +123,11 @@ class PlanetScreen(ScreenBase):
 				if self.centered_rect.collidepoint(event.pos):
 					self.on_planet_clicked()
 				else:
-					if self.planet and len(self.planet.fleets) > 1:
+					if self.planet and len(self.player_fleets) > 1:
 						if self.fleet_info_rect.collidepoint(event.pos) \
 						or self.fleet_rect.collidepoint(event.pos):
 							self.fleet_selection_popup = UIPopup(
-								self.planet.fleets,
+								self.player_fleets,
 								event.pos
 							)
 					for b in self.buttons:

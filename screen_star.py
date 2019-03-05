@@ -82,8 +82,9 @@ class StarScreen(ScreenBase):
 
 					clicked_fleets = []
 					for f in self.star.fleets:
-						if f.rect_s.collidepoint(event.pos):
-							clicked_fleets.append(f)
+						if f.player == self._app.local_player:
+							if f.rect_s.collidepoint(event.pos):
+								clicked_fleets.append(f)
 					if len(clicked_fleets) == 1:
 						self.on_fleet_clicked(clicked_fleets[0])
 					elif len(clicked_fleets) > 1:

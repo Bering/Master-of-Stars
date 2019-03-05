@@ -57,10 +57,9 @@ class GalaxyScreen(ScreenBase):
 						self.on_star_clicked(s)
 
 				clicked_fleets = []
-				for player in self._app.players + self._app.ais:
-					for fleet in player.fleets:
-						if fleet.rect.collidepoint(event.pos):
-							clicked_fleets.append(fleet)
+				for fleet in self._app.local_player.fleets:
+					if fleet.rect.collidepoint(event.pos):
+						clicked_fleets.append(fleet)
 				if len(clicked_fleets) == 1:
 					self.on_fleet_clicked(clicked_fleets[0])
 				elif len(clicked_fleets) > 1:
@@ -93,6 +92,7 @@ class GalaxyScreen(ScreenBase):
 		for player in self._app.players + self._app.ais:
 			for f in player.fleets:
 				if f.destination_star:
+					# TODO: red for incoming enemy fleet
 					pygame.draw.aaline(surface, (255,255,255), f.rect.center, f.destination_star.rect.center)
 				surface.blit(self.fleet_surface, f.rect)
 			
