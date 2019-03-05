@@ -192,7 +192,7 @@ class PlanetScreen(ScreenBase):
 		self.fleet_info_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, self.fleet_info_rect)
 
-		if self.planet.fleets:
+		if len(self.player_fleets) > 0:
 			self.button_fleet.rect.midtop = self.fleet_info_rect.midbottom
 			self.button_fleet.rect.move_ip(0, 6)
 			self.button_fleet.render(surface)
@@ -324,8 +324,9 @@ class PlanetScreen(ScreenBase):
 		s.setup(self.planet)
 
 	def on_fleet_manage_clicked(self):
-		s = self._app.screens.change_to("Fleet")
-		s.setup("Planet", self.selected_fleet)
+		if len(self.player_fleets) > 0:
+			s = self._app.screens.change_to("Fleet")
+			s.setup("Planet", self.selected_fleet)
 
 	def on_colonize_clicked(self):
 		self.planet.player.found_colony(self.planet, self.selected_fleet)
