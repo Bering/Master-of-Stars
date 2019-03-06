@@ -78,23 +78,33 @@ class PlanetScreen(ScreenBase):
 		self.name_rect = self.name_surf.get_rect()
 
 		self.player_fleets = []
+		self.enemy_fleets = []
 		for f in self.planet.fleets:
 			if f.player == self._app.local_player:
 				self.player_fleets.append(f)
+			else:
+				self.enemy_fleets.append(f)
 
-		if len(self.player_fleets) > 0:
+		if self.player_fleets:
 			self.selected_fleet = self.player_fleets[0]
-		elif len(self.planet.fleets) > 0:
+		elif self.planet.fleets:
 			self.selected_fleet = self.planet.fleets[0]
 		else:
 			self.selected_fleet = None
 
-		if self.selected_fleet:
-			surface = self.selected_fleet.surface
+		if self.player_fleets:
+			surface = self.player_fleets[0].surface
 			self.fleet_rect = surface.get_rect()
 			self.fleet_rect.width *= 2
 			self.fleet_rect.height *= 2
 			self.fleet_surface = pygame.transform.smoothscale(surface, self.fleet_rect.size)
+
+		if self.enemy_fleets:
+			surface = self.enemy_fleets[0].surface
+			self.enemy_fleet_rect = surface.get_rect()
+			self.enemy_fleet_rect.width *= 2
+			self.enemy_fleet_rect.height *= 2
+			self.enemy_fleet_surface = pygame.transform.smoothscale(surface, self.enemy_fleet_rect.size)
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -132,8 +142,9 @@ class PlanetScreen(ScreenBase):
 				if self.centered_rect.collidepoint(event.pos):
 					self.on_planet_clicked()
 				else:
-					if self.planet and len(self.player_fleets) > 1:
+					if len(self.player_fleets) > 1:
 						if self.fleet_info_rect.collidepoint(event.pos) \
+						or self.enemy_fleet_info_rect.collidepoint(event.pos) \
 						or self.fleet_rect.collidepoint(event.pos):
 							self.fleet_selection_popup = UIPopup(
 								self.player_fleets,
@@ -154,9 +165,13 @@ class PlanetScreen(ScreenBase):
 			self.ownermarker_rect.center = surface.get_rect().center
 			surface.blit(self.ownermarker, self.ownermarker_rect)
 
-		if self.planet.fleets:
+		if self.player_fleets:
 			self.fleet_rect.midleft = self.centered_rect.topright
 			surface.blit(self.fleet_surface, self.fleet_rect)
+
+		if self.enemy_fleets:
+			self.enemy_fleet_rect.midbottom = self.centered_rect.topright
+			surface.blit(self.enemy_fleet_surface, self.enemy_fleet_rect)
 
 		if self.planet.shipyard_level > 0:
 			self.shipyard_rect.midleft = self.centered_rect.bottomright
@@ -192,7 +207,7 @@ class PlanetScreen(ScreenBase):
 		self.fleet_info_rect.move_ip(32, -32)
 		surface.blit(fleet_surface, self.fleet_info_rect)
 
-		if len(self.player_fleets) > 0:
+		if self.player_fleets:
 			self.button_fleet.rect.midtop = self.fleet_info_rect.midbottom
 			self.button_fleet.rect.move_ip(0, 6)
 			self.button_fleet.render(surface)
@@ -324,7 +339,7 @@ class PlanetScreen(ScreenBase):
 		s.setup(self.planet)
 
 	def on_fleet_manage_clicked(self):
-		if len(self.player_fleets) > 0:
+		if self.player_fleets:
 			s = self._app.screens.change_to("Fleet")
 			s.setup("Planet", self.selected_fleet)
 
