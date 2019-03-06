@@ -15,18 +15,6 @@ class StarScreen(ScreenBase):
 		filename = os.path.join("images", "selection.png")
 		self.selection_marker_surface = pygame.image.load(filename)
 
-		filename = os.path.join("images", "ownermarker.png")
-		self.owned_planet_surface = pygame.image.load(filename)
-
-		filename = os.path.join("images", "fleet.png")
-		self.fleet_surface = pygame.image.load(filename)
-
-		filename = os.path.join("images", "shipyard.png")
-		self.shipyard_surface = pygame.image.load(filename)
-
-		filename = os.path.join("images", "defense.png")
-		self.defense_surface = pygame.image.load(filename)
-
 		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
 		self.fleet_selection_popup = None
 
@@ -110,7 +98,7 @@ class StarScreen(ScreenBase):
 			if not f.planet:
 				f.rect_s.midleft = self.centered_rect.topright
 
-			surface.blit(self.fleet_surface, f.rect_s)
+			surface.blit(f.surface, f.rect_s)
 
 		if self.selected_fleet:
 			surface.blit(self.selection_marker_surface, self.selected_fleet.rect_s)
@@ -122,17 +110,17 @@ class StarScreen(ScreenBase):
 				surface.blit(self.selection_marker_surface, self.selected_planet.rect)
 
 			if p.player:
-				surface.blit(self.owned_planet_surface, p.rect)
+				surface.blit(p.player.icon_ownermarker, p.rect)
 
 			if p.shipyard_level > 0:
 				rect = p.rect.copy()
 				rect.midleft = p.rect.bottomright
-				surface.blit(self.shipyard_surface, rect)
+				surface.blit(p.player.icon_shipyard, rect)
 
 			if p.defense > 0:
 				rect = p.rect.copy()
 				rect.midright = p.rect.bottomleft
-				surface.blit(self.defense_surface, rect)
+				surface.blit(p.player.icon_defense, rect)
 			
 			surface.blit(p.name_surf, p.name_rect)
 

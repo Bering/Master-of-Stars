@@ -1,5 +1,5 @@
 from ship import Ship
-import os
+import icon
 import math
 import pygame
 
@@ -14,9 +14,8 @@ class Fleet:
 		self.destination_star = None
 		self.destination_planet = None
 		self.destination_center_star_rect = None
-		
-		image_file = os.path.join("images", "fleet.png")
-		self.surface = pygame.image.load(image_file).convert_alpha()
+
+		self.surface = icon.load("fleet.png", self.player.color)
 
 		# rect in the galaxy screen
 		self.rect = self.surface.get_rect()

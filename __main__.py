@@ -24,9 +24,11 @@ class Application:
 		self.screens = screens.ScreensManager(self)
 
 		self.players = []
-		for n in range(config.nb_players):
+		self.local_player = Player("Player One", (0, 128, 0))
+		self.players.append(self.local_player)
+
+		for n in range(1, config.nb_players - 1):
 			self.players.append(Player("Player " + str(n+1)))
-		self.local_player = self.players[0]
 		
 		self.ais = []
 		for n in range(config.nb_ais):

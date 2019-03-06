@@ -1,6 +1,7 @@
 import os
 import math
 import pygame
+import icon
 from screen_base import ScreenBase
 from ui_button import UIButton
 from ui_text_renderer import UITextRenderer
@@ -12,34 +13,6 @@ class PlanetScreen(ScreenBase):
 	def __init__(self, app):
 		super().__init__(app)
 		self.planet = None
-
-		filename = os.path.join("images", "ownermarker.png")
-		surface = pygame.image.load(filename)
-		self.ownermarker_rect = surface.get_rect()
-		self.ownermarker_rect.width *= 3
-		self.ownermarker_rect.height *= 3
-		self.ownermarker = pygame.transform.smoothscale(surface, self.ownermarker_rect.size)
-
-		filename = os.path.join("images", "fleet.png")
-		surface = pygame.image.load(filename)
-		self.fleet_rect = surface.get_rect()
-		self.fleet_rect.width *= 2
-		self.fleet_rect.height *= 2
-		self.fleet_surface = pygame.transform.smoothscale(surface, self.fleet_rect.size)
-
-		filename = os.path.join("images", "shipyard.png")
-		surface = pygame.image.load(filename)
-		self.shipyard_rect = surface.get_rect()
-		self.shipyard_rect.width *= 2
-		self.shipyard_rect.height *= 2
-		self.shipyard_surface = pygame.transform.smoothscale(surface, self.shipyard_rect.size)
-
-		filename = os.path.join("images", "defense.png")
-		surface = pygame.image.load(filename)
-		self.defense_rect = surface.get_rect()
-		self.defense_rect.width *= 2
-		self.defense_rect.height *= 2
-		self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self.name_font = pygame.font.Font(None, 18)
 		
@@ -76,6 +49,25 @@ class PlanetScreen(ScreenBase):
 
 		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
+
+		if planet.player:
+			surface = planet.player.icon_ownermarker
+			self.ownermarker_rect = surface.get_rect()
+			self.ownermarker_rect.width *= 3
+			self.ownermarker_rect.height *= 3
+			self.ownermarker = pygame.transform.smoothscale(surface, self.ownermarker_rect.size)
+
+			surface = planet.player.icon_shipyard
+			self.shipyard_rect = surface.get_rect()
+			self.shipyard_rect.width *= 2
+			self.shipyard_rect.height *= 2
+			self.shipyard_surface = pygame.transform.smoothscale(surface, self.shipyard_rect.size)
+
+			surface = planet.player.icon_defense
+			self.defense_rect = surface.get_rect()
+			self.defense_rect.width *= 2
+			self.defense_rect.height *= 2
+			self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self.player_fleets = []
 		self.enemy_fleets = []

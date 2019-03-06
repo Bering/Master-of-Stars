@@ -14,15 +14,6 @@ class GalaxyScreen(ScreenBase):
 		filename = os.path.join("images", "selection.png")
 		self.selection_marker_surface = pygame.image.load(filename)
 
-		filename = os.path.join("images", "ownermarker.png")
-		self.owned_star_surface = pygame.image.load(filename)
-
-		filename = os.path.join("images", "fleet.png")
-		self.fleet_surface = pygame.image.load(filename)
-
-		filename = os.path.join("images", "shipyard.png")
-		self.shipyard_surface = pygame.image.load(filename)
-
 		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
 
 		self.fleet_selection_popup = None
@@ -80,12 +71,12 @@ class GalaxyScreen(ScreenBase):
 
 			for p in s.planets:
 				if p.player:
-					surface.blit(self.owned_star_surface, s.rect)
+					surface.blit(p.player.icon_ownermarker, s.rect)
 
 				if p.shipyard_level > 0:
 					rect = s.rect.copy()
 					rect.midleft = s.rect.bottomright
-					surface.blit(self.shipyard_surface, rect)
+					surface.blit(p.player.icon_shipyard, rect)
 			
 			surface.blit(s.name_surf, s.name_rect)
 
@@ -94,7 +85,7 @@ class GalaxyScreen(ScreenBase):
 				if f.destination_star:
 					# TODO: red for incoming enemy fleet
 					pygame.draw.aaline(surface, (255,255,255), f.rect.center, f.destination_star.rect.center)
-				surface.blit(self.fleet_surface, f.rect)
+				surface.blit(f.surface, f.rect)
 			
 		if self.selected_star:
 			surface.blit(self.selection_marker_surface, self.selected_star.rect)

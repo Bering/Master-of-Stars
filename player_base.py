@@ -1,10 +1,30 @@
 from fleet import Fleet
+import icon
+import random
 import research
+
+# TODO: Pick decent colors
+available_colors = [
+	(255, 0, 0),
+	(0, 255, 0),
+	(0, 0, 255),
+	(255, 255, 0),
+	(0, 255, 255),
+	(128, 0, 0),
+	(0, 128, 0),
+	(0, 0, 128),
+	(128, 128, 0),
+	(0, 128, 128)
+]
 
 class PlayerBase:
 
-	def __init__(self, name):
+	def __init__(self, name, color=None):
 		self.name = name
+		self.color = color
+		if not self.color:
+			self.color = random.choice(available_colors)
+		available_colors.remove	self.color)
 		self.planets = []
 		self.selected_planet_index = 0
 		self.fleets = []
@@ -23,6 +43,10 @@ class PlayerBase:
 			"Destroyer" : research.ResearchDestroyer(self),
 			"Colony" : research.ResearchColony(self)
 		}
+		self.icon_ownermarker = icon.load("ownermarker.png", self.color)
+#		self.icon_fleet = icon.load("fleet.png", self.color)
+		self.icon_shipyard = icon.load("shipyard.png", self.color)
+		self.icon_defense = icon.load("defense.png", self.color)
 
 	def next_planet(self, current_planet):
 		if current_planet == None:
