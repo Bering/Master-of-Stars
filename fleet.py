@@ -5,11 +5,11 @@ import pygame
 
 class Fleet:
 
-	def __init__(self, planet, number):
+	def __init__(self, player, planet, number):
 		self.name = self.generate_name(number)
-		self.star = planet.star
+		self.player = player
 		self.planet = planet
-		self.player = planet.player
+		self.star = planet.star
 		self.ships = []
 		self.destination_star = None
 		self.destination_planet = None
@@ -20,12 +20,13 @@ class Fleet:
 
 		# rect in the galaxy screen
 		self.rect = self.surface.get_rect()
-		star_rect = planet.star.rect
+		star_rect = self.star.rect
 		self.rect.midleft = star_rect.topright
 
 		# rect in the star screen
-		self.rect_s = planet.rect.copy()
-		self.rect_s.midleft = planet.rect.topright
+		# TODO: I want to be able to create fleets in orbit around a star too
+		self.rect_s = self.planet.rect.copy()
+		self.rect_s.midleft = self.planet.rect.topright
 
 		font = pygame.font.Font(None, 18)
 		self.name_surf = font.render(self.name, True, (255,255,255))
