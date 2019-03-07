@@ -4,6 +4,7 @@ from screen_planet import PlanetScreen
 from screen_production import ProductionScreen
 from screen_research import ResearchScreen
 from screen_fleets import FleetsScreen
+from screen_test import TestScreen
 from screen_quit import QuitScreen
 
 class ScreensManager:
@@ -16,6 +17,7 @@ class ScreensManager:
 			"Production" : ProductionScreen(app),
 			"Research" : ResearchScreen(app),
 			"Fleet" : FleetsScreen(app),
+			"Test" : TestScreen(app),
 			"Quit" : QuitScreen(app)
 		}
 		self._previous_screen_name = "None"

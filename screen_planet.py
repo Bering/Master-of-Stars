@@ -113,6 +113,9 @@ class PlanetScreen(ScreenBase):
 				self._app.screens.change_to("Galaxy")
 			elif (event.key == pygame.K_s):
 				self._app.screens.change_to("Star")
+			elif (event.key == pygame.K_t):
+				s = self._app.screens.change_to("Test")
+				s.setup("Planet")
 			elif (event.key == pygame.K_r):
 				self.on_change_research_clicked()
 			elif (event.key == pygame.K_p):

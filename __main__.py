@@ -21,8 +21,6 @@ class Application:
 		pygame.display.set_caption("STARS Alpha 0.1")
 		self._surface = pygame.display.set_mode((config.window_width, config.window_height))
 
-		self.screens = screens.ScreensManager(self)
-
 		self.players = []
 		self.local_player = Player("Player One", (0, 128, 0))
 		self.players.append(self.local_player)
@@ -36,6 +34,8 @@ class Application:
 		
 		self.world = World(config, self.players, self.ais)
 
+		self.screens = screens.ScreensManager(self)
+		
 		p = self.local_player.planets[0]
 		s = self.screens.change_to("Galaxy")
 		s.select_star(p.star)
