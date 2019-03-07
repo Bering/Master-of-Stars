@@ -46,6 +46,7 @@ class PlanetScreen(ScreenBase):
 		self.centered_rect.width *= 3
 		self.centered_rect.height *= 3
 		self.centered_surface = pygame.transform.smoothscale(planet.surface, self.centered_rect.size)
+		self.centered_rect.center = self._app._surface.get_rect().center
 
 		self.name_surf = self.name_font.render(self.planet.name, True, (255,255,255))
 		self.name_rect = self.name_surf.get_rect()
@@ -70,12 +71,9 @@ class PlanetScreen(ScreenBase):
 			self.defense_surface = pygame.transform.smoothscale(surface, self.defense_rect.size)
 
 		self.player_fleets = []
-		self.enemy_fleets = []
 		for f in self.planet.fleets:
 			if f.player == self._app.local_player:
 				self.player_fleets.append(f)
-			else:
-				self.enemy_fleets.append(f)
 
 		if self.player_fleets:
 			self.selected_fleet = self.player_fleets[0]
@@ -84,19 +82,26 @@ class PlanetScreen(ScreenBase):
 		else:
 			self.selected_fleet = None
 
-		if self.player_fleets:
-			surface = self.player_fleets[0].surface
-			self.fleet_rect = surface.get_rect()
-			self.fleet_rect.width *= 2
-			self.fleet_rect.height *= 2
-			self.fleet_surface = pygame.transform.smoothscale(surface, self.fleet_rect.size)
+		self.fleet1, self.fleet2, self.fleet3 = self.fleet_picker(self.planet.fleets)
 
-		if self.enemy_fleets:
-			surface = self.enemy_fleets[0].surface
-			self.enemy_fleet_rect = surface.get_rect()
-			self.enemy_fleet_rect.width *= 2
-			self.enemy_fleet_rect.height *= 2
-			self.enemy_fleet_surface = pygame.transform.smoothscale(surface, self.enemy_fleet_rect.size)
+		if self.fleet1:
+			self.fleet1_rect = self.fleet1.rect.copy()
+			self.fleet1_rect.width *= 2
+			self.fleet1_rect.height *= 2
+			self.fleet1_surface = pygame.transform.smoothscale(self.fleet1.surface, self.fleet1_rect.size)
+			self.fleet1_rect.midleft = self.centered_rect.topright
+		if self.fleet2:
+			self.fleet2_rect = self.fleet2.rect.copy()
+			self.fleet2_rect.width *= 2
+			self.fleet2_rect.height *= 2
+			self.fleet2_surface = pygame.transform.smoothscale(self.fleet2.surface, self.fleet2_rect.size)
+			self.fleet2_rect.midbottom = self.centered_rect.topright
+		if self.fleet3:
+			self.fleet3_rect = self.fleet3.rect.copy()
+			self.fleet3_rect.width *= 2
+			self.fleet3_rect.height *= 2
+			self.fleet3_surface = pygame.transform.smoothscale(self.fleet3.surface, self.fleet3_rect.size)
+			self.fleet3_rect.midbottom = self.centered_rect.topleft
 
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
@@ -136,8 +141,7 @@ class PlanetScreen(ScreenBase):
 				else:
 					if len(self.player_fleets) > 1:
 						if self.fleet_info_rect.collidepoint(event.pos) \
-						or self.enemy_fleet_info_rect.collidepoint(event.pos) \
-						or self.fleet_rect.collidepoint(event.pos):
+						or self.fleet1_rect.collidepoint(event.pos):
 							self.fleet_selection_popup = UIPopup(
 								self.player_fleets,
 								event.pos
@@ -150,20 +154,18 @@ class PlanetScreen(ScreenBase):
 		pass
 
 	def render(self, surface):
-		self.centered_rect.center = surface.get_rect().center
 		surface.blit(self.centered_surface, self.centered_rect)
 
 		if self.planet.player:
 			self.ownermarker_rect.center = surface.get_rect().center
 			surface.blit(self.ownermarker, self.ownermarker_rect)
 
-		if self.player_fleets:
-			self.fleet_rect.midleft = self.centered_rect.topright
-			surface.blit(self.fleet_surface, self.fleet_rect)
-
-		if self.enemy_fleets:
-			self.enemy_fleet_rect.midbottom = self.centered_rect.topright
-			surface.blit(self.enemy_fleet_surface, self.enemy_fleet_rect)
+		if self.fleet1:
+			surface.blit(self.fleet1_surface, self.fleet1_rect)
+		if self.fleet2:
+			surface.blit(self.fleet2_surface, self.fleet2_rect)
+		if self.fleet3:
+			surface.blit(self.fleet3_surface, self.fleet3_rect)
 
 		if self.planet.shipyard_level > 0:
 			self.shipyard_rect.midleft = self.centered_rect.bottomright
@@ -238,6 +240,38 @@ class PlanetScreen(ScreenBase):
 
 		if self.fleet_selection_popup:
 			self.fleet_selection_popup.render(surface)
+
+	# 3 fleets to choose
+	# if local player has a fleet, it must be f1
+	# only choose the first fleet of every player
+	# if more than 3 players, only choose the first 3
+	def fleet_picker(self, fleets):
+		f1 = None
+		f2 = None
+		f3 = None
+		player_fleets = {}
+
+		# First fleet of every player
+		for f in fleets:
+			if f.player not in player_fleets:
+				player_fleets[f.player] = f
+
+		# if local player has a fleet, it is f1
+		if self._app.local_player in player_fleets:
+			f1 = player_fleets[self._app.local_player]
+			del player_fleets[self._app.local_player]
+
+		for player, fleet in player_fleets.items():
+			if not f1:
+				f1 = player_fleets[player]
+			elif not f2:
+				f2 = player_fleets[player]
+			elif not f3:
+				f3 = player_fleets[player]
+			else:
+				break
+
+		return f1, f2, f3
 
 	def render_info_text(self):
 		text = ""

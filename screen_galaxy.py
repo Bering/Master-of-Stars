@@ -77,6 +77,21 @@ class GalaxyScreen(ScreenBase):
 					rect = s.rect.copy()
 					rect.midleft = s.rect.bottomright
 					surface.blit(p.player.icon_shipyard, rect)
+
+			if s.fleets:
+				rect = s.rect.copy()
+				orbiting_fleets = [f for f in s.fleets if not f.destination_star]
+				f1, f2, f3 = self.fleet_picker(orbiting_fleets)
+				if f1:
+					rect.midleft = s.rect.topright
+					surface.blit(f1.surface, rect)
+				if f2:
+					rect.midbottom = s.rect.topright
+					surface.blit(f2.surface, rect)
+				if f3:
+					rect.midbottom = s.rect.topleft
+					rect.move_ip(3, 0)
+					surface.blit(f3.surface, rect)
 			
 			surface.blit(s.name_surf, s.name_rect)
 
@@ -84,8 +99,13 @@ class GalaxyScreen(ScreenBase):
 			for f in player.fleets:
 				if f.destination_star:
 					# TODO: red for incoming enemy fleet
-					pygame.draw.aaline(surface, (255,255,255), f.rect.center, f.destination_star.rect.center)
-				surface.blit(f.surface, f.rect)
+					pygame.draw.aaline(
+						surface,
+						player.color,
+						f.rect.center,
+						f.destination_star.rect.center
+					)
+					surface.blit(f.surface, f.rect)
 			
 		if self.selected_star:
 			surface.blit(self.selection_marker_surface, self.selected_star.rect)
@@ -99,6 +119,38 @@ class GalaxyScreen(ScreenBase):
 
 		if self.fleet_selection_popup:
 			self.fleet_selection_popup.render(surface)
+
+	# 3 fleets to choose
+	# if local player has a fleet, it must be f1
+	# only choose the first fleet of every player
+	# if more than 3 players, only choose the first 3
+	def fleet_picker(self, fleets):
+		f1 = None
+		f2 = None
+		f3 = None
+		player_fleets = {}
+
+		# First fleet of every player
+		for f in fleets:
+			if f.player not in player_fleets:
+				player_fleets[f.player] = f
+
+		# if local player has a fleet, it is f1
+		if self._app.local_player in player_fleets:
+			f1 = player_fleets[self._app.local_player]
+			del player_fleets[self._app.local_player]
+
+		for player, fleet in player_fleets.items():
+			if not f1:
+				f1 = player_fleets[player]
+			elif not f2:
+				f2 = player_fleets[player]
+			elif not f3:
+				f3 = player_fleets[player]
+			else:
+				break
+
+		return f1, f2, f3
 
 	def select_star(self, star):
 		if self.selected_fleet:

@@ -24,7 +24,7 @@ class PlayerBase:
 		self.color = color
 		if not self.color:
 			self.color = random.choice(available_colors)
-		available_colors.remove	self.color)
+		available_colors.remove(self.color)
 		self.planets = []
 		self.selected_planet_index = 0
 		self.fleets = []
