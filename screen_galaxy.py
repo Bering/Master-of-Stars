@@ -162,9 +162,11 @@ class GalaxyScreen(ScreenBase):
 				screen.setup(star)
 			else:
 				self.selected_star = star
+				self.selected_fleet = None
 
 	def select_fleet(self, fleet):
 		self.selected_fleet = fleet
+		self.selected_star = None
 
 	def dispatch_fleet(self, fleet, star):
 		# Cannot change destination while traveling

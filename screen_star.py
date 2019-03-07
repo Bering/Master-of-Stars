@@ -226,9 +226,11 @@ class StarScreen(ScreenBase):
 				screen.setup(planet)
 			else:
 				self.selected_planet = planet
+				self.selected_fleet = None
 
 	def select_fleet(self, fleet):
 		self.selected_fleet = fleet
+		self.selected_planet = None
 
 	def dispatch_fleet_to_planet(self, fleet, planet):
 		# Cannot change destination while traveling
