@@ -58,7 +58,7 @@ class StarScreen(ScreenBase):
 				if clicked_fleet:
 					self.on_fleet_clicked(clicked_fleet)
 			else:
-				if self.star and self.centered_rect.collidepoint(event.pos):
+				if self.centered_rect.collidepoint(event.pos):
 					self.on_star_clicked()
 				elif self.next_turn_button.rect.collidepoint(event.pos):
 					self.on_next_turn_clicked()
@@ -99,26 +99,26 @@ class StarScreen(ScreenBase):
 				if f.destination_star \
 				or f.destination_center_star_rect \
 				or f.destination_planet:
-					rect = f.rect.copy()
-					rect.midright = self.centered_rect.topleft
-					surface.blit(f.surface, rect)
+					f.rect_s = f.rect.copy()
+					f.rect_s.midright = self.centered_rect.topleft
+					surface.blit(f.surface, f.rect_s)
 				else:
 					fleets_in_orbit_around_star.append(f)
 
 		f1, f2, f3 = self.fleet_picker(fleets_in_orbit_around_star)
 		if f1:
-			rect = f1.rect.copy()
-			rect.midleft = self.centered_rect.topright
-			surface.blit(f1.surface, rect)
+			f1.rect_s = f1.rect.copy()
+			f1.rect_s.midleft = self.centered_rect.topright
+			surface.blit(f1.surface, f1.rect_s)
 		if f2:
-			rect = f2.rect.copy()
-			rect.midbottom = self.centered_rect.topright
-			surface.blit(f2.surface, rect)
+			f2.rect_s = f2.rect.copy()
+			f2.rect_s.midbottom = self.centered_rect.topright
+			surface.blit(f2.surface, f2.rect_s)
 		if f3:
-			rect = f3.rect.copy()
-			rect.midbottom = self.centered_rect.topleft
-			rect.move_ip(35, 0)
-			surface.blit(f3.surface, rect)
+			f3.rect_s = f3.rect.copy()
+			f3.rect_s.midbottom = self.centered_rect.topleft
+			f3.rect_s.move_ip(35, 0)
+			surface.blit(f3.surface, f3.rect_s)
 
 		for p in self.star.planets:
 			surface.blit(p.surface, p.rect)
@@ -277,6 +277,7 @@ class StarScreen(ScreenBase):
 		self.select_planet(planet)
 
 	def on_fleet_clicked(self, fleet):
+		print("Fleet selected")
 		self.select_fleet(fleet)
 
 	def on_next_turn_clicked(self):

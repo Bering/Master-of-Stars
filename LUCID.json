@@ -16,30 +16,22 @@
             "labels": []
         },
         {
-            "id": "1031600666_973169628_464248803_3395876002",
+            "id": "223816169_27901770_1160515492_2735204477",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 0,
-            "title": "43 cards not imported from the GLO board...",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "2179201315_2047373742_3800621983_1881441494",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 1,
-            "title": "Import GLO cards in here",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "223816169_27901770_1160515492_2735204477",
-            "list_id": "1994759157_3198025395_360080308_1005768122",
-            "position": 1,
             "title": "Fleets that travelled between stars are stuck at the star. Cannot select them anyymore",
             "description": "",
             "labels": [
                 1
             ]
+        },
+        {
+            "id": "1031600666_973169628_464248803_3395876002",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 1,
+            "title": "43 cards not imported from the GLO board...",
+            "description": "",
+            "labels": []
         },
         {
             "id": "4238327001_3368910702_3430609534_1811910456",
@@ -50,6 +42,14 @@
             "labels": [
                 1
             ]
+        },
+        {
+            "id": "2179201315_2047373742_3800621983_1881441494",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 2,
+            "title": "Import GLO cards in here",
+            "description": "",
+            "labels": []
         },
         {
             "id": "2168620984_78404930_1615438207_1520265291",
@@ -214,5 +214,5 @@
             "labels": []
         }
     ],
-    "theme": "default"
+    "theme": "dark"
 }
