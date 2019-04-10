@@ -190,7 +190,12 @@ class FleetsScreen(ScreenBase):
 	def on_event(self, event):
 		if (event.type == pygame.KEYUP):
 			if event.key == pygame.K_ESCAPE:
-				self.on_ok_clicked()
+				if self.popup_left:
+					self.popup_left = None
+				elif self.popup_right:
+					self.popup_right = None
+				else:
+					self.on_ok_clicked()
 
 		elif (event.type == pygame.MOUSEBUTTONUP):
 			if self.popup_left:
