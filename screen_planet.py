@@ -355,6 +355,7 @@ class PlanetScreen(ScreenBase):
 
 	def on_next_turn_clicked(self):
 		self._app.next_turn()
+		self.setup(self.planet)
 
 	def on_planet_clicked(self):
 		self._app.screens.change_to("Star")

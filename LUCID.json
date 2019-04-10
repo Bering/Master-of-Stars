@@ -16,9 +16,19 @@
             "labels": []
         },
         {
-            "id": "223816169_27901770_1160515492_2735204477",
+            "id": "4238327001_3368910702_3430609534_1811910456",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 0,
+            "title": "Set fleet to travel to a planet. Go to the planet. End turn. The game crashes.",
+            "description": "Game doesn't crash anymore.\n\nBut the fleet doesn't show up once arrived",
+            "labels": [
+                1
+            ]
+        },
+        {
+            "id": "223816169_27901770_1160515492_2735204477",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 1,
             "title": "Fleets that travelled between stars are stuck at the star. Cannot select them anyymore",
             "description": "",
             "labels": [
@@ -28,26 +38,8 @@
         {
             "id": "1031600666_973169628_464248803_3395876002",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 1,
-            "title": "43 cards not imported from the GLO board...",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "4238327001_3368910702_3430609534_1811910456",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 1,
-            "title": "Set fleet to travel to a planet. Go to the planet. End turn. The game crashes.",
-            "description": "",
-            "labels": [
-                1
-            ]
-        },
-        {
-            "id": "2179201315_2047373742_3800621983_1881441494",
-            "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 2,
-            "title": "Import GLO cards in here",
+            "title": "43 cards not imported from the GLO board...",
             "description": "",
             "labels": []
         },
@@ -60,6 +52,14 @@
             "labels": [
                 1
             ]
+        },
+        {
+            "id": "2179201315_2047373742_3800621983_1881441494",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 3,
+            "title": "Import GLO cards in here",
+            "description": "",
+            "labels": []
         },
         {
             "id": "1202641148_3842513973_2105573304_818518217",
