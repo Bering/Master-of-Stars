@@ -209,7 +209,7 @@ class PlanetScreen(ScreenBase):
 			self.button_fleet.rect.move_ip(0, 6)
 			self.button_fleet.render(surface)
 		else:
-			self.button_fleet.rect.bottomright = (0, 0)
+			self.button_fleet.rect.topright = (0, 0)
 
 		if self.planet.player:
 
@@ -224,6 +224,8 @@ class PlanetScreen(ScreenBase):
 				self.button_research.rect.midtop = research_rect.midbottom
 				self.button_research.rect.move_ip(0, 6)
 				self.button_research.render(surface)
+			else:
+				self.button_research.rect.topright = (0, 0)
 
 			# Production info
 			production_surface = self.render_production_text()
@@ -236,6 +238,8 @@ class PlanetScreen(ScreenBase):
 				self.button_production.rect.midtop = production_rect.midbottom
 				self.button_production.rect.move_ip(0, 6)
 				self.button_production.render(surface)
+			else:
+				self.button_production.rect.topright = (0, 0)
 
 		self.button_next_turn.rect.topright = surface.get_rect().topright
 		self.button_next_turn.rect.move_ip(-16, 16)
