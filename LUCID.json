@@ -8,14 +8,6 @@
     },
     "cards": [
         {
-            "id": "994804335_3810641120_314219872_4027271076",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 0,
-            "title": "Escape to close fleet screen popup instead of going back to the planet screen",
-            "description": "",
-            "labels": []
-        },
-        {
             "id": "2760880535_263629960_2125098319_3142184209",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 0,
@@ -24,6 +16,24 @@
             "labels": [
                 4
             ]
+        },
+        {
+            "id": "3324814446_2107334099_2977103948_706466565",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 0,
+            "title": "Yes/No buttons in the quit screen",
+            "description": "",
+            "labels": [
+                6
+            ]
+        },
+        {
+            "id": "994804335_3810641120_314219872_4027271076",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 1,
+            "title": "Escape to close fleet screen popup instead of going back to the planet screen",
+            "description": "",
+            "labels": []
         },
         {
             "id": "1042119270_3526433543_4019009638_3750354573",
@@ -38,7 +48,7 @@
         {
             "id": "2168620984_78404930_1615438207_1520265291",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 1,
+            "position": 2,
             "title": "Change research project and change production project buttons still work on enemy planets.",
             "description": "The buttons are invisible but they still work",
             "labels": [
@@ -58,7 +68,7 @@
         {
             "id": "4238327001_3368910702_3430609534_1811910456",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 2,
+            "position": 3,
             "title": "Set fleet to travel to a planet. Go to the planet. End turn. The game crashes.",
             "description": "Game doesn't crash anymore.\n\nBut the fleet doesn't show up once arrived",
             "labels": [
@@ -78,7 +88,7 @@
         {
             "id": "223816169_27901770_1160515492_2735204477",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 3,
+            "position": 4,
             "title": "Fleets that travelled between stars are stuck at the star. Cannot select them anyymore",
             "description": "",
             "labels": [
@@ -86,19 +96,9 @@
             ]
         },
         {
-            "id": "3324814446_2107334099_2977103948_706466565",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 4,
-            "title": "Yes/No buttons in the quit screen",
-            "description": "",
-            "labels": [
-                6
-            ]
-        },
-        {
             "id": "1031600666_973169628_464248803_3395876002",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 4,
+            "position": 5,
             "title": "43 cards not imported from the GLO board...",
             "description": "",
             "labels": []
@@ -114,7 +114,7 @@
         {
             "id": "2179201315_2047373742_3800621983_1881441494",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 5,
+            "position": 6,
             "title": "Import GLO cards in here",
             "description": "",
             "labels": []
