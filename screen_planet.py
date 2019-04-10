@@ -194,7 +194,7 @@ class PlanetScreen(ScreenBase):
 			self.button_colonize.rect.bottomright = (0, 0)
 		elif self.planet.fleets and self.selected_fleet.get_ship_counts()["Colony"] > 0:
 			self.button_colonize.rect.midtop = info_rect.midbottom
-			self.button_colonize.rect.move_ip(0, 6)
+			self.button_colonize.rect.move_ip(0, -1)
 			self.button_colonize.render(surface)
 
 		# Fleet info
@@ -206,7 +206,7 @@ class PlanetScreen(ScreenBase):
 
 		if self.player_fleets:
 			self.button_fleet.rect.midtop = self.fleet_info_rect.midbottom
-			self.button_fleet.rect.move_ip(0, 6)
+			self.button_fleet.rect.move_ip(0, -1)
 			self.button_fleet.render(surface)
 		else:
 			self.button_fleet.rect.topright = (0, 0)
@@ -222,7 +222,7 @@ class PlanetScreen(ScreenBase):
 
 			if self.planet.player == self._app.local_player:
 				self.button_research.rect.midtop = research_rect.midbottom
-				self.button_research.rect.move_ip(0, 6)
+				self.button_research.rect.move_ip(0, -1)
 				self.button_research.render(surface)
 			else:
 				self.button_research.rect.topright = (0, 0)
@@ -236,7 +236,7 @@ class PlanetScreen(ScreenBase):
 
 			if self.planet.player == self._app.local_player:
 				self.button_production.rect.midtop = production_rect.midbottom
-				self.button_production.rect.move_ip(0, 6)
+				self.button_production.rect.move_ip(0, -1)
 				self.button_production.render(surface)
 			else:
 				self.button_production.rect.topright = (0, 0)
