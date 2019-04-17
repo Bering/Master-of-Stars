@@ -277,7 +277,6 @@ class StarScreen(ScreenBase):
 		self.select_planet(planet)
 
 	def on_fleet_clicked(self, fleet):
-		print("Fleet selected")
 		self.select_fleet(fleet)
 
 	def on_next_turn_clicked(self):
