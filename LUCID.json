@@ -3,8 +3,8 @@
     "description": "",
     "lists": {
         "1463394567_1005693800_3793023534_2523788226": "TODO",
-        "1994759157_3198025395_360080308_1005768122": "Done",
-        "1901749129_962513719_918349320_1149498453": "Doing"
+        "1994759157_3198025395_360080308_1005768122": "Doing",
+        "1901749129_962513719_918349320_1149498453": "Done"
     },
     "cards": [
         {
@@ -18,22 +18,22 @@
             ]
         },
         {
-            "id": "3324814446_2107334099_2977103948_706466565",
+            "id": "522466551_1743159456_2196485998_3234358328",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 0,
-            "title": "Yes/No buttons in the quit screen",
+            "title": "Red lines for incoming enemy fleets",
+            "description": "",
+            "labels": []
+        },
+        {
+            "id": "1339967007_4079715733_2616305636_234263384",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 1,
+            "title": "Move the planet screen buttons closer to the titles",
             "description": "",
             "labels": [
                 6
             ]
-        },
-        {
-            "id": "994804335_3810641120_314219872_4027271076",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 1,
-            "title": "Escape to close fleet screen popup instead of going back to the planet screen",
-            "description": "",
-            "labels": []
         },
         {
             "id": "1042119270_3526433543_4019009638_3750354573",
@@ -46,13 +46,13 @@
             ]
         },
         {
-            "id": "2168620984_78404930_1615438207_1520265291",
+            "id": "3324814446_2107334099_2977103948_706466565",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 2,
-            "title": "Change research project and change production project buttons still work on enemy planets.",
-            "description": "The buttons are invisible but they still work",
+            "title": "Yes/No buttons in the quit screen",
+            "description": "",
             "labels": [
-                1
+                6
             ]
         },
         {
@@ -66,9 +66,27 @@
             ]
         },
         {
-            "id": "4238327001_3368910702_3430609534_1811910456",
+            "id": "994804335_3810641120_314219872_4027271076",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 3,
+            "title": "Escape to close fleet screen popup instead of going back to the planet screen",
+            "description": "",
+            "labels": []
+        },
+        {
+            "id": "2168620984_78404930_1615438207_1520265291",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 4,
+            "title": "Change research project and change production project buttons still work on enemy planets.",
+            "description": "The buttons are invisible but they still work",
+            "labels": [
+                1
+            ]
+        },
+        {
+            "id": "4238327001_3368910702_3430609534_1811910456",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 5,
             "title": "Set fleet to travel to a planet. Go to the planet. End turn. The game crashes.",
             "description": "Game doesn't crash anymore.\n\nBut the fleet doesn't show up once arrived",
             "labels": [
@@ -76,48 +94,14 @@
             ]
         },
         {
-            "id": "1339967007_4079715733_2616305636_234263384",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 3,
-            "title": "Move the planet screen buttons closer to the titles",
-            "description": "",
-            "labels": [
-                6
-            ]
-        },
-        {
             "id": "223816169_27901770_1160515492_2735204477",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 4,
+            "position": 6,
             "title": "Fleets that travelled between stars are stuck at the star. Cannot select them anyymore",
             "description": "",
             "labels": [
                 1
             ]
-        },
-        {
-            "id": "1031600666_973169628_464248803_3395876002",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 5,
-            "title": "43 cards not imported from the GLO board...",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "522466551_1743159456_2196485998_3234358328",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 5,
-            "title": "Red lines for incoming enemy fleets",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "2179201315_2047373742_3800621983_1881441494",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 6,
-            "title": "Import GLO cards in here",
-            "description": "",
-            "labels": []
         },
         {
             "id": "2997333533_3588240172_2955164006_2380098902",
@@ -128,10 +112,26 @@
             "labels": []
         },
         {
+            "id": "1031600666_973169628_464248803_3395876002",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 7,
+            "title": "43 cards not imported from the GLO board...",
+            "description": "",
+            "labels": []
+        },
+        {
             "id": "981508599_2737323741_224122963_4034467496",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 7,
             "title": "Save/Load",
+            "description": "",
+            "labels": []
+        },
+        {
+            "id": "2179201315_2047373742_3800621983_1881441494",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 8,
+            "title": "Import GLO cards in here",
             "description": "",
             "labels": []
         },

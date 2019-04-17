@@ -90,10 +90,26 @@ class StarScreen(ScreenBase):
 		for f in self.star.fleets:
 
 			if f.destination_star or f.destination_center_star_rect:
-				pygame.draw.aaline(surface, (255,255,255), f.rect_s.center, self.centered_rect.center)
+				pygame.draw.aaline(
+					surface,
+					(255,255,255),
+					f.rect_s.center,
+					self.centered_rect.center
+				)
 
 			if f.destination_planet:
-				pygame.draw.aaline(surface, (255,255,255), f.rect_s.center, f.destination_planet.rect.center)
+				if f.player != self._app.local_player \
+				and f.destination_planet.player == self._app.local_player:
+					color = (255,0,0)
+				else:
+					color = (255,255,255)
+
+				pygame.draw.aaline(
+					surface,
+					color,
+					f.rect_s.center,
+					f.destination_planet.rect.center
+				)
 
 			if not f.planet:
 				if f.destination_star \
