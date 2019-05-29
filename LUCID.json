@@ -8,6 +8,16 @@
     },
     "cards": [
         {
+            "id": "2997333533_3588240172_2955164006_2380098902",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 0,
+            "title": "UIPopup in Fleet Management screen can only handle 11 fleets",
+            "description": "To get more, I'd have to push the popup down so it doesn't get outside the window\n\n11 ought to be enough ;-)",
+            "labels": [
+                6
+            ]
+        },
+        {
             "id": "2760880535_263629960_2125098319_3142184209",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 0,
@@ -18,18 +28,20 @@
             ]
         },
         {
-            "id": "522466551_1743159456_2196485998_3234358328",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 0,
-            "title": "Red lines for incoming enemy fleets",
-            "description": "",
-            "labels": []
+            "id": "846099105_1879938610_1959090399_3351961763",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 1,
+            "title": "Fleet preview and button to management screen in Star Screen",
+            "description": "Pop the preview on the proper window quadrant according to where the planet is",
+            "labels": [
+                6
+            ]
         },
         {
-            "id": "1339967007_4079715733_2616305636_234263384",
+            "id": "522466551_1743159456_2196485998_3234358328",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 1,
-            "title": "Move the planet screen buttons closer to the titles",
+            "title": "Red lines for incoming enemy fleets",
             "description": "",
             "labels": [
                 6
@@ -38,7 +50,7 @@
         {
             "id": "1042119270_3526433543_4019009638_3750354573",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 1,
+            "position": 2,
             "title": "Allow creation of fleets while in orbit around a star",
             "description": "This could tie in with the GUI to view fleet composition of player and enemy's in galaxy and star screen",
             "labels": [
@@ -46,10 +58,10 @@
             ]
         },
         {
-            "id": "3324814446_2107334099_2977103948_706466565",
+            "id": "1339967007_4079715733_2616305636_234263384",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 2,
-            "title": "Yes/No buttons in the quit screen",
+            "title": "Move the planet screen buttons closer to the titles",
             "description": "",
             "labels": [
                 6
@@ -58,7 +70,7 @@
         {
             "id": "1202641148_3842513973_2105573304_818518217",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 2,
+            "position": 3,
             "title": "Add ship icons in the fleet management screen",
             "description": "",
             "labels": [
@@ -66,17 +78,35 @@
             ]
         },
         {
-            "id": "994804335_3810641120_314219872_4027271076",
+            "id": "3324814446_2107334099_2977103948_706466565",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 3,
+            "title": "Yes/No buttons in the quit screen",
+            "description": "",
+            "labels": [
+                1
+            ]
+        },
+        {
+            "id": "994804335_3810641120_314219872_4027271076",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 4,
             "title": "Escape to close fleet screen popup instead of going back to the planet screen",
+            "description": "",
+            "labels": []
+        },
+        {
+            "id": "981508599_2737323741_224122963_4034467496",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 4,
+            "title": "Save/Load",
             "description": "",
             "labels": []
         },
         {
             "id": "2168620984_78404930_1615438207_1520265291",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 4,
+            "position": 5,
             "title": "Change research project and change production project buttons still work on enemy planets.",
             "description": "The buttons are invisible but they still work",
             "labels": [
@@ -84,9 +114,17 @@
             ]
         },
         {
+            "id": "1274160366_1410176066_1876531608_2806072551",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 5,
+            "title": "Fleet Battles",
+            "description": "",
+            "labels": []
+        },
+        {
             "id": "4238327001_3368910702_3430609534_1811910456",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 5,
+            "position": 6,
             "title": "Set fleet to travel to a planet. Go to the planet. End turn. The game crashes.",
             "description": "Game doesn't crash anymore.\n\nBut the fleet doesn't show up once arrived",
             "labels": [
@@ -94,9 +132,17 @@
             ]
         },
         {
+            "id": "588018434_2718589480_1513541498_2714047600",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 6,
+            "title": "Planet Bombardment",
+            "description": "",
+            "labels": []
+        },
+        {
             "id": "223816169_27901770_1160515492_2735204477",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 6,
+            "position": 7,
             "title": "Fleets that travelled between stars are stuck at the star. Cannot select them anyymore",
             "description": "",
             "labels": [
@@ -104,73 +150,41 @@
             ]
         },
         {
-            "id": "2997333533_3588240172_2955164006_2380098902",
+            "id": "1368791727_3158381169_3219672898_3340399529",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 6,
-            "title": "UIPopup in Fleet Management screen can only handle 11 fleets",
-            "description": "To get more, I'd have to push the popup down so it doesn't get outside the window",
+            "position": 7,
+            "title": "Planet invasion (ground combat)",
+            "description": "",
             "labels": []
         },
         {
             "id": "1031600666_973169628_464248803_3395876002",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 7,
+            "position": 8,
             "title": "43 cards not imported from the GLO board...",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "981508599_2737323741_224122963_4034467496",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 7,
-            "title": "Save/Load",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "2179201315_2047373742_3800621983_1881441494",
-            "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 8,
-            "title": "Import GLO cards in here",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "1274160366_1410176066_1876531608_2806072551",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 8,
-            "title": "Fleet Battles",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "588018434_2718589480_1513541498_2714047600",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 9,
-            "title": "Planet Bombardment",
-            "description": "",
-            "labels": []
-        },
-        {
-            "id": "1368791727_3158381169_3219672898_3340399529",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 10,
-            "title": "Planet invasion (ground combat)",
             "description": "",
             "labels": []
         },
         {
             "id": "4140943940_141615940_1055049537_558904787",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 11,
+            "position": 8,
             "title": "Planet takeover / Genocide",
+            "description": "",
+            "labels": []
+        },
+        {
+            "id": "2179201315_2047373742_3800621983_1881441494",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 9,
+            "title": "Import GLO cards in here",
             "description": "",
             "labels": []
         },
         {
             "id": "2387498956_3254115913_1077162728_700186734",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 12,
+            "position": 9,
             "title": "End Turn Report",
             "description": "",
             "labels": []
@@ -178,7 +192,7 @@
         {
             "id": "1929839343_186240536_2575394932_892999102",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 13,
+            "position": 10,
             "title": "Fog of War",
             "description": "",
             "labels": []
@@ -186,7 +200,7 @@
         {
             "id": "937088681_3098848144_2642466755_3933492444",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 14,
+            "position": 11,
             "title": "Better Graphics",
             "description": "",
             "labels": [
@@ -196,7 +210,7 @@
         {
             "id": "1414924376_3913339950_4082644168_1526450055",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 15,
+            "position": 12,
             "title": "Score / Victory",
             "description": "",
             "labels": []
@@ -204,7 +218,7 @@
         {
             "id": "2301457015_1569380539_349070653_297166201",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 16,
+            "position": 13,
             "title": "Diplomacy ?",
             "description": "",
             "labels": []
@@ -212,7 +226,7 @@
         {
             "id": "3981385050_2839987658_3873283589_246852974",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 17,
+            "position": 14,
             "title": "Espionnage?",
             "description": "",
             "labels": []
@@ -220,7 +234,7 @@
         {
             "id": "792313238_301692038_28616934_2271128948",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 18,
+            "position": 15,
             "title": "Leaders?",
             "description": "",
             "labels": []
@@ -228,7 +242,7 @@
         {
             "id": "2165580902_1490618300_2774250543_3804175560",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 19,
+            "position": 16,
             "title": "Project Research to get higher limits for population, industry and research",
             "description": "Right now, population is locked based on the planet size. Industry, science and defence are all locked on population.\n\nAdd research projects that would lock on, for example, 2x population or 3x instead. Robotics, AI, automatisation, etc.",
             "labels": []
