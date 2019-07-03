@@ -3,6 +3,8 @@ import pygame
 from screen_base import ScreenBase
 from ui_button import UIButton
 from ui_popup import UIPopup
+from ui_text_renderer import UITextRenderer
+from ui_tile_renderer import UITileRenderer
 
 class StarScreen(ScreenBase):
 
@@ -17,6 +19,11 @@ class StarScreen(ScreenBase):
 
 		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
 		self.fleet_selection_popup = None
+
+		filename = os.path.join("fonts", "OpenSansRegular.ttf")
+		info_font = pygame.font.Font(filename, 16)
+		text_renderer = UITextRenderer(info_font)
+		self.tile_renderer = UITileRenderer(text_renderer)
 
 	def setup(self, star):
 		"""Setup the screen around this star"""
@@ -184,15 +191,20 @@ class StarScreen(ScreenBase):
 
 			surface.blit(p.name_surf, p.name_rect)
 
-		if self.selected_fleet:
-			surface.blit(self.selection_marker_surface, self.selected_fleet.rect_s)
-
 		self.centered_rect.center = surface.get_rect().center
 		surface.blit(self.centered_surface, self.centered_rect)
 		
 		self.name_rect.midtop = self.centered_rect.midbottom
 		surface.blit(self.star.name_surf, self.name_rect)
 		
+		if self.selected_fleet:
+			surface.blit(self.selection_marker_surface, self.selected_fleet.rect_s)
+
+			fleet_info_surface = self.render_fleet_text()
+			fleet_info_rect = fleet_info_surface.get_rect()
+			fleet_info_rect = self.move_fleet_rect(fleet_info_rect)
+			surface.blit(fleet_info_surface, fleet_info_rect)
+
 		self.next_turn_button.rect.topright = surface.get_rect().topright
 		self.next_turn_button.rect.move_ip(-16, 16)
 		self.next_turn_button.render(surface)
@@ -232,6 +244,39 @@ class StarScreen(ScreenBase):
 
 		return f1, f2, f3
 
+	def render_fleet_text(self):
+		ship_counts = self.selected_fleet.get_ship_counts()
+		text = ""
+		text += self.selected_fleet.name + "\n"
+		text += "Scout(s): " + str(ship_counts["Scout"]) + "\n"
+		text += "Colony Ship(s): " + str(ship_counts["Colony"]) + "\n"
+		text += "Frigate(s): " + str(ship_counts["Frigate"]) + "\n"
+		text += "Destroyer(s): " + str(ship_counts["Destroyer"]) + "\n"
+		text += "Total: " + str(ship_counts["Total"])
+
+		return self.tile_renderer.render(text, (255,200,200), (0,0,0))
+
+	def move_fleet_rect(self, fleet_info_rect):
+		center_x = self.centered_rect.centerx
+		center_y = self.centered_rect.centery
+
+		if self.selected_fleet.rect_s.centerx < center_x:
+			if self.selected_fleet.rect_s.centery < center_y:
+				fleet_info_rect.topleft = self.selected_fleet.rect_s.bottomright
+				fleet_info_rect.move_ip(8, 8)
+			else:
+				fleet_info_rect.bottomleft = self.selected_fleet.rect_s.topright
+				fleet_info_rect.move_ip(8, -8)
+		else:
+			if self.selected_fleet.rect_s.centery < center_y:
+				fleet_info_rect.topright = self.selected_fleet.rect_s.bottomleft
+				fleet_info_rect.move_ip(-8, 8)
+			else:
+				fleet_info_rect.bottomright = self.selected_fleet.rect_s.topleft
+				fleet_info_rect.move_ip(-8, -8)
+
+		return fleet_info_rect
+
 	def select_planet(self, planet):
 		if self.selected_fleet:
 			self.dispatch_fleet_to_planet(self.selected_fleet, planet)
@@ -247,6 +292,10 @@ class StarScreen(ScreenBase):
 	def select_fleet(self, fleet):
 		self.selected_fleet = fleet
 		self.selected_planet = None
+
+	def manage_fleet(self, fleet):
+		screen = self._app.screens.change_to("Fleet")
+		screen.setup("Star", fleet)
 
 	def dispatch_fleet_to_planet(self, fleet, planet):
 		# Cannot change destination while traveling

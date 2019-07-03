@@ -18,23 +18,31 @@
             ]
         },
         {
-            "id": "2760880535_263629960_2125098319_3142184209",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 0,
-            "title": "Build first release",
-            "description": "",
-            "labels": [
-                4
-            ]
-        },
-        {
             "id": "846099105_1879938610_1959090399_3351961763",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 1,
+            "list_id": "1994759157_3198025395_360080308_1005768122",
+            "position": 0,
             "title": "Fleet preview and button to management screen in Star Screen",
             "description": "Pop the preview on the proper window quadrant according to where the planet is",
             "labels": [
                 6
+            ]
+        },
+        {
+            "id": "95467808_1477057275_1977624071_1561350194",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 0,
+            "title": "Escape to deselect fleet",
+            "description": "",
+            "labels": []
+        },
+        {
+            "id": "2760880535_263629960_2125098319_3142184209",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 1,
+            "title": "Build first release",
+            "description": "",
+            "labels": [
+                4
             ]
         },
         {
@@ -43,16 +51,6 @@
             "position": 1,
             "title": "Red lines for incoming enemy fleets",
             "description": "",
-            "labels": [
-                6
-            ]
-        },
-        {
-            "id": "1042119270_3526433543_4019009638_3750354573",
-            "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 2,
-            "title": "Allow creation of fleets while in orbit around a star",
-            "description": "This could tie in with the GUI to view fleet composition of player and enemy's in galaxy and star screen",
             "labels": [
                 6
             ]
@@ -68,11 +66,11 @@
             ]
         },
         {
-            "id": "1202641148_3842513973_2105573304_818518217",
+            "id": "1042119270_3526433543_4019009638_3750354573",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 3,
-            "title": "Add ship icons in the fleet management screen",
-            "description": "",
+            "title": "Allow management of fleets while in orbit around a star",
+            "description": "This could tie in with the GUI to view fleet composition of player and enemy's in galaxy and star screen",
             "labels": [
                 6
             ]
@@ -88,6 +86,16 @@
             ]
         },
         {
+            "id": "1202641148_3842513973_2105573304_818518217",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 4,
+            "title": "Add ship icons in the fleet management screen",
+            "description": "",
+            "labels": [
+                6
+            ]
+        },
+        {
             "id": "994804335_3810641120_314219872_4027271076",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 4,
@@ -98,7 +106,7 @@
         {
             "id": "981508599_2737323741_224122963_4034467496",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 4,
+            "position": 5,
             "title": "Save/Load",
             "description": "",
             "labels": []
@@ -116,7 +124,7 @@
         {
             "id": "1274160366_1410176066_1876531608_2806072551",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 5,
+            "position": 6,
             "title": "Fleet Battles",
             "description": "",
             "labels": []
@@ -134,7 +142,7 @@
         {
             "id": "588018434_2718589480_1513541498_2714047600",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 6,
+            "position": 7,
             "title": "Planet Bombardment",
             "description": "",
             "labels": []
@@ -152,7 +160,7 @@
         {
             "id": "1368791727_3158381169_3219672898_3340399529",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 7,
+            "position": 8,
             "title": "Planet invasion (ground combat)",
             "description": "",
             "labels": []
@@ -168,7 +176,7 @@
         {
             "id": "4140943940_141615940_1055049537_558904787",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 8,
+            "position": 9,
             "title": "Planet takeover / Genocide",
             "description": "",
             "labels": []
@@ -184,7 +192,7 @@
         {
             "id": "2387498956_3254115913_1077162728_700186734",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 9,
+            "position": 10,
             "title": "End Turn Report",
             "description": "",
             "labels": []
@@ -192,7 +200,7 @@
         {
             "id": "1929839343_186240536_2575394932_892999102",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 10,
+            "position": 11,
             "title": "Fog of War",
             "description": "",
             "labels": []
@@ -200,7 +208,7 @@
         {
             "id": "937088681_3098848144_2642466755_3933492444",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 11,
+            "position": 12,
             "title": "Better Graphics",
             "description": "",
             "labels": [
@@ -210,7 +218,7 @@
         {
             "id": "1414924376_3913339950_4082644168_1526450055",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 12,
+            "position": 13,
             "title": "Score / Victory",
             "description": "",
             "labels": []
@@ -218,7 +226,7 @@
         {
             "id": "2301457015_1569380539_349070653_297166201",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 13,
+            "position": 14,
             "title": "Diplomacy ?",
             "description": "",
             "labels": []
@@ -226,7 +234,7 @@
         {
             "id": "3981385050_2839987658_3873283589_246852974",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 14,
+            "position": 15,
             "title": "Espionnage?",
             "description": "",
             "labels": []
@@ -234,7 +242,7 @@
         {
             "id": "792313238_301692038_28616934_2271128948",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 15,
+            "position": 16,
             "title": "Leaders?",
             "description": "",
             "labels": []
@@ -242,7 +250,7 @@
         {
             "id": "2165580902_1490618300_2774250543_3804175560",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
-            "position": 16,
+            "position": 17,
             "title": "Project Research to get higher limits for population, industry and research",
             "description": "Right now, population is locked based on the planet size. Industry, science and defence are all locked on population.\n\nAdd research projects that would lock on, for example, 2x population or 3x instead. Robotics, AI, automatisation, etc.",
             "labels": []
