@@ -13,6 +13,7 @@ class StarScreen(ScreenBase):
 		self.star = None
 		self.selected_planet = None
 		self.selected_fleet = None
+		self.show_fleet_info = False
 
 		filename = os.path.join("images", "selection.png")
 		self.selection_marker_surface = pygame.image.load(filename)
@@ -30,6 +31,7 @@ class StarScreen(ScreenBase):
 		self.star = star
 		self.selected_planet = None
 		self.selected_fleet = None
+		self.show_fleet_info = False
 
 		self.centered_rect = star.rect.copy()
 		self.centered_rect.width *= 3
@@ -200,6 +202,7 @@ class StarScreen(ScreenBase):
 		if self.selected_fleet:
 			surface.blit(self.selection_marker_surface, self.selected_fleet.rect_s)
 
+		if self.show_fleet_info:
 			fleet_info_surface = self.render_fleet_text()
 			fleet_info_rect = fleet_info_surface.get_rect()
 			fleet_info_rect = self.move_fleet_rect(fleet_info_rect)
@@ -281,6 +284,7 @@ class StarScreen(ScreenBase):
 		if self.selected_fleet:
 			self.dispatch_fleet_to_planet(self.selected_fleet, planet)
 			self.selected_fleet = None
+			self.show_fleet_info = False
 		else:
 			if self.selected_planet == planet:
 				screen = self._app.screens.change_to("Planet")
@@ -288,10 +292,14 @@ class StarScreen(ScreenBase):
 			else:
 				self.selected_planet = planet
 				self.selected_fleet = None
+				self.show_fleet_info = False
 
 	def select_fleet(self, fleet):
-		self.selected_fleet = fleet
-		self.selected_planet = None
+		if fleet == self.selected_fleet:
+			self.show_fleet_info = not self.show_fleet_info
+		else:
+			self.selected_fleet = fleet
+			self.selected_planet = None
 
 	def manage_fleet(self, fleet):
 		screen = self._app.screens.change_to("Fleet")
@@ -318,6 +326,7 @@ class StarScreen(ScreenBase):
 		if self.selected_fleet:
 			self.dispatch_fleet_to_star(self.selected_fleet, self.centered_rect)
 			self.selected_fleet = None
+			self.show_fleet_info = None
 		else:
 			self._app.screens.change_to("Galaxy")
 

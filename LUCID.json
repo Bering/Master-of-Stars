@@ -22,7 +22,7 @@
             "list_id": "1994759157_3198025395_360080308_1005768122",
             "position": 0,
             "title": "Fleet preview and button to management screen in Star Screen",
-            "description": "Pop the preview on the proper window quadrant according to where the planet is",
+            "description": "- [x] Pop the preview on the proper window quadrant according to where the planet is\n- [x] Toggle fleet info when clicking a selected fleet\n- [ ] Show enemy fleet info",
             "labels": [
                 6
             ]
