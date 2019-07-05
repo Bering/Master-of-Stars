@@ -327,7 +327,8 @@ class StarScreen(ScreenBase):
 			fleet.rect_s.midright = self.centered_rect.topleft
 
 	def select_star(self):
-		if self.selected_fleet:
+		if self.selected_fleet \
+		and self.selected_fleet.player == self.app.local_player:
 			self.dispatch_fleet_to_star(self.selected_fleet, self.centered_rect)
 			self.selected_fleet = None
 			self.show_fleet_info = False
