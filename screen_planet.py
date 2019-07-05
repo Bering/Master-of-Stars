@@ -375,7 +375,15 @@ class PlanetScreen(ScreenBase):
 	def on_fleet_manage_clicked(self):
 		if self.player_fleets:
 			s = self._app.screens.change_to("Fleet")
-			s.setup("Planet", self.selected_fleet)
+			s.setup(self.selected_fleet, "Planet", self.on_back_from_fleet_manage)
+
+	def on_back_from_fleet_manage(self, fleet_screen):
+		if fleet_screen.fleet_left:
+			self.selected_fleet = fleet_screen.fleet_left
+		elif len(fleet_screen.fleets) > 0:
+			self.selected_fleet = fleet_screen.fleets[0]
+		else:
+			self.selected_fleet = None
 
 	def on_colonize_clicked(self):
 		self.planet.player.found_colony(self.planet, self.selected_fleet)

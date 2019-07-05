@@ -77,8 +77,9 @@ class FleetsScreen(ScreenBase):
 
 		self.fleet_selection_popup = None
 
-	def setup(self, prev_screen_name, fleet_left):
+	def setup(self, fleet_left, prev_screen_name, prev_screen_callback):
 		self.prev_screen_name = prev_screen_name
+		self.prev_screen_callback = prev_screen_callback
 		self.player = fleet_left.player
 		self.planet = fleet_left.planet # TODO: this requires a valid planet but I want to be able to manage fleets in orbit around stars...
 
@@ -340,11 +341,4 @@ class FleetsScreen(ScreenBase):
 
 	def on_ok_clicked(self):
 		screen = self._app.screens.change_to(self.prev_screen_name)
-		screen.setup(self.planet)
-
-		if self.fleet_left:
-			screen.selected_fleet = self.fleet_left
-		elif len(self.fleets) > 0:
-			screen.selected_fleet = self.fleets[0]
-		else:
-			screen.selected_fleet = None
+		self.prev_screen_callback(self)
