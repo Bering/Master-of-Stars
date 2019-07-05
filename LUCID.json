@@ -22,28 +22,30 @@
             "list_id": "1994759157_3198025395_360080308_1005768122",
             "position": 0,
             "title": "Fleet preview and button to management screen in Star Screen",
-            "description": "- [x] Pop the preview on the proper window quadrant according to where the planet is\n- [x] Toggle fleet info when clicking a selected fleet\n- [ ] Show enemy fleet info\n- [ ] Button to fleet management when showing player-owned fleet",
+            "description": "- [x] Pop the preview on the proper window quadrant according to where the planet is\n- [x] Toggle fleet info when clicking a selected fleet\n- [ ] Show enemy fleet info\n- [x] Button to fleet management when showing player-owned fleet",
             "labels": [
                 6
             ]
         },
         {
-            "id": "2783883567_3219332311_3102792826_1355173683",
+            "id": "1967398963_1287942379_1777044692_1811799380",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 0,
-            "title": "Planet Screen selected fleet switches back to fleet 1 when starting new turn",
+            "title": "Fleet Manage: When removing all ships from a fleet it should disband the fleet",
             "description": "",
             "labels": [
                 1
             ]
         },
         {
-            "id": "95467808_1477057275_1977624071_1561350194",
+            "id": "2783883567_3219332311_3102792826_1355173683",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 1,
-            "title": "Escape to deselect fleet",
+            "title": "Planet Screen selected fleet switches back to fleet 1 when starting new turn",
             "description": "",
-            "labels": []
+            "labels": [
+                1
+            ]
         },
         {
             "id": "522466551_1743159456_2196485998_3234358328",
@@ -56,14 +58,12 @@
             ]
         },
         {
-            "id": "2760880535_263629960_2125098319_3142184209",
+            "id": "95467808_1477057275_1977624071_1561350194",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 2,
-            "title": "Build first release",
+            "title": "Escape to deselect fleet",
             "description": "",
-            "labels": [
-                4
-            ]
+            "labels": []
         },
         {
             "id": "1339967007_4079715733_2616305636_234263384",
@@ -73,6 +73,16 @@
             "description": "",
             "labels": [
                 6
+            ]
+        },
+        {
+            "id": "2760880535_263629960_2125098319_3142184209",
+            "list_id": "1463394567_1005693800_3793023534_2523788226",
+            "position": 3,
+            "title": "Build first release",
+            "description": "",
+            "labels": [
+                4
             ]
         },
         {

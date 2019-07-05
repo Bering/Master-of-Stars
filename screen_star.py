@@ -18,13 +18,14 @@ class StarScreen(ScreenBase):
 		filename = os.path.join("images", "selection.png")
 		self.selection_marker_surface = pygame.image.load(filename)
 
-		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
-		self.fleet_selection_popup = None
-
 		filename = os.path.join("fonts", "OpenSansRegular.ttf")
 		info_font = pygame.font.Font(filename, 16)
 		text_renderer = UITextRenderer(info_font)
 		self.tile_renderer = UITileRenderer(text_renderer)
+
+		self.fleet_button = UIButton("Manage", self.on_manage_fleet_clicked)
+		self.next_turn_button = UIButton("End Turn", self.on_next_turn_clicked)
+		self.fleet_selection_popup = None
 
 	def setup(self, star):
 		"""Setup the screen around this star"""
@@ -71,6 +72,10 @@ class StarScreen(ScreenBase):
 					self.on_star_clicked()
 				elif self.next_turn_button.rect.collidepoint(event.pos):
 					self.on_next_turn_clicked()
+				elif self.show_fleet_info \
+				and self.selected_fleet.player == self._app.local_player \
+				and self.fleet_button.rect.collidepoint(event.pos):
+					self.on_manage_fleet_clicked()
 				else:
 					for p in self.star.planets:
 						if p.rect.collidepoint(event.pos):
@@ -207,6 +212,9 @@ class StarScreen(ScreenBase):
 			fleet_info_rect = fleet_info_surface.get_rect()
 			fleet_info_rect = self.move_fleet_rect(fleet_info_rect)
 			surface.blit(fleet_info_surface, fleet_info_rect)
+			if self.selected_fleet.player == self._app.local_player:
+				self.fleet_button.rect.midtop = fleet_info_rect.midbottom
+				self.fleet_button.render(surface)
 
 		self.next_turn_button.rect.topright = surface.get_rect().topright
 		self.next_turn_button.rect.move_ip(-16, 16)
@@ -301,10 +309,6 @@ class StarScreen(ScreenBase):
 			self.selected_fleet = fleet
 			self.selected_planet = None
 
-	def manage_fleet(self, fleet):
-		screen = self._app.screens.change_to("Fleet")
-		screen.setup("Star", fleet)
-
 	def dispatch_fleet_to_planet(self, fleet, planet):
 		# Cannot change destination while traveling
 		if not fleet.star:
@@ -326,7 +330,7 @@ class StarScreen(ScreenBase):
 		if self.selected_fleet:
 			self.dispatch_fleet_to_star(self.selected_fleet, self.centered_rect)
 			self.selected_fleet = None
-			self.show_fleet_info = None
+			self.show_fleet_info = False
 		else:
 			self._app.screens.change_to("Galaxy")
 
@@ -355,3 +359,17 @@ class StarScreen(ScreenBase):
 
 	def on_next_turn_clicked(self):
 		self._app.next_turn()
+
+	def on_manage_fleet_clicked(self):
+		s = self._app.screens.change_to("Fleet")
+		s.setup(self.selected_fleet, "Star", self.on_back_from_fleet_screen)
+
+	def on_back_from_fleet_screen(self, fleet_screen):
+		if fleet_screen.fleet_left == None:
+			if fleet_screen.fleet_right == None:
+				self.selected_fleet = None
+				self.show_fleet_info = False
+			else:
+				self.selected_fleet = fleet_screen.fleet_right
+		else:
+			self.selected_fleet = fleet_screen.fleet_left
