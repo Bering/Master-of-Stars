@@ -8,21 +8,11 @@
     },
     "cards": [
         {
-            "id": "2997333533_3588240172_2955164006_2380098902",
+            "id": "846099105_1879938610_1959090399_3351961763",
             "list_id": "1901749129_962513719_918349320_1149498453",
             "position": 0,
-            "title": "UIPopup in Fleet Management screen can only handle 11 fleets",
-            "description": "To get more, I'd have to push the popup down so it doesn't get outside the window\n\n11 ought to be enough ;-)",
-            "labels": [
-                6
-            ]
-        },
-        {
-            "id": "846099105_1879938610_1959090399_3351961763",
-            "list_id": "1994759157_3198025395_360080308_1005768122",
-            "position": 0,
             "title": "Fleet preview and button to management screen in Star Screen",
-            "description": "- [x] Pop the preview on the proper window quadrant according to where the planet is\n- [x] Toggle fleet info when clicking a selected fleet\n- [ ] Show enemy fleet info\n- [x] Button to fleet management when showing player-owned fleet",
+            "description": "- [x] Pop the preview on the proper window quadrant according to where the planet is\n- [x] Toggle fleet info when clicking a selected fleet\n- [x] Show enemy fleet info\n- [x] Button to fleet management when showing player-owned fleet",
             "labels": [
                 6
             ]
@@ -38,6 +28,16 @@
             ]
         },
         {
+            "id": "2997333533_3588240172_2955164006_2380098902",
+            "list_id": "1901749129_962513719_918349320_1149498453",
+            "position": 1,
+            "title": "UIPopup in Fleet Management screen can only handle 11 fleets",
+            "description": "To get more, I'd have to push the popup down so it doesn't get outside the window\n\n11 ought to be enough ;-)",
+            "labels": [
+                6
+            ]
+        },
+        {
             "id": "2783883567_3219332311_3102792826_1355173683",
             "list_id": "1463394567_1005693800_3793023534_2523788226",
             "position": 1,
@@ -50,7 +50,7 @@
         {
             "id": "522466551_1743159456_2196485998_3234358328",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 1,
+            "position": 2,
             "title": "Red lines for incoming enemy fleets",
             "description": "",
             "labels": [
@@ -68,7 +68,7 @@
         {
             "id": "1339967007_4079715733_2616305636_234263384",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 2,
+            "position": 3,
             "title": "Move the planet screen buttons closer to the titles",
             "description": "",
             "labels": [
@@ -88,7 +88,7 @@
         {
             "id": "3324814446_2107334099_2977103948_706466565",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 3,
+            "position": 4,
             "title": "Yes/No buttons in the quit screen",
             "description": "",
             "labels": [
@@ -108,7 +108,7 @@
         {
             "id": "994804335_3810641120_314219872_4027271076",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 4,
+            "position": 5,
             "title": "Escape to close fleet screen popup instead of going back to the planet screen",
             "description": "",
             "labels": []
@@ -126,7 +126,7 @@
         {
             "id": "2168620984_78404930_1615438207_1520265291",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 5,
+            "position": 6,
             "title": "Change research project and change production project buttons still work on enemy planets.",
             "description": "The buttons are invisible but they still work",
             "labels": [
@@ -144,7 +144,7 @@
         {
             "id": "4238327001_3368910702_3430609534_1811910456",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 6,
+            "position": 7,
             "title": "Set fleet to travel to a planet. Go to the planet. End turn. The game crashes.",
             "description": "Game doesn't crash anymore.\n\nBut the fleet doesn't show up once arrived",
             "labels": [
@@ -162,7 +162,7 @@
         {
             "id": "223816169_27901770_1160515492_2735204477",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 7,
+            "position": 8,
             "title": "Fleets that travelled between stars are stuck at the star. Cannot select them anyymore",
             "description": "",
             "labels": [
@@ -180,7 +180,7 @@
         {
             "id": "1031600666_973169628_464248803_3395876002",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 8,
+            "position": 9,
             "title": "43 cards not imported from the GLO board...",
             "description": "",
             "labels": []
@@ -196,7 +196,7 @@
         {
             "id": "2179201315_2047373742_3800621983_1881441494",
             "list_id": "1901749129_962513719_918349320_1149498453",
-            "position": 9,
+            "position": 10,
             "title": "Import GLO cards in here",
             "description": "",
             "labels": []

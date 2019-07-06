@@ -84,9 +84,9 @@ class StarScreen(ScreenBase):
 
 					clicked_fleets = []
 					for f in self.star.fleets:
-						if f.player == self._app.local_player:
-							if f.rect_s.collidepoint(event.pos):
-								clicked_fleets.append(f)
+#						if f.player == self._app.local_player:
+						if f.rect_s.collidepoint(event.pos):
+							clicked_fleets.append(f)
 					if len(clicked_fleets) == 1:
 						self.on_fleet_clicked(clicked_fleets[0])
 					elif len(clicked_fleets) > 1:
@@ -289,7 +289,8 @@ class StarScreen(ScreenBase):
 		return fleet_info_rect
 
 	def select_planet(self, planet):
-		if self.selected_fleet:
+		if self.selected_fleet \
+		and self.selected_fleet.player == self._app.local_player:
 			self.dispatch_fleet_to_planet(self.selected_fleet, planet)
 			self.selected_fleet = None
 			self.show_fleet_info = False
@@ -308,6 +309,8 @@ class StarScreen(ScreenBase):
 		else:
 			self.selected_fleet = fleet
 			self.selected_planet = None
+			if fleet.player != self._app.local_player:
+				self.show_fleet_info = True
 
 	def dispatch_fleet_to_planet(self, fleet, planet):
 		# Cannot change destination while traveling
@@ -328,7 +331,7 @@ class StarScreen(ScreenBase):
 
 	def select_star(self):
 		if self.selected_fleet \
-		and self.selected_fleet.player == self.app.local_player:
+		and self.selected_fleet.player == self._app.local_player:
 			self.dispatch_fleet_to_star(self.selected_fleet, self.centered_rect)
 			self.selected_fleet = None
 			self.show_fleet_info = False
